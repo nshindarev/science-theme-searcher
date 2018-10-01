@@ -16,6 +16,8 @@
         <slf4j.version>1.7.24</slf4j.version>
         <logback.version>1.2.1</logback.version>
         <junit.version>4.12</junit.version>
+        <httpclient.version>4.5.6</httpclient.version>
+        <jericho.version>3.3</jericho.version>
     </properties>
 
 
@@ -54,6 +56,16 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>fluent-hc</artifactId>
+                <version>4.5.6</version>
+            </dependency>
+            <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
@@ -63,6 +75,55 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.htmlunit</groupId>
+                <artifactId>htmlunit</artifactId>
+                <version>2.8</version>
+            </dependency>
+
+            <!--for RINZ parser-->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>3.11</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>3.11</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jdesktop</groupId>
+                <artifactId>beansbinding</artifactId>
+                <version>1.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.htmlunit</groupId>
+                <artifactId>htmlunit</artifactId>
+                <version>2.8</version>
+            </dependency>
+
+
+            <!-- https://mvnrepository.com/artifact/org.ccil.cowan.tagsoup/tagsoup -->
+            <!--<dependency>-->
+                <!--<groupId>org.ccil.cowan.tagsoup</groupId>-->
+                <!--<artifactId>tagsoup</artifactId>-->
+                <!--<version>1.2</version>-->
+            <!--</dependency>-->
+
+            <!-- jericho - парсер HTML страниц для google scholar-->
+            <!-- https://mvnrepository.com/artifact/net.htmlparser.jericho/jericho-html -->
+            <!--<dependency>-->
+                <!--<groupId>net.htmlparser.jericho</groupId>-->
+                <!--<artifactId>jericho-html</artifactId>-->
+                <!--<version>${jericho.version}</version>-->
+            <!--</dependency>-->
+
             <!-- Тестирование -->
             <dependency>
                 <groupId>junit</groupId>

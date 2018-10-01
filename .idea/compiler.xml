@@ -11,7 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="appl" target="1.8" />
-      <module name="parserscopusclient" target="1.8" />
+      <module name="parser.scopus.client" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

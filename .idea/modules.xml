@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/appl/appl.iml" filepath="$PROJECT_DIR$/appl/appl.iml" />
-      <module fileurl="file://$PROJECT_DIR$/parserscopusclient.iml" filepath="$PROJECT_DIR$/parserscopusclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parser.scopus.client.iml" filepath="$PROJECT_DIR$/parser.scopus.client.iml" />
     </modules>
   </component>
 </project>
