@@ -1,5 +1,4 @@
 import auth.ElibAuthorize;
-import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
 import datamapper.User;
 import org.slf4j.Logger;
@@ -13,39 +12,51 @@ import java.util.List;
 
 public class RinzParser {
     private static final Logger logger  = LoggerFactory.getLogger(RinzParser.class);
+    private User user;
 
     public RinzParser (){
-        startResearch(new User("Николай", "Терехов"));
+        this.user = new User("Николай", "Терехов");
+        startResearch(this.user);
     }
-
     public RinzParser(String name, String surname){
-        startResearch(new User(name, surname));
+        this.user = new User (name, surname);
+        startResearch(this.user);
     }
 
 
     private void startResearch (User userInfo){
         // __________authorization______________
         ElibAuthorize auth = new ElibAuthorize();
-        HtmlPage startPage = auth.getElibraryStartPage();
 
-        HtmlPage firstSearchRez = searchByUser(userInfo, startPage);
+        //___________search by author____________________
+        HtmlPage startPage = auth.getElibraryStartPage();
+        HtmlPage authPage  = navigateToAuthorsPage(startPage);
+        HtmlPage resPage   = authorSearch(this.user, authPage);
+
+        handleSearchResults(resPage);
+
+
+        HtmlPage firstSearchRez = defaultSearch(userInfo, startPage);
         logger.trace(firstSearchRez.toString());
     }
 
     /**
-     * In exception case returns current page
+     * Search methods, usage depends on current page
      * @param userInfo authors name
      * @param currentPage current page with form to insert
      * @return HtmlPage
      */
-    private HtmlPage searchByUser(User userInfo, HtmlPage currentPage){
+    private HtmlPage defaultSearch(User userInfo, HtmlPage currentPage){
 
-        //insert search parameters
+        //__________ log forms in page
         List<HtmlForm> forms = currentPage.getForms();
         for (HtmlForm form : forms) {
-            logger.info(form.toString());
+            logger.trace(form.toString());
         }
 
+        /**
+         *  deprecated search code
+         */
         HtmlForm form = currentPage.getFormByName("search");
         HtmlTextInput textField = form.getInputByName("ftext");
         textField.setValueAttribute(userInfo.getSurname()+" "+userInfo.getName());
@@ -57,7 +68,6 @@ public class RinzParser {
             //write results into file
             writePageIntoFile(resultPage,"basicSearchResults");
 
-            //TODO: get to authors page and search
             handleSearchResults(navigateToAuthorsPage(resultPage));
             return resultPage;
         }
@@ -66,6 +76,35 @@ public class RinzParser {
             logger.error("error during search call");
             return currentPage;
         }
+    }
+    private HtmlPage authorSearch(User userInfo, HtmlPage currentPage){
+
+        //________________trace_____________________
+        List<HtmlForm> forms = currentPage.getForms();
+        for (HtmlForm form : forms) {
+            logger.debug(form.toString());
+        }
+
+        HtmlTextInput surnameInput = currentPage.getHtmlElementById("surname");
+        surnameInput.setValueAttribute(userInfo.getSurname());
+
+        try {
+
+            HtmlForm form = currentPage.getFormByName("results");
+            List<HtmlElement> listElements = form.getElementsByAttribute("div","class", "butred");
+
+            HtmlPage resultPage = listElements.get(0).click();
+
+            //write results into file
+            writePageIntoFile(resultPage, "authorSearchResults");
+
+            return resultPage;
+        }
+        catch (IOException ex){
+            logger.error(ex.getMessage());
+            return currentPage;
+        }
+
     }
 
     private HtmlPage navigateToAuthorsPage (HtmlPage startPage){
@@ -84,26 +123,19 @@ public class RinzParser {
     private void handleSearchResults (HtmlPage curPage){
        final HtmlTable rezultsTable = curPage.getHtmlElementById("restab");
        for (final HtmlTableRow row : rezultsTable.getRows()){
-           logger.info(row.toString());
+           logger.info(row.getAlignAttribute());
            for (final HtmlTableCell cell : row.getCells()){
-               logger.info(cell.toString());
+               logger.info(cell.asText());
            }
        }
        logger.info("_______end__________");
     }
-    /*private void handleSearchResults (HtmlPage curPage){
 
-        while (true) {
 
-            logger.info(getLinksToAuthors(curPage).toString());
-            curPage = getNextPage(curPage);
-
-            if (curPage == null) {
-                break;
-            }
-        }
-    }*/
-
+    /**
+     * logging
+     * @param page to be logged into file as xml
+     */
     private void writePageIntoFile (HtmlPage page){
         // write into file
         try (PrintWriter out = new PrintWriter("appl/src/main/resources/page.xml")) {

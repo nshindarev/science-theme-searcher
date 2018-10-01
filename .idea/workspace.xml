@@ -2,50 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4750bea4-0ddd-4a3d-aa83-d8c9cee04990" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_10.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_1_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_cssparser_cssparser_0_9_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_2_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_core_js_2_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_nekohtml_nekohtml_1_9_14.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_fluent_hc_4_5_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_10.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpmime_4_0_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_james_apache_mime4j_0_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_3_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_ooxml_3_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_ooxml_schemas_3_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_xmlbeans_xmlbeans_2_6_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jdesktop_beansbinding_1_2_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_w3c_css_sac_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__stax_stax_api_1_0_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xalan_serializer_2_7_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xalan_xalan_2_7_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xerces_xercesImpl_2_9_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xml_apis_xml_apis_1_3_04.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/RinzParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/auth/ElibAuthorize.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/datamapper/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/util/GoogleScholarPage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/util/HTMLHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/util/JerichoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/util/ReaderGoogleScholar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/util/ScopusGetQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/nshindar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appl/appl.iml" beforeDir="false" afterPath="$PROJECT_DIR$/appl/appl.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appl/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/appl/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appl/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appl/src/main/java/RinzParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/java/RinzParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appl/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/resources/logback.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/appl/target/" />
@@ -62,17 +20,26 @@
       <file leaf-file-name="RinzParser.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/appl/src/main/java/RinzParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="32" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="280">
+              <caret line="127" column="40" selection-start-line="127" selection-start-column="40" selection-end-line="127" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#419#420#0" expanded="true" />
-                <element signature="e#481#482#0" expanded="true" />
+                <element signature="method#RinzParser#0;class#RinzParser#0" />
+                <element signature="method#RinzParser#1;class#RinzParser#0" />
                 <element signature="method#writePageIntoFile#0;class#RinzParser#0" />
                 <element signature="method#writePageIntoFile#1;class#RinzParser#0" />
                 <element signature="method#getLinksToAuthors#0;class#RinzParser#0" />
                 <element signature="method#getNextPage#0;class#RinzParser#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="logback.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/appl/src/main/resources/logback.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="18" column="71" selection-start-line="18" selection-start-column="71" selection-end-line="18" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -92,7 +59,9 @@
       <file leaf-file-name="authorsSearchPage.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appl/src/main/resources/authorsSearchPage.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3482" />
+            <state relative-caret-position="121">
+              <caret line="6891" column="113" selection-start-line="6891" selection-start-column="113" selection-end-line="6891" selection-end-column="113" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -124,6 +93,7 @@
       <find>rinzurl</find>
       <find>НАЙДЕНО</find>
       <find>найдено</find>
+      <find>butr</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -158,10 +128,9 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="-1920" />
-    <option name="width" value="1920" />
-    <option name="height" value="1200" />
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+    <option name="width" value="1280" />
+    <option name="height" value="800" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -327,7 +296,7 @@
     <option name="totallyTimeSpent" value="7985000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="0" width="1920" height="1200" extended-state="0" />
+    <frame x="0" y="0" width="1280" height="800" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="5" />
@@ -339,17 +308,17 @@
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.32900944" />
       <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="bottom" id="Run" order="7" weight="0.32849365" />
+      <window_info active="true" anchor="bottom" id="Run" order="7" visible="true" weight="0.32763532" />
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Terminal" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="0" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.1656017" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.25121164" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
       <window_info id="UI Designer" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="8" visible="true" weight="0.25317603" />
+      <window_info anchor="bottom" id="Debug" order="8" weight="0.3974359" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
@@ -360,6 +329,37 @@
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="6" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" id="Palette" order="5" />
+      <window_info anchor="bottom" id="Find" order="6" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="0" />
+      <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="3" />
+      <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.25121164" />
+      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="bottom" id="TODO" order="11" />
+      <window_info anchor="bottom" id="Message" order="5" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.32849365" />
+      <window_info id="Image Layers" order="4" />
+      <window_info id="Designer" order="0" />
+      <window_info id="UI Designer" order="1" />
+      <window_info active="true" anchor="bottom" id="Debug" order="8" visible="true" weight="0.3974359" />
+      <window_info anchor="bottom" id="SBT Console" order="12" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="1" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.32900944" />
+      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="4" weight="0.32905984" />
+      <window_info anchor="right" id="Maven Projects" order="4" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -372,18 +372,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/appl/src/main/java/RinzParser.java</url>
-          <line>84</line>
+          <line>87</line>
           <properties />
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/appl/src/main/java/RinzParser.java</url>
-          <line>91</line>
-          <properties />
-          <option name="timeStamp" value="55" />
+          <option name="timeStamp" value="60" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="56" />
+      <option name="time" value="61" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -393,8 +387,8 @@
           <caret line="54" column="44" lean-forward="true" selection-start-line="54" selection-start-column="44" selection-end-line="54" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#419#420#0" expanded="true" />
-            <element signature="e#481#482#0" expanded="true" />
+            <element signature="method#RinzParser#0;class#RinzParser#0" />
+            <element signature="method#RinzParser#1;class#RinzParser#0" />
             <element signature="method#writePageIntoFile#0;class#RinzParser#0" />
             <element signature="method#writePageIntoFile#1;class#RinzParser#0" />
             <element signature="method#getLinksToAuthors#0;class#RinzParser#0" />
@@ -438,8 +432,8 @@
           <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#419#420#0" expanded="true" />
-            <element signature="e#481#482#0" expanded="true" />
+            <element signature="method#RinzParser#0;class#RinzParser#0" />
+            <element signature="method#RinzParser#1;class#RinzParser#0" />
             <element signature="method#writePageIntoFile#0;class#RinzParser#0" />
             <element signature="method#writePageIntoFile#1;class#RinzParser#0" />
             <element signature="method#getLinksToAuthors#0;class#RinzParser#0" />
@@ -526,13 +520,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appl/src/main/resources/logback.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="16" column="59" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/net/sourceforge/htmlunit/htmlunit/2.8/htmlunit-2.8.jar!/com/gargoylesoftware/htmlunit/html/HtmlPage.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
@@ -552,9 +539,11 @@
         <state relative-caret-position="-18759" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appl/src/main/resources/authorsSearchPage.xml">
+    <entry file="file://$PROJECT_DIR$/appl/src/main/resources/logback.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3482" />
+        <state relative-caret-position="266">
+          <caret line="18" column="71" selection-start-line="18" selection-start-column="71" selection-end-line="18" selection-end-column="71" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/appl/src/main/java/Main.java">
@@ -579,14 +568,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/appl/src/main/resources/authorsSearchPage.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="6891" column="113" selection-start-line="6891" selection-start-column="113" selection-end-line="6891" selection-end-column="113" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/appl/src/main/java/RinzParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        <state relative-caret-position="280">
+          <caret line="127" column="40" selection-start-line="127" selection-start-column="40" selection-end-line="127" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#419#420#0" expanded="true" />
-            <element signature="e#481#482#0" expanded="true" />
+            <element signature="method#RinzParser#0;class#RinzParser#0" />
+            <element signature="method#RinzParser#1;class#RinzParser#0" />
             <element signature="method#writePageIntoFile#0;class#RinzParser#0" />
             <element signature="method#writePageIntoFile#1;class#RinzParser#0" />
             <element signature="method#getLinksToAuthors#0;class#RinzParser#0" />
