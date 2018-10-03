@@ -1,6 +1,7 @@
 import auth.ElibAuthorize;
 import com.gargoylesoftware.htmlunit.html.*;
 import datamapper.Author;
+import io.FileWriterWrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,12 +34,21 @@ public class RinzParser {
         HtmlPage authPage  = navigateToAuthorsPage(startPage);
         HtmlPage resPage   = authorSearch(this.author, authPage);
 
-        writePageIntoFile(resPage, "authorSearchRezults");
+        FileWriterWrap.writePageIntoFile(resPage, "authorSearchRezults");
         handleSearchResults(resPage);
 
+        try{
+            //TODO: for debugging, change call hierarchy
+            HtmlPage publicationsPage = this.author.navigateToPublications();
+            this.author.collectAuthorsPublications(publicationsPage);
 
-        HtmlPage firstSearchRez = defaultSearch(authorInfo, startPage);
-        logger.trace(firstSearchRez.toString());
+            FileWriterWrap.writePageIntoFile(publicationsPage, "authorsPublicationsPage");
+        }
+        catch (IOException ex){
+            logger.error(ex.getMessage());
+        }
+        // HtmlPage firstSearchRez = defaultSearch(authorInfo, startPage);
+        // logger.trace(firstSearchRez.toString());
     }
 
     /**
@@ -67,7 +77,7 @@ public class RinzParser {
             HtmlPage resultPage = listElements.get(0).click();
 
             //write results into file
-            writePageIntoFile(resultPage,"basicSearchResults");
+            FileWriterWrap.writePageIntoFile(resultPage,"basicSearchResults");
 
             //handleSearchResults(navigateToAuthorsPage(resultPage));
             return resultPage;
@@ -102,7 +112,7 @@ public class RinzParser {
             HtmlPage resultPage = listElements.get(0).click();
 
             //write results into file
-            writePageIntoFile(resultPage, "authorSearchResults");
+            FileWriterWrap.writePageIntoFile(resultPage, "authorSearchResults");
 
             return resultPage;
         }
@@ -118,7 +128,7 @@ public class RinzParser {
         logger.trace(anchor.toString());
 
         try{
-            writePageIntoFile((HtmlPage) anchor.openLinkInNewWindow(), "authorsSearchPage");
+            FileWriterWrap.writePageIntoFile((HtmlPage) anchor.openLinkInNewWindow(), "authorsSearchPage");
             return (HtmlPage) anchor.openLinkInNewWindow();
         }
         catch (MalformedURLException ex){
@@ -139,30 +149,6 @@ public class RinzParser {
        logger.info("_______end__________");
     }
 
-
-    /**
-     * logging
-     * @param page to be logged into file as xml
-     */
-    private void writePageIntoFile (HtmlPage page){
-        // write into file
-        try (PrintWriter out = new PrintWriter("appl/src/main/resources/page.xml")) {
-            out.println(page.asXml());
-        }
-        catch (IOException ex){
-            logger.error(ex.getMessage());
-        }
-    }
-    private void writePageIntoFile (HtmlPage page, String filename){
-        // write into file
-        try (PrintWriter out = new PrintWriter("appl/src/main/resources/"+filename+".xml")) {
-            out.println(page.asXml());
-        }
-        catch (IOException ex){
-            logger.error(ex.getMessage());
-        }
-    }
-
     private List<String> getLinksToAuthors (HtmlPage curPage){
         List<String> result = new LinkedList<>();
         HtmlTable table = curPage.getHtmlElementById("restab");
@@ -177,6 +163,8 @@ public class RinzParser {
                 HtmlAnchor anchor = (HtmlAnchor) a.get(0);
                 String value = anchor.getAttribute("href");
                 result.add("http://elibrary.ru/" + value);
+
+                this.author.linkToUser = "http://elibrary.ru/" + value;
             }
         }
 

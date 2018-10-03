@@ -28,7 +28,6 @@ public class FileWriterWrap {
             logger.error(ex.getMessage());
         }
     }
-
     public static void writePageIntoFile (HtmlPage page, String filename){
         // write into file
         try (PrintWriter out = new PrintWriter("appl/src/main/resources/"+filename+".xml")) {
