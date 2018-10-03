@@ -172,7 +172,7 @@
 //            URLConnection connection = new URL(url).openConnection();
 //            connection.setConnectTimeout(4000);
 //            connection.setReadTimeout(4000);
-//            connection.setRequestProperty("User-Agent", AGENT);
+//            connection.setRequestProperty("Author-Agent", AGENT);
 //            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), CHARSET));
 //            String line;
 //            while ((line = in.readLine()) != null) {

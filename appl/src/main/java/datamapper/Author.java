@@ -1,13 +1,21 @@
 package datamapper;
 
-public class User {
+public class Author {
 
     private String name;
     private String surname;
+    private String patronymic;
 
-    public User (String name, String surname){
+    private String linkToUser;
+
+    public Author(String name, String surname){
         this.name = name;
         this.surname = surname;
+    }
+    public Author(String surname, String name, String patronymic){
+        this.surname = surname;
+        this.name = name;
+        this.patronymic = patronymic;
     }
 
     public String getName() {
@@ -16,6 +24,7 @@ public class User {
     public String getSurname(){
         return surname;
     }
+    public String getPatronymic() { return patronymic; }
 
     public String getFullName(){
         if (!name.isEmpty() && !surname.isEmpty()) return surname + " " + name;

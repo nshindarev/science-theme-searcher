@@ -14,12 +14,12 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
-    <logger name="appl"                                    level="trace"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl"                                    level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.java.auth.ElibAuthorize"   level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
-    <logger name="appl.src.main.java.RinzParser"           level="trace"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.main.java.RinzParser"           level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
 
     <!-- root -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
