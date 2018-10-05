@@ -745,7 +745,7 @@ function login_enter(event){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              145.255.238.138
+                                              91.151.187.33
                                             </font>
                                           </td>
                                         </tr>
@@ -762,7 +762,9 @@ function login_enter(event){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              не определена
+                                              <a href="/org_about.asp?orgsid=489" id="">
+                                                Санкт-Петербургский институт информатики и автоматизации РАН
+                                              </a>
                                             </font>
                                           </td>
                                         </tr>
@@ -1142,7 +1144,7 @@ function end_session(){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              145.255.238.138
+                                              91.151.187.33
                                             </font>
                                           </td>
                                         </tr>
@@ -1159,7 +1161,9 @@ function end_session(){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              не определена
+                                              <a href="/org_about.asp?orgsid=489" id="">
+                                                Санкт-Петербургский институт информатики и автоматизации РАН
+                                              </a>
                                             </font>
                                           </td>
                                         </tr>
@@ -1176,7 +1180,7 @@ function end_session(){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              03.10.2018 17:00
+                                              05.10.2018 12:53
                                             </font>
                                           </td>
                                         </tr>
@@ -1193,7 +1197,7 @@ function end_session(){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              00:01
+                                              00:00
                                             </font>
                                           </td>
                                         </tr>
@@ -1545,7 +1549,7 @@ function end_session(){
                       </table>
                     </td>
                     <td align="left" valign="top" id="">
-                      <form method="post" name="results" onsubmit="return false" id="">
+                      <form method="post" name="results" onsubmit="return false" id="" action="author_items.asp" target="">
                         <table border="0" cellspacing="0" cellpadding="0" id="">
                           <tbody id="">
                             <tr id="">
@@ -1591,7 +1595,7 @@ else {
                                   <input type="hidden" name="auth" value="" id=""/>
                                   <input type="hidden" name="authorid" value="98937" id=""/>
                                   <input type="hidden" name="authorhash" value="Терехов А Н" id=""/>
-                                  <input type="hidden" name="pagenum" value="1" id=""/>
+                                  <input type="hidden" name="pagenum" value="2" id=""/>
                                   <input type="hidden" name="add_all" value="" id=""/>
                                   <input type="hidden" name="paysum" value="" id=""/>
                                   <input type="hidden" name="slight" value="" id=""/>

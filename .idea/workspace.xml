@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4750bea4-0ddd-4a3d-aa83-d8c9cee04990" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/datamapper/AuthorsDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appl/src/main/java/datamapper/Publication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appl/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appl/src/main/java/RinzParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/java/RinzParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appl/src/main/java/datamapper/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/java/datamapper/Author.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appl/src/main/java/io/FileWriterWrap.java" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/java/io/FileWriterWrap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appl/src/main/resources/authorSearchResults.xml" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/resources/authorSearchResults.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appl/src/main/resources/authorsPublicationsPage.xml" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/resources/authorsPublicationsPage.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appl/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/appl/src/main/resources/logback.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -30,11 +27,12 @@
       <file leaf-file-name="RinzParser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appl/src/main/java/RinzParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
+            <state relative-caret-position="226">
+              <caret line="160" column="116" selection-start-line="160" selection-start-column="36" selection-end-line="160" selection-end-column="116" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#RinzParser#1;class#RinzParser#0" />
+                <element signature="method#defaultSearch#0;class#RinzParser#0" />
                 <element signature="method#authorSearch#0;class#RinzParser#0" />
                 <element signature="method#navigateToAuthorsPage#0;class#RinzParser#0" />
                 <element signature="method#handleSearchResults#0;class#RinzParser#0" />
@@ -47,8 +45,8 @@
       <file leaf-file-name="FileWriterWrap.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appl/src/main/java/io/FileWriterWrap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="29" column="5" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+            <state relative-caret-position="96">
+              <caret line="10" column="27" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#writePageIntoFile#0;class#FileWriterWrap#0" />
@@ -61,24 +59,16 @@
       <file leaf-file-name="Author.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/appl/src/main/java/datamapper/Author.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="93" column="21" selection-start-line="93" selection-start-column="21" selection-end-line="93" selection-end-column="21" />
+            <state relative-caret-position="94">
+              <caret line="72" column="14" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#navigateToAuthor#0;class#Author#0" />
-                <element signature="method#getFullName#0;class#User#0" />
-                <element signature="e#3651#3652#0" expanded="true" />
-                <element signature="e#3711#3712#0" expanded="true" />
+                <element signature="method#getFullName#0;class#Author#0" />
+                <element signature="method#equals#0;class#Author#0" />
+                <element signature="e#4057#4058#0" expanded="true" />
+                <element signature="e#4117#4118#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HtmlTableRow.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/net/sourceforge/htmlunit/htmlunit/2.8/htmlunit-2.8.jar!/com/gargoylesoftware/htmlunit/html/HtmlTableRow.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="35" selection-start-line="35" selection-end-line="35" />
             </state>
           </provider>
         </entry>
@@ -87,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/appl/src/main/java/datamapper/Publication.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
-              <caret line="10" column="22" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="22" />
+              <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -99,7 +89,7 @@
         <entry file="file://$PROJECT_DIR$/appl/src/main/java/datamapper/AuthorsDB.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+              <caret line="9" column="44" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -122,7 +112,7 @@
       <file leaf-file-name="ElibAuthorize.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appl/src/main/java/auth/ElibAuthorize.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
+            <state relative-caret-position="750">
               <caret line="56" column="68" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="68" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -155,6 +145,12 @@
       <find>detect</find>
       <find>get</find>
       <find>HTMLF</find>
+      <find>resta</find>
+      <find>form</find>
+      <find>click</find>
+      <find>for (HtmlF</find>
+      <find>tit</find>
+      <find>title</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -168,12 +164,12 @@
         <option value="$PROJECT_DIR$/appl/src/main/resources/authorsPageRestabSearch.xml" />
         <option value="$PROJECT_DIR$/appl/src/main/java/datamapper/User.java" />
         <option value="$PROJECT_DIR$/appl/src/main/java/auth/ElibAuthorize.java" />
-        <option value="$PROJECT_DIR$/appl/src/main/resources/logback.xml" />
         <option value="$PROJECT_DIR$/appl/src/main/java/datamapper/AuthorsDB.java" />
         <option value="$PROJECT_DIR$/appl/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/appl/src/main/java/datamapper/Publication.java" />
-        <option value="$PROJECT_DIR$/appl/src/main/java/io/FileWriterWrap.java" />
         <option value="$PROJECT_DIR$/appl/src/main/java/RinzParser.java" />
+        <option value="$PROJECT_DIR$/appl/src/main/java/io/FileWriterWrap.java" />
+        <option value="$PROJECT_DIR$/appl/src/main/resources/logback.xml" />
         <option value="$PROJECT_DIR$/appl/src/main/java/datamapper/Author.java" />
       </list>
     </option>
@@ -195,9 +191,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="-1920" />
-    <option name="width" value="1920" />
-    <option name="height" value="1200" />
+    <option name="width" value="1280" />
+    <option name="height" value="800" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -208,8 +203,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -282,6 +275,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -372,8 +367,7 @@
     <option name="totallyTimeSpent" value="7985000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="0" width="1920" height="1200" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="5" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -384,58 +378,28 @@
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.32900944" />
       <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="bottom" id="Run" order="7" weight="0.20961888" />
       <window_info anchor="bottom" id="Version Control" order="3" />
+      <window_info active="true" anchor="bottom" id="Run" order="7" visible="true" weight="0.20940171" />
       <window_info anchor="bottom" id="Terminal" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="0" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.17838125" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.2746365" />
+      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="8" weight="0.25" />
+      <window_info id="UI Designer" order="1" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="8" weight="1.0" />
+      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.32905984" />
-      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
-      <window_info id="UI Designer" order="1" />
-      <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="8" visible="true" weight="0.39655173" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="7" side_tool="true" weight="0.32960597" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="9" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="right" id="Palette" order="5" />
-      <window_info anchor="bottom" id="Find" order="6" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
-      <window_info anchor="right" id="Capture Analysis" order="0" />
-      <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="3" />
-      <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.27059773" />
-      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info anchor="bottom" id="TODO" order="11" />
-      <window_info anchor="bottom" id="Message" order="5" />
-      <window_info anchor="bottom" id="Run" order="7" weight="0.17663817" />
-      <window_info id="Image Layers" order="4" />
-      <window_info id="Designer" order="0" />
-      <window_info id="UI Designer" order="1" />
-      <window_info anchor="bottom" id="Debug" order="8" visible="true" weight="0.3974359" />
-      <window_info anchor="bottom" id="SBT Console" order="12" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" id="Palette&#9;" order="1" />
-      <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.32900944" />
-      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Messages" order="4" weight="0.32905984" />
-      <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -445,30 +409,102 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/appl/src/main/java/datamapper/Author.java</url>
-          <line>104</line>
-          <properties />
-          <option name="timeStamp" value="75" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/appl/src/main/java/datamapper/Author.java</url>
-          <line>98</line>
-          <properties />
-          <option name="timeStamp" value="77" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/appl/src/main/java/datamapper/Author.java</url>
-          <line>94</line>
-          <properties />
-          <option name="timeStamp" value="78" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="79" />
+      <option name="time" value="91" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/appl/src/main/java/RinzParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#RinzParser#1;class#RinzParser#0" />
+            <element signature="method#defaultSearch#0;class#RinzParser#0" />
+            <element signature="method#authorSearch#0;class#RinzParser#0" />
+            <element signature="method#navigateToAuthorsPage#0;class#RinzParser#0" />
+            <element signature="method#handleSearchResults#0;class#RinzParser#0" />
+            <element signature="method#getNextPage#0;class#RinzParser#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appl/src/main/java/io/FileWriterWrap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="29" column="5" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#writePageIntoFile#0;class#FileWriterWrap#0" />
+            <element signature="method#writePageIntoFile#1;class#FileWriterWrap#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/net/sourceforge/htmlunit/htmlunit/2.8/htmlunit-2.8.jar!/com/gargoylesoftware/htmlunit/html/HtmlTableRow.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appl/src/main/java/datamapper/Publication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="10" column="22" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appl/src/main/java/datamapper/AuthorsDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appl/src/main/java/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appl/src/main/java/auth/ElibAuthorize.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="56" column="68" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2095#2096#0" expanded="true" />
+            <element signature="e#2140#2141#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appl/src/main/java/datamapper/Author.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1170">
+          <caret line="91" column="68" selection-start-line="91" selection-start-column="68" selection-end-line="91" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#navigateToAuthor#0;class#Author#0" />
+            <element signature="method#getFullName#0;class#Author#0" />
+            <element signature="method#equals#0;class#Author#0" />
+            <element signature="e#4057#4058#0" expanded="true" />
+            <element signature="e#4117#4118#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/appl/src/main/java/RinzParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
@@ -476,6 +512,7 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#RinzParser#1;class#RinzParser#0" />
+            <element signature="method#defaultSearch#0;class#RinzParser#0" />
             <element signature="method#authorSearch#0;class#RinzParser#0" />
             <element signature="method#navigateToAuthorsPage#0;class#RinzParser#0" />
             <element signature="method#handleSearchResults#0;class#RinzParser#0" />
@@ -520,6 +557,7 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#RinzParser#1;class#RinzParser#0" />
+            <element signature="method#defaultSearch#0;class#RinzParser#0" />
             <element signature="method#authorSearch#0;class#RinzParser#0" />
             <element signature="method#navigateToAuthorsPage#0;class#RinzParser#0" />
             <element signature="method#handleSearchResults#0;class#RinzParser#0" />
@@ -599,13 +637,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/net/sourceforge/htmlunit/htmlunit/2.8/htmlunit-2.8.jar!/com/gargoylesoftware/htmlunit/html/HtmlPage.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="986" selection-start-line="986" selection-end-line="986" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SearchResults.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22245">
@@ -618,13 +649,7 @@
         <state relative-caret-position="-18759" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appl/src/main/resources/authorsPageRestabSearch.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="987" column="113" selection-start-line="987" selection-start-column="106" selection-end-line="987" selection-end-column="113" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/appl/src/main/resources/authorsPageRestabSearch.xml" />
     <entry file="file://$PROJECT_DIR$/appl/src/main/resources/authorsSearchPage.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="121">
@@ -658,16 +683,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appl/src/main/resources/logback.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="59" selection-start-line="19" selection-start-column="59" selection-end-line="19" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/appl/src/main/java/auth/ElibAuthorize.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
+        <state relative-caret-position="750">
           <caret line="56" column="68" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -677,10 +695,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/net/sourceforge/htmlunit/htmlunit/2.8/htmlunit-2.8.jar!/com/gargoylesoftware/htmlunit/html/HtmlTableRow.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/net/sourceforge/htmlunit/htmlunit/2.8/htmlunit-2.8.jar!/com/gargoylesoftware/htmlunit/html/HtmlPage.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="343" selection-start-line="343" selection-end-line="343" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appl/src/main/resources/logback.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="59" lean-forward="true" selection-start-line="20" selection-start-column="59" selection-end-line="20" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/appl/src/main/java/datamapper/AuthorsDB.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+          <caret line="9" column="44" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -699,8 +738,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/appl/src/main/java/io/FileWriterWrap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="29" column="5" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+        <state relative-caret-position="96">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#writePageIntoFile#0;class#FileWriterWrap#0" />
@@ -712,7 +751,7 @@
     <entry file="file://$PROJECT_DIR$/appl/src/main/java/datamapper/Publication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="22" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="22" />
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -721,11 +760,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/appl/src/main/java/RinzParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
+        <state relative-caret-position="226">
+          <caret line="160" column="116" selection-start-line="160" selection-start-column="36" selection-end-line="160" selection-end-column="116" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#RinzParser#1;class#RinzParser#0" />
+            <element signature="method#defaultSearch#0;class#RinzParser#0" />
             <element signature="method#authorSearch#0;class#RinzParser#0" />
             <element signature="method#navigateToAuthorsPage#0;class#RinzParser#0" />
             <element signature="method#handleSearchResults#0;class#RinzParser#0" />
@@ -734,23 +774,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/net/sourceforge/htmlunit/htmlunit/2.8/htmlunit-2.8.jar!/com/gargoylesoftware/htmlunit/html/HtmlTableRow.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/appl/src/main/java/datamapper/Author.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="93" column="21" selection-start-line="93" selection-start-column="21" selection-end-line="93" selection-end-column="21" />
+        <state relative-caret-position="94">
+          <caret line="72" column="14" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#navigateToAuthor#0;class#Author#0" />
-            <element signature="method#getFullName#0;class#User#0" />
-            <element signature="e#3651#3652#0" expanded="true" />
-            <element signature="e#3711#3712#0" expanded="true" />
+            <element signature="method#getFullName#0;class#Author#0" />
+            <element signature="method#equals#0;class#Author#0" />
+            <element signature="e#4057#4058#0" expanded="true" />
+            <element signature="e#4117#4118#0" expanded="true" />
           </folding>
         </state>
       </provider>

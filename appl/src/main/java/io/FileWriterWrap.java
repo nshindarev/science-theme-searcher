@@ -1,5 +1,6 @@
 package io;
 
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,15 @@ public class FileWriterWrap {
         }
         catch (IOException ex){
             logger.error(ex.getMessage());
+        }
+    }
+
+    public static void printFormsEnum (HtmlPage page){
+        logger.debug("_______FORMS LIST FOR CUR PAGE_______");
+        logger.debug(page.toString());
+
+        for(HtmlForm form: page.getForms()){
+            logger.debug(form.toString());
         }
     }
 }

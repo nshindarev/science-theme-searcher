@@ -18,6 +18,7 @@
     <logger name="appl.src.main.java.auth.ElibAuthorize"   level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.java.RinzParser"           level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.java.datamapper.Author"    level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.main.java"                      level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
 
     <!-- root -->
     <root level="DEBUG">

@@ -1,12 +1,15 @@
 package datamapper;
 
 import auth.ElibAuthorize;
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
+import io.FileWriterWrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -52,6 +55,7 @@ public class Author {
 
             HtmlPage  authorsPage = this.navigateToAuthor();
 
+
             for (HtmlForm form: authorsPage.getForms()){
                 logger.info(form.toString());
             }
@@ -62,54 +66,46 @@ public class Author {
             return (HtmlPage) referenceToPublications.openLinkInNewWindow();
     }
 
-//    public List<Publication> getAuthorsPublication(HtmlPage page){
-//        List<Publication> publications = new LinkedList<>();
-//
-//
-//
-//    }
-    /*
-    HtmlTable table = curPage.getHtmlElementById("restab");
-
-        for (HtmlTableRow row : table.getRows()) {
-            if (row.getIndex() < 3) {
-                continue;
-            }
-
-            List a = row.getCell(3).getElementsByAttribute("a", "title", "Анализ публикационной активности автора");
-            if (!a.isEmpty()) {
-                HtmlAnchor anchor = (HtmlAnchor) a.get(0);
-                String value = anchor.getAttribute("href");
-                result.add("http://elibrary.ru/" + value);
-
-                this.author.linkToUser = "http://elibrary.ru/" + value;
-            }
-        }
-
-        return result;*/
-
-    //TODO:STOPPED HERE - NEED TO FIND EXACT TABLE USING FORM FILTER
     public void collectAuthorsPublications(HtmlPage publicationsPage){
 
-        if (!AuthorsDB.authorsStorage.contains(this)){
+        if (!AuthorsDB.authorsStorage.contains(this)) {
 
-            int l2 = publicationsPage.getFormByName("result").getElementsByTagName("table").size();
-            int l1 = publicationsPage.getElementsByTagName("table").size();
-            HtmlTable table = (HtmlTable) publicationsPage.getElementsByTagName("table").get(0);
+            //FileWriterWrap.printFormsEnum(publicationsPage);
+            final HtmlTable rezultsTable = publicationsPage.getHtmlElementById("restab");
 
-            for (HtmlTableRow row : table.getRows()) {
-                int l = row.getCells().size();
-
-                HtmlElement name =    row.getCell(0).getElementsByTagName("a").get(0);
-//              HtmlElement name =    row.getCell(1).getElementsByTagName("a").get(0);
-//              HtmlElement authors = row.getCell(1).getElementsByTagName("i").get(0);
-
-              logger.debug(name.asText());
-//              logger.debug(authors.asText());
+            for (final HtmlTableRow row : rezultsTable.getRows()) {
+                if (row.getElementsByTagName("a").size()>0){
+                    HtmlElement name = row.getElementsByTagName("a").get(0);
+                    logger.debug(name.asText());
+                }
+                if (row.getElementsByTagName("i").size()>0){
+                    HtmlElement name = row.getElementsByTagName("i").get(0);
+                    logger.debug(name.asText());
+                }
             }
+            if(navigateToNextPublications(publicationsPage)!=null){
+                publicationsPage = navigateToNextPublications(publicationsPage);
+                collectAuthorsPublications(publicationsPage);
+            }
+            logger.debug("trace");
         }
     }
 
+    public static HtmlPage navigateToNextPublications(HtmlPage page){
+        try{
+            HtmlForm form = page.getFormByName("results");
+            HtmlAnchor anch = (HtmlAnchor) form.getElementsByAttribute("a", "title", "Следующая страница").get(0);
+
+            return (HtmlPage) anch.openLinkInNewWindow();
+        }
+        catch (MalformedURLException ex){
+            ex.printStackTrace();
+            return null;
+        }
+        catch (IndexOutOfBoundsException ex){
+            return null;
+        }
+    }
     public String getFullName(){
         if (!name.isEmpty() && !surname.isEmpty()) return surname + " " + name;
         else if (name.isEmpty() || name.equals(null)) return surname;
