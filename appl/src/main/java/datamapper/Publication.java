@@ -1,7 +1,6 @@
 package datamapper;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Publication {
 
@@ -16,6 +15,18 @@ public class Publication {
     public Publication(String name, List<Author> authors){
         this.name = name;
         this.authors = authors;
+    }
+
+    public Publication (String name, String authors){
+
+        List<String> authInPubl = Arrays.asList(authors.split(","));
+        this.authors = new ArrayList<Author>(authInPubl.size());
+        this.name = name;
+
+        for (String auth : authInPubl) {
+            Author authObj = Author.convertStringToAuthor(auth);
+            this.authors.add(authObj);
+        }
     }
 
     public void setAuthors(List<Author> authors){
@@ -38,5 +49,15 @@ public class Publication {
         Publication publication = (Publication) o;
         if (this.name.toLowerCase().equals(publication.getName().toLowerCase())) return true;
             else return false;
+    }
+
+    @Override
+    public String toString (){
+        return "PUBLICATION: " + this.name + " AUTHORS: " + this.authors.size();
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(this.name.toLowerCase());
     }
 }

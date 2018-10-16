@@ -21,7 +21,7 @@
     <logger name="appl.src.main.java"                      level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
 
     <!-- root -->
-    <root level="DEBUG">
+    <root level="TRACE">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

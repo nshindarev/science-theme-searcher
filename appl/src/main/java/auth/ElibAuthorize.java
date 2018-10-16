@@ -1,7 +1,7 @@
 package auth;
 
-import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
+import io.FileWriterWrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +19,6 @@ public class ElibAuthorize {
 
     //page returned after
     private HtmlPage elibraryStartPage;
-    private WebClient webClient = new WebClient();
 
     public ElibAuthorize(){
        try{
@@ -35,7 +34,7 @@ public class ElibAuthorize {
      * in other case elib_start_authors can be used
      */
     private void auth() throws IOException {
-            HtmlPage startPage = webClient.getPage(elib_start);
+            HtmlPage startPage = FileWriterWrap.webClient.getPage(elib_start);
             logger.info("received page from " + elib_start);
             logger.info(startPage.asXml());
 

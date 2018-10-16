@@ -2,6 +2,7 @@ import auth.ElibAuthorize;
 import com.gargoylesoftware.htmlunit.html.*;
 import datamapper.Author;
 import io.FileWriterWrap;
+import io.LogStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,16 +33,16 @@ public class RinzParser {
         //___________search by author____________________
         HtmlPage startPage = auth.getElibraryStartPage();
         HtmlPage authPage  = navigateToAuthorsPage(startPage);
+
         HtmlPage resPage   = authorSearch(this.author, authPage);
 
         FileWriterWrap.writePageIntoFile(resPage, "authorSearchRezults");
-        handleSearchResults(resPage);
 
         try{
-            //TODO: for debugging, change call hierarchy
             HtmlPage publicationsPage = this.author.navigateToPublications();
             this.author.collectAuthorsPublications(publicationsPage);
 
+            LogStatistics.logAuthorsPublications(this.author);
             FileWriterWrap.writePageIntoFile(publicationsPage, "authorsPublicationsPage");
         }
         catch (IOException ex){
@@ -57,7 +58,7 @@ public class RinzParser {
      * @param currentPage current page with form to insert
      * @return HtmlPage
      */
-    private HtmlPage defaultSearch(Author authorInfo, HtmlPage currentPage){
+    private HtmlPage defaultSearch(String query, HtmlPage currentPage){
 
         //__________ log forms in page
         List<HtmlForm> forms = currentPage.getForms();
@@ -70,7 +71,7 @@ public class RinzParser {
          */
         HtmlForm form = currentPage.getFormByName("search");
         HtmlTextInput textField = form.getInputByName("ftext");
-        textField.setValueAttribute(authorInfo.getSurname()+" "+ authorInfo.getName());
+        textField.setValueAttribute(query);
 
         try{
             List<HtmlElement> listElements = form.getElementsByAttribute("div", "class", "butblue");
@@ -79,7 +80,7 @@ public class RinzParser {
             //write results into file
             FileWriterWrap.writePageIntoFile(resultPage,"basicSearchResults");
 
-            //handleSearchResults(navigateToAuthorsPage(resultPage));
+            handleSearchResults(navigateToAuthorsPage(resultPage));
             return resultPage;
         }
         catch (IOException ex){
@@ -89,6 +90,10 @@ public class RinzParser {
         }
     }
     private HtmlPage authorSearch(Author authorInfo, HtmlPage currentPage){
+
+        // method fills links to user
+        handleSearchResults(currentPage);
+
 
         //________________trace_____________________
         List<HtmlForm> forms = currentPage.getForms();
@@ -141,12 +146,12 @@ public class RinzParser {
         final HtmlTable rezultsTable = curPage.getHtmlElementById("restab");
 
         for (final HtmlTableRow row : rezultsTable.getRows()){
-           logger.info(row.getAlignAttribute());
+           logger.trace(row.getAlignAttribute());
            for (final HtmlTableCell cell : row.getCells()){
-               logger.info(cell.asText());
+               logger.trace(cell.asText());
            }
        }
-       logger.info("_______end__________");
+       logger.trace("_______end__________");
     }
 
     private List<String> getLinksToAuthors (HtmlPage curPage){

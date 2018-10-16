@@ -1,10 +1,8 @@
-import datamapper.AuthorsDB;
+import storage.AuthorsDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.logging.Level;
 
 /*
@@ -18,15 +16,14 @@ import java.util.logging.Level;
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main (String[] args) throws IOException {
-        logger.info("Started project");
+        logger.trace("Started project");
 
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
         java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
 
 
-        AuthorsDB.authorsStorage = new HashSet<>();
-        AuthorsDB.publicationsStorage = new HashMap<>();
-
+        AuthorsDB.initAuthorsStorage();
+        AuthorsDB.initPublicationsStorage();
 
         RinzParser parser = new RinzParser();
     }

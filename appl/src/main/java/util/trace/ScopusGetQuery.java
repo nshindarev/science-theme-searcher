@@ -1,4 +1,4 @@
-package util;
+package util.trace;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
