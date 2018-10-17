@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 public class LogStatistics {
     private static final Logger logger = LoggerFactory.getLogger(LogStatistics.class);
@@ -27,6 +28,20 @@ public class LogStatistics {
         logger.debug("------------------------ ");
     }
     public static void logAuthorsDB_auth (){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+
+        logger.debug("________________________ ");
+        logger.debug("DB CONDITION ON " + dateFormat.format(date));
+        logger.debug("STORAGE SIZE "+ AuthorsDB.getAuthorsStorage().size());
+        logger.debug("________________________");
+
+        for (Author a : AuthorsDB.getAuthorsStorage()){
+            logger.debug(a.getSurname()+" "+a.getN()+". "+a.getP()+".");
+        }
+
+    }
+    public static void logAuthorsDB_auth (Set<Author> authors){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 

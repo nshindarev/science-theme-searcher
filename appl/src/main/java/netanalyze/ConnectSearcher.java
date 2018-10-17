@@ -1,6 +1,11 @@
 package netanalyze;
 
+
+import datamapper.Theme;
+import main.RinzParser;
 import util.SearchType;
+
+//TODO: добавить реализацию для поиска по авторам
 
 public class ConnectSearcher {
 
@@ -14,7 +19,8 @@ public class ConnectSearcher {
     }
 
     private void searchByTheme(String query){
-
+        Theme theme = new Theme(query);
+        RinzParser parser = new RinzParser(theme);
     }
     private void searchByAuthor(String query){
 

@@ -8,6 +8,10 @@ import java.util.*;
 public class AuthorsDB {
 
     private static Map<Author, Set<Publication>> publicationsStorage;
+    /**
+     *  case Theme research: contains all authors of publications in current research topic
+     *  case Author search:  contains all co-authors
+     */
     private static Set<Author>  authorsStorage;
 
     public static Set<Author> getAuthorsStorage(){

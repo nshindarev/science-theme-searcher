@@ -16,7 +16,7 @@ import java.util.Set;
 public class FileWriterWrap {
 
     private static final Logger logger = LoggerFactory.getLogger(FileWriterWrap.class);
-    public static final WebClient webClient = new WebClient();
+
     //class without any
     private FileWriterWrap(){
 

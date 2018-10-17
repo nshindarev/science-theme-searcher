@@ -1,3 +1,7 @@
+package main;
+
+import datamapper.Author;
+import datamapper.Theme;
 import storage.AuthorsDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +29,8 @@ public class Main {
         AuthorsDB.initAuthorsStorage();
         AuthorsDB.initPublicationsStorage();
 
-        RinzParser parser = new RinzParser();
+        RinzParser parser = new RinzParser(new Author("Ловягин", "Юрий", "Никитич"));
+//        RinzParser parser = new RinzParser(new Theme("социоинженерные атаки"));
     }
 
 }
