@@ -11,6 +11,7 @@ import io.FileWriterWrap;
 import io.LogStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import storage.AuthorsDB;
 import util.Navigator;
 
 import java.io.IOException;
@@ -60,6 +61,12 @@ public class RinzParser {
 
                 LogStatistics.logAuthorsPublications(this.author);
                 FileWriterWrap.writePageIntoFile(publicationsPage, "authorsPublicationsPage");
+
+                //TODO: переделать хранилище
+                AuthorsDB.addToAuthorsStorage(this.author);
+                for(Author author: this.author.coAuthors) AuthorsDB.addToAuthorsStorage(author);
+
+                LogStatistics.logAuthorsDB_auth();
             }
             catch (IOException ex){
                 logger.error(ex.getMessage());
@@ -150,8 +157,6 @@ public class RinzParser {
                 logger.debug("SIZE coAuth = " + startPoint.coAuthors.size());
             }
         }
-
-        LogStatistics.logAuthorsDB_auth();
 
         if(Navigator.navigateToNextPublications(publicationsPage)!=null){
             publicationsPage = Navigator.navigateToNextPublications(publicationsPage);
