@@ -1,7 +1,7 @@
 package netanalyze;
 
 
-import datamapper.Theme;
+import datamapper.ResearchStarters.Theme;
 import main.RinzParser;
 import util.SearchType;
 

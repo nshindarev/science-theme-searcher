@@ -1,20 +1,21 @@
-package datamapper;
+package datamapper.ResearchStarters;
+
+import datamapper.ResearchStarter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Theme {
+public class Theme extends ResearchStarter {
 
     private String name;
 
 
     public Theme (String name){
         this.name = name;
-        this.authors = new HashSet<>();
+        super.coAuthors = new HashSet<>();
     }
 
     public String getName() {
         return name;
     }
-    public Set<Author> authors;
 }

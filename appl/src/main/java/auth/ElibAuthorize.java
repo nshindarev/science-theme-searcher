@@ -15,8 +15,8 @@ public class ElibAuthorize {
     private static final String login    = "nshindarev";
     private static final String password = "v3r0n1k4";
 
-    private static final String elib_start_authors  = "https://elibrary.ru/authors.asp";
-    private static final String elib_start          = "https://elibrary.ru";
+    public static final String elib_start_authors  = "https://elibrary.ru/authors.asp";
+    public static final String elib_start          = "https://elibrary.ru";
 
     //page returned after
     private HtmlPage elibraryStartPage;
@@ -52,16 +52,18 @@ public class ElibAuthorize {
             HtmlPasswordInput pswField = form.getInputByName("password");
             pswField.setValueAttribute(this.password);
 
-            logger.trace(form.asXml());
+            logger.trace(form.asText());
 
             List<HtmlElement> elements = form.getElementsByAttribute("div", "class", "butred");
             HtmlPage searchResults = elements.get(0).click();
 
-            logger.debug(searchResults.asXml());
+            logger.debug(searchResults.asText());
             this.elibraryStartPage = searchResults;
     }
 
     public HtmlPage getElibraryStartPage(){
+        logger.trace(this.elibraryStartPage.asText());
         return this.elibraryStartPage;
+
     }
 }

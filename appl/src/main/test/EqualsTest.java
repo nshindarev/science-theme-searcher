@@ -1,7 +1,7 @@
-import datamapper.Author;
+import datamapper.ResearchStarters.Author;
 import org.junit.Test;
 
-public class testEquals {
+public class EqualsTest {
     @Test
     public void testAuthor(){
         Author a1 = new Author("Shindarev", 'N', 'A');

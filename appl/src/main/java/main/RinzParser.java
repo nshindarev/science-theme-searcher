@@ -3,9 +3,10 @@ package main;
 import auth.ElibAuthorize;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.html.*;
-import datamapper.Author;
+import datamapper.ResearchStarters.Author;
 import datamapper.Publication;
-import datamapper.Theme;
+import datamapper.ResearchStarters.Theme;
+import datamapper.ResearchStarter;
 import io.FileWriterWrap;
 import io.LogStatistics;
 import org.slf4j.Logger;
@@ -14,11 +15,13 @@ import util.Navigator;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 public class RinzParser {
     private static final Logger logger  = LoggerFactory.getLogger(RinzParser.class);
+
     private Author author;
     private Theme theme;
 
@@ -38,20 +41,20 @@ public class RinzParser {
         HtmlPage startPage = auth.getElibraryStartPage();
 
 
-        //___________search by author____________________
+        //___________search by author_____________________________________________
         if (this.author != null){
             HtmlPage authPage  = Navigator.navigateToAuthorsSearchPage(startPage);
-            HtmlPage resPage   = Navigator.navigateToAuthorsSearchRezults(this.author, authPage);
+            HtmlPage resPage   = Navigator.navigateToAuthorsSearchResults(this.author, authPage);
 
             // method fills link to user
             setLinkToAuthor(this.author, resPage);
 
             try{
                 HtmlPage publicationsPage = Navigator.navigateToPublications(this.author);
-                this.author = collectCoAuthors(publicationsPage, this.author);
+                this.author = (Author) collectCoAuthors(publicationsPage, this.author);
 
                 for(Author coAuthor: this.author.coAuthors){
-                    resPage  = Navigator.navigateToAuthorsSearchRezults(coAuthor, Navigator.navigateToAuthorsSearchPage(startPage));
+                    resPage  = Navigator.navigateToAuthorsSearchResults(coAuthor, Navigator.navigateToAuthorsSearchPage(startPage));
                     coAuthor.linkToUser = setLinkToAuthor(coAuthor, resPage).linkToUser;
                 }
 
@@ -61,54 +64,23 @@ public class RinzParser {
             catch (IOException ex){
                 logger.error(ex.getMessage());
             }
-
-            logger.trace("");
-            // HtmlPage firstSearchRez = defaultSearch(authorInfo, startPage);
-            // logger.trace(firstSearchRez.toString());
         }
+
+        //___________search by theme___________________________
+//        else if (this.theme != null){
+//            HtmlPage resPage   = Navigator.navigateToThemeSearchResults(theme, startPage);
+//            this.theme =
+//
+//        }
 
     }
 
     /**
-     * Search methods, usage depends on current page
-     * @param authorInfo authors name
-     * @param currentPage current page with form to insert
-     * @return HtmlPage
+     * добавляет поле linkToAuthor с ссылкой на страницу в elibrary
+     * @param author автор для добавления ссылки
+     * @param curPage страница с результатами поиска по ФИО
+     * @return
      */
-    private HtmlPage defaultSearch(String query, HtmlPage currentPage){
-
-        //__________ log forms in page
-        List<HtmlForm> forms = currentPage.getForms();
-        for (HtmlForm form : forms) {
-            logger.trace(form.toString());
-        }
-
-        /**
-         *  deprecated search code
-         */
-        HtmlForm form = currentPage.getFormByName("search");
-        HtmlTextInput textField = form.getInputByName("ftext");
-        textField.setValueAttribute(query);
-
-        try{
-            List<HtmlElement> listElements = form.getElementsByAttribute("div", "class", "butblue");
-            HtmlPage resultPage = listElements.get(0).click();
-
-            //write results into file
-            FileWriterWrap.writePageIntoFile(resultPage,"basicSearchResults");
-
-            return resultPage;
-        }
-        catch (IOException ex){
-            logger.error(ex.getMessage());
-            logger.error("error during search call");
-            return currentPage;
-        }
-    }
-
-
-
-
     private Author setLinkToAuthor(Author author, HtmlPage curPage){
         List<String> result = new LinkedList<>();
 
@@ -137,9 +109,19 @@ public class RinzParser {
     }
 
 
-
-    public Author collectCoAuthors (HtmlPage publicationsPage, Author curAuthor){
+    /**
+     * добавляет всех соавторов в поле объекта author
+     * @param publicationsPage
+     * @param startPoint
+     * @return
+     */
+    public ResearchStarter collectCoAuthors (HtmlPage publicationsPage, ResearchStarter startPoint){
         final HtmlTable rezultsTable = publicationsPage.getHtmlElementById("restab");
+
+        if (startPoint.coAuthors == null || startPoint.publications == null){
+            startPoint.publications = new HashSet<>();
+            startPoint.coAuthors = new HashSet<>();
+        }
 
         /**
          * <a> Название публикации </a>
@@ -150,16 +132,22 @@ public class RinzParser {
                 HtmlElement publName = row.getElementsByTagName("a").get(0);
                 HtmlElement authNames = row.getElementsByTagName("i").get(0);
 
-                curAuthor.publications.add(new Publication(publName.asText(), authNames.asText()));
+//                logger.trace(publName.asText());
+//                logger.trace(authNames.asText());
+
+                startPoint.publications.add(new Publication(publName.asText(), authNames.asText()));
 
                 List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
                 for (String auth : authInPubl) {
                     Author authObj = Author.convertStringToAuthor(auth);
-                    curAuthor.coAuthors.add(authObj);
+                    startPoint.coAuthors.add(authObj);
                 }
 
                 logger.debug(publName.asText());
                 logger.debug(authNames.asText());
+
+                logger.debug("SIZE public = " + startPoint.publications.size());
+                logger.debug("SIZE coAuth = " + startPoint.coAuthors.size());
             }
         }
 
@@ -168,49 +156,10 @@ public class RinzParser {
         if(Navigator.navigateToNextPublications(publicationsPage)!=null){
             publicationsPage = Navigator.navigateToNextPublications(publicationsPage);
             logger.debug("________________page ended___________________");
-            collectCoAuthors(publicationsPage, curAuthor);
+            collectCoAuthors(publicationsPage, startPoint);
         }
 
-        FileWriterWrap.writeAuthorsSetIntoFile(curAuthor.coAuthors, "authors");
-        return curAuthor;
+        FileWriterWrap.writeAuthorsSetIntoFile(startPoint.coAuthors, "authors");
+        return startPoint;
     }
-//    public Theme collectCoAuthors (HtmlPage publicationsPage, Theme curTheme){
-//
-//        if (!AuthorsDB.getAuthorsStorage().contains(this)) {
-//            final HtmlTable rezultsTable = publicationsPage.getHtmlElementById("restab");
-//
-//            /**
-//             * <a> Название публикации </a>
-//             * <i> Фамилия И.О., Фамилия И.О., ...</i>
-//             */
-//            for (final HtmlTableRow row : rezultsTable.getRows()) {
-//                if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
-//                    HtmlElement publName = row.getElementsByTagName("a").get(0);
-//                    HtmlElement authNames = row.getElementsByTagName("i").get(0);
-//
-//                    this.publications.add(new Publication(publName.asText(), authNames.asText()));
-//
-//                    List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
-//                    for (String auth : authInPubl) {
-//                        Author authObj = convertStringToAuthor(auth);
-//                        AuthorsDB.addToAuthorsStorage(authObj);
-//                    }
-//
-//                    logger.debug(publName.asText());
-//                    logger.debug(authNames.asText());
-//                }
-//            }
-//
-//            LogStatistics.logAuthorsDB_auth();
-//
-//            if(navigateToNextPublications(publicationsPage)!=null){
-//                publicationsPage = navigateToNextPublications(publicationsPage);
-//                logger.debug("page ended");
-//                collectAuthorsPublications(publicationsPage);
-//            }
-//
-//            FileWriterWrap.writeAuthorsSetIntoFile(AuthorsDB.getAuthorsStorage(), "authors");
-//        }
-//    }
-
 }

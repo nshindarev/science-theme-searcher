@@ -1,6 +1,6 @@
 package io;
 
-import datamapper.Author;
+import datamapper.ResearchStarters.Author;
 import storage.AuthorsDB;
 import datamapper.Publication;
 import org.slf4j.Logger;

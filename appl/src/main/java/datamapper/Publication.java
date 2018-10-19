@@ -1,5 +1,7 @@
 package datamapper;
 
+import datamapper.ResearchStarters.Author;
+
 import java.util.*;
 
 public class Publication {

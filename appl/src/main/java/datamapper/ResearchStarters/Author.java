@@ -1,26 +1,21 @@
-package datamapper;
+package datamapper.ResearchStarters;
 
-import com.gargoylesoftware.htmlunit.html.*;
-import io.FileWriterWrap;
-import io.LogStatistics;
+import datamapper.Publication;
+import datamapper.ResearchStarter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import storage.AuthorsDB;
-import util.Navigator;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.*;
 
-public class Author {
+public class Author extends ResearchStarter {
 
     private final Logger logger = LoggerFactory.getLogger(Author.class);
 
     private String name;
     private String surname;
     private String patronymic;
-    public Set<Publication> publications = new HashSet<>();
-    public Set<Author> coAuthors = new HashSet<>();
+//    public Set<Publication> publications = new HashSet<>();
+//    public Set<Author> coAuthors = new HashSet<>();
 
     /**
      * initials:

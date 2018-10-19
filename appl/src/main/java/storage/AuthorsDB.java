@@ -1,6 +1,6 @@
 package storage;
 
-import datamapper.Author;
+import datamapper.ResearchStarters.Author;
 import datamapper.Publication;
 
 import java.util.*;

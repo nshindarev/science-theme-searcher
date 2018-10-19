@@ -1,10 +1,10 @@
 package main;
 
-import datamapper.Author;
-import datamapper.Theme;
+import datamapper.ResearchStarters.Author;
 import storage.AuthorsDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.Navigator;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -29,8 +29,12 @@ public class Main {
         AuthorsDB.initAuthorsStorage();
         AuthorsDB.initPublicationsStorage();
 
+        Navigator.webClient.setTimeout(Navigator.timeOut);
+
+//      RinzParser parser = new RinzParser(new Author("Терехов", "Андрей", "Николаевич"));
+
         RinzParser parser = new RinzParser(new Author("Ловягин", "Юрий", "Никитич"));
-//        RinzParser parser = new RinzParser(new Theme("социоинженерные атаки"));
+//      RinzParser parser = new RinzParser(new Theme("социоинженерные атаки"));
     }
 
 }
