@@ -6,7 +6,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 import datamapper.ResearchStarters.Author;
 import datamapper.Publication;
 import datamapper.ResearchStarters.Theme;
-import datamapper.ResearchStarter;
+import datamapper.ResearchPoint;
 import io.FileWriterWrap;
 import io.LogStatistics;
 import org.slf4j.Logger;
@@ -25,6 +25,7 @@ public class RinzParser {
 
     private Author author;
     private Theme theme;
+    private ResearchPoint searchPoint;
 
     public RinzParser (Theme theme){
         this.theme = theme;
@@ -42,6 +43,7 @@ public class RinzParser {
         HtmlPage startPage = auth.getElibraryStartPage();
 
 
+        //TODO: объединить author и theme для класса RinzParser
         //___________search by author_____________________________________________
         if (this.author != null){
             HtmlPage authPage  = Navigator.navigateToAuthorsSearchPage(startPage);
@@ -59,27 +61,51 @@ public class RinzParser {
                     coAuthor.linkToUser = setLinkToAuthor(coAuthor, resPage).linkToUser;
                 }
 
-                LogStatistics.logAuthorsPublications(this.author);
+                this.searchPoint = this.author;
                 FileWriterWrap.writePageIntoFile(publicationsPage, "authorsPublicationsPage");
 
                 //TODO: переделать хранилище
-                AuthorsDB.addToAuthorsStorage(this.author);
                 for(Author author: this.author.coAuthors) AuthorsDB.addToAuthorsStorage(author);
+            }
+            catch (IOException ex){
+                logger.error(ex.getMessage());
+            }
 
-                LogStatistics.logAuthorsDB_auth();
+        }
+
+        //___________search by theme___________________________
+        else if (this.theme != null){
+            HtmlPage resPage   = Navigator.navigateToThemeSearchResults(theme, startPage);
+            this.theme = (Theme) collectCoAuthors(resPage, this.theme);
+
+            for(Author coAuthor: this.theme.coAuthors){
+                resPage  = Navigator.navigateToAuthorsSearchResults(coAuthor, Navigator.navigateToAuthorsSearchPage(startPage));
+                coAuthor.linkToUser = setLinkToAuthor(coAuthor, resPage).linkToUser;
+            }
+            this.searchPoint = this.theme;
+
+
+            for(Author author: this.theme.coAuthors) AuthorsDB.addToAuthorsStorage(author);
+        }
+
+        LogStatistics.logAuthorsPublications(this.searchPoint);
+        LogStatistics.logAuthorsDB_auth();
+
+        /**
+         *  Second level search: collects coAuthors for startPoint coauthors (authors, if theme was inserted)
+         */
+        for(Author coAuthor: this.searchPoint.coAuthors){
+            try{
+                HtmlPage publicationsPage = Navigator.navigateToPublications(coAuthor);
+                coAuthor = (Author) collectCoAuthors(publicationsPage, coAuthor);
+
+                LogStatistics.logAuthorsPublications(coAuthor);
             }
             catch (IOException ex){
                 logger.error(ex.getMessage());
             }
         }
-
-        //___________search by theme___________________________
-//        else if (this.theme != null){
-//            HtmlPage resPage   = Navigator.navigateToThemeSearchResults(theme, startPage);
-//            this.theme =
-//
-//        }
-
+        logger.info("");
     }
 
     /**
@@ -112,6 +138,8 @@ public class RinzParser {
         catch(ElementNotFoundException ex){
             logger.warn("Found author without page " + author.getSurname());
         }
+
+        logger.trace("LINK TO "+author.toString()+" ==> " + author.linkToUser);
         return author;
     }
 
@@ -122,7 +150,7 @@ public class RinzParser {
      * @param startPoint
      * @return
      */
-    public ResearchStarter collectCoAuthors (HtmlPage publicationsPage, ResearchStarter startPoint){
+    public ResearchPoint collectCoAuthors (HtmlPage publicationsPage, ResearchPoint startPoint){
         final HtmlTable rezultsTable = publicationsPage.getHtmlElementById("restab");
 
         if (startPoint.coAuthors == null || startPoint.publications == null){

@@ -1,11 +1,10 @@
 package datamapper.ResearchStarters;
 
-import datamapper.ResearchStarter;
+import datamapper.ResearchPoint;
 
 import java.util.HashSet;
-import java.util.Set;
 
-public class Theme extends ResearchStarter {
+public class Theme extends ResearchPoint {
 
     private String name;
 
@@ -17,5 +16,13 @@ public class Theme extends ResearchStarter {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString(){
+        if(this.name != null && !this.name.isEmpty()){
+            return this.name;
+        }
+        else return new Integer(hashCode()).toString();
     }
 }

@@ -31,7 +31,7 @@ public class Navigator {
     // дефолтная страница с полями для ввода автора
     public static HtmlPage navigateToAuthorsSearchPage(HtmlPage startPage){
         HtmlAnchor anchor = startPage.getAnchorByHref("/authors.asp");
-        logger.trace(anchor.toString());
+//        logger.trace(anchor.toString());
 
         try{
             FileWriterWrap.writePageIntoFile((HtmlPage) anchor.openLinkInNewWindow(), "authorsSearchPage");
@@ -56,7 +56,7 @@ public class Navigator {
             HtmlPage resultPage = listElements.get(0).click();
 
             //write results into file
-            FileWriterWrap.writePageIntoFile(resultPage,"theme/searchResults.xml");
+            FileWriterWrap.writePageIntoFile(resultPage,"theme/searchResults");
 
             return resultPage;
         }
@@ -72,9 +72,9 @@ public class Navigator {
 
         //________________trace_____________________
         List<HtmlForm> forms = defaultAuthSearchPage.getForms();
-        for (HtmlForm form : forms) {
-            logger.trace(form.toString());
-        }
+//        for (HtmlForm form : forms) {
+//            logger.trace(form.toString());
+//        }
 
         try {
             HtmlTextInput surnameInput = defaultAuthSearchPage.getHtmlElementById("surname");
@@ -90,9 +90,9 @@ public class Navigator {
                 surnameInput.setValueAttribute(authorInfo.getSurname()+" "+ authorInfo.getN()+".");
             else surnameInput.setValueAttribute(authorInfo.getSurname());
 
-            logger.info ("_________________________________");
-            logger.info ("SEARCH PAGE FOR AUTHOR " + surnameInput.getText());
-            logger.info ("_________________________________");
+//            logger.trace ("_________________________________");
+//            logger.info ("SEARCH PAGE FOR AUTHOR " + surnameInput.getText());
+//            logger.trace ("_________________________________");
             HtmlForm form = defaultAuthSearchPage.getFormByName("results");
             List<HtmlElement> listElements = form.getElementsByAttribute("div","class", "butred");
 

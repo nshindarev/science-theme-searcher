@@ -1,6 +1,7 @@
 package main;
 
 import datamapper.ResearchStarters.Author;
+import datamapper.ResearchStarters.Theme;
 import storage.AuthorsDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +33,14 @@ public class Main {
         Navigator.webClient.setTimeout(Navigator.timeOut);
 
 //      RinzParser parser = new RinzParser(new Author("Терехов", "Андрей", "Николаевич"));
-
-        RinzParser parser = new RinzParser(new Author("Ловягин", "Юрий", "Никитич"));
+//      RinzParser parser = new RinzParser(new Author("Ловягин", "Юрий", "Никитич"));
 //      RinzParser parser = new RinzParser(new Theme("социоинженерные атаки"));
+//      RinzParser parser1 = new RinzParser(new Theme("МЕМЫ И СОЦИОИНЖЕНЕРНЫЕ АТАКИ В ВИРТУАЛЬНОМ ПРОСТРАНСТВЕ"));
+//        RinzParser parser = new RinzParser(new Author("Галактионов", "Владимир", "Михайлович"));
+        RinzParser parser = new RinzParser(new Author("Ловягин", "Никита", "Юрьевич"));
+
+        Navigator.webClient.closeAllWindows();
+
     }
 
 }

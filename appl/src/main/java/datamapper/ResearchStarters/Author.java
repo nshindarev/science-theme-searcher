@@ -1,21 +1,19 @@
 package datamapper.ResearchStarters;
 
 import datamapper.Publication;
-import datamapper.ResearchStarter;
+import datamapper.ResearchPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public class Author extends ResearchStarter {
+public class Author extends ResearchPoint {
 
     private final Logger logger = LoggerFactory.getLogger(Author.class);
 
     private String name;
     private String surname;
     private String patronymic;
-//    public Set<Publication> publications = new HashSet<>();
-//    public Set<Author> coAuthors = new HashSet<>();
 
     /**
      * initials:
@@ -64,82 +62,6 @@ public class Author extends ResearchStarter {
     public Set<Author> getCoAuthors(){ return coAuthors; }
 
 
-//    public HtmlPage navigateToAuthor() throws IOException{
-//        if (this.linkToUser != null){
-//            return Navigator.webClient.getPage(this.linkToUser);
-//        }
-//        else return null;
-//    }
-//    public HtmlPage navigateToPublications() throws IOException{
-//
-//            HtmlPage  authorsPage = this.navigateToAuthor();
-//
-//
-//            for (HtmlForm form: authorsPage.getForms()){
-//                logger.info(form.toString());
-//            }
-//
-//            FileWriterWrap.writePageIntoFile(authorsPage, "authPage");
-//            HtmlForm form = authorsPage.getFormByName("results");
-//            HtmlAnchor referenceToPublications = (HtmlAnchor)form.getElementsByAttribute("a", "title", "Список публикаций автора в РИНЦ").get(0);
-//
-//            return (HtmlPage) referenceToPublications.openLinkInNewWindow();
-//    }
-//    public HtmlPage navigateToNextPublications(HtmlPage page){
-//        try{
-//            HtmlForm form = page.getFormByName("results");
-//            HtmlAnchor anch = (HtmlAnchor) form.getElementsByAttribute("a", "title", "Следующая страница").get(0);
-//
-//            return (HtmlPage) anch.openLinkInNewWindow();
-//        }
-//        catch (MalformedURLException ex){
-//            ex.printStackTrace();
-//            return null;
-//        }
-//        catch (IndexOutOfBoundsException ex){
-//            return null;
-//        }
-//    }
-
-
-//    public void collectAuthorsPublications(HtmlPage publicationsPage){
-//
-//        if (!AuthorsDB.getAuthorsStorage().contains(this)) {
-//            final HtmlTable rezultsTable = publicationsPage.getHtmlElementById("restab");
-//
-//            /**
-//             * <a> Название публикации </a>
-//             * <i> Фамилия И.О., Фамилия И.О., ...</i>
-//             */
-//            for (final HtmlTableRow row : rezultsTable.getRows()) {
-//                if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
-//                    HtmlElement publName = row.getElementsByTagName("a").get(0);
-//                    HtmlElement authNames = row.getElementsByTagName("i").get(0);
-//
-//                    this.publications.add(new Publication(publName.asText(), authNames.asText()));
-//
-//                    List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
-//                    for (String auth : authInPubl) {
-//                        Author authObj = convertStringToAuthor(auth);
-//                        AuthorsDB.addToAuthorsStorage(authObj);
-//                    }
-//
-//                    logger.debug(publName.asText());
-//                    logger.debug(authNames.asText());
-//                }
-//            }
-//
-//            LogStatistics.logAuthorsDB_auth();
-//
-//            if(navigateToNextPublications(publicationsPage)!=null){
-//                publicationsPage = navigateToNextPublications(publicationsPage);
-//                logger.debug("page ended");
-//                collectAuthorsPublications(publicationsPage);
-//            }
-//
-//            FileWriterWrap.writeAuthorsSetIntoFile(AuthorsDB.getAuthorsStorage(), "authors");
-//        }
-//    }
 
     public static Author convertStringToAuthor (String auth){
         ArrayList<String> surname_n_p = new ArrayList<>(Arrays.asList(auth.split(" ")));
@@ -147,15 +69,21 @@ public class Author extends ResearchStarter {
         if (surname_n_p.get(0).isEmpty())
             surname_n_p.remove(0);
 
-        char n = surname_n_p.get(1).charAt(0);
-        char p;
+        try{
+            char n = surname_n_p.get(1).charAt(0);
+            char p;
 
-        if (surname_n_p.get(1).length()>=3) {
-            p = surname_n_p.get(1).charAt(2)!='.'?surname_n_p.get(1).charAt(2):' ';
+            if (surname_n_p.get(1).length()>=3) {
+                p = surname_n_p.get(1).charAt(2)!='.'?surname_n_p.get(1).charAt(2):' ';
+            }
+            else p = ' ';
+
+            return new Author(surname_n_p.get(0), n, p);
         }
-        else p = ' ';
-
-        return new Author(surname_n_p.get(0), n, p);
+        catch (IndexOutOfBoundsException ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -182,5 +110,18 @@ public class Author extends ResearchStarter {
           return Objects.hash(name,surname,patronymic);
 
         return Objects.hash(n,surname);
+    }
+
+    @Override
+    public String toString(){
+        if(this.getPatronymic()!=null)
+            return (this.getSurname()+" "+ this.getName()+" "+ this.getPatronymic());
+        else if (this.getName()!=null)
+            return (this.getSurname()+" "+ this.getName());
+        else if (Character.isLetter(this.getP()))
+            return (this.getSurname()+" "+ this.getN() + ". "+ this.getP()+".");
+        else if (Character.isLetter(this.getN()))
+            return (this.getSurname()+" "+ this.getN()+".");
+        else return (this.getSurname());
     }
 }

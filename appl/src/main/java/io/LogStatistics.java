@@ -1,5 +1,6 @@
 package io;
 
+import datamapper.ResearchPoint;
 import datamapper.ResearchStarters.Author;
 import storage.AuthorsDB;
 import datamapper.Publication;
@@ -16,14 +17,14 @@ public class LogStatistics {
     private LogStatistics(){
 
     }
-    public static void logAuthorsPublications(Author auth){
-        logger.debug("________________________ ");
-        logger.debug("___Author statistics____ ");
-        logger.debug("________________________ ");
+    public static void logAuthorsPublications(ResearchPoint auth){
+        logger.debug("___________________________ ");
+        logger.debug("___Statistics For Point____ ");
+        logger.debug("___________________________ ");
 
-        for(Publication pub: auth.getPublications()){
+        logger.debug(auth.toString());
+        for(Publication pub: auth.publications){
             logger.debug(pub.toString());
-
         }
         logger.debug("------------------------ ");
     }
@@ -32,7 +33,7 @@ public class LogStatistics {
         Date date = new Date();
 
         logger.debug("________________________ ");
-        logger.debug("DB CONDITION ON " + dateFormat.format(date));
+        logger.debug("DB STATE ON " + dateFormat.format(date));
         logger.debug("STORAGE SIZE "+ AuthorsDB.getAuthorsStorage().size());
         logger.debug("________________________");
 
