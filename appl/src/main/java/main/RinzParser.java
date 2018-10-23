@@ -47,7 +47,9 @@ public class RinzParser {
         //___________search by author_____________________________________________
         if (this.author != null){
             HtmlPage authPage  = Navigator.navigateToAuthorsSearchPage(startPage);
+            logger.debug(authPage.asText());
             HtmlPage resPage   = Navigator.navigateToAuthorsSearchResults(this.author, authPage);
+            logger.debug(resPage.asText());
 
             // method fills link to user
             setLinkToAuthor(this.author, resPage);
@@ -115,17 +117,22 @@ public class RinzParser {
      * @return
      */
     private Author setLinkToAuthor(Author author, HtmlPage curPage){
+        logger.debug(curPage.asText());
         List<String> result = new LinkedList<>();
 
         try{
             HtmlTable table = curPage.getHtmlElementById("restab");
 
+            List<HtmlTableRow> rows = table.getRows();
             for (HtmlTableRow row : table.getRows()) {
                 if (row.getIndex() < 3) {
                     continue;
                 }
 
-                List a = row.getCell(3).getElementsByAttribute("a", "title", "Анализ публикационной активности автора");
+
+//              List a = row.getCell(3).getElementsByAttribute("a", "title", "Анализ публикационной активности автора");
+                List a = table.getRow(3).getCell(3).getElementsByAttribute("a", "title", "Анализ публикационной активности автора");
+
                 if (!a.isEmpty()) {
                     HtmlAnchor anchor = (HtmlAnchor) a.get(0);
                     String value = anchor.getAttribute("href");
@@ -164,6 +171,9 @@ public class RinzParser {
          */
         for (final HtmlTableRow row : rezultsTable.getRows()) {
             if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
+                if (startPoint.coAuthors.size() >= Navigator.searchLimit){
+                    continue;
+                }
                 HtmlElement publName = row.getElementsByTagName("a").get(0);
                 HtmlElement authNames = row.getElementsByTagName("i").get(0);
 

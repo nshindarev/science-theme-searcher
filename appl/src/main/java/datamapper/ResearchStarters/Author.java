@@ -5,9 +5,10 @@ import datamapper.ResearchPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Author extends ResearchPoint {
+public class Author extends ResearchPoint implements Serializable {
 
     private final Logger logger = LoggerFactory.getLogger(Author.class);
 
@@ -46,10 +47,14 @@ public class Author extends ResearchPoint {
 
 
     public char getN(){
-       return this.name == null ? this.n : this.name.charAt(0);
+       char n = this.name == null ? this.n : this.name.charAt(0);
+        if(Character.isLetter(n)) return n;
+        else return '\u0000';
     }
     public char getP(){
-        return this.patronymic == null? this.p : this.patronymic.charAt(0);
+        char p = this.patronymic == null? this.p : this.patronymic.charAt(0);
+        if(Character.isLetter(p)) return p;
+        else return '\u0000';
     }
     public String getName() {
         return name;
@@ -81,8 +86,7 @@ public class Author extends ResearchPoint {
             return new Author(surname_n_p.get(0), n, p);
         }
         catch (IndexOutOfBoundsException ex){
-            ex.printStackTrace();
-        }
+            LoggerFactory.getLogger(Author.class).warn("author "+ surname_n_p.get(0)+" has only surname and cannot be analyzed");        }
         return null;
     }
 

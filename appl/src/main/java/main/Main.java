@@ -1,13 +1,16 @@
 package main;
 
+import auth.ProxyHandler;
 import datamapper.ResearchStarters.Author;
 import datamapper.ResearchStarters.Theme;
+import io.Serializer;
 import storage.AuthorsDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.Navigator;
 
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 import java.util.logging.Level;
 
 /*
@@ -22,7 +25,6 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main (String[] args) throws IOException {
         logger.trace("Started project");
-
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
         java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
 
@@ -39,8 +41,10 @@ public class Main {
 //        RinzParser parser = new RinzParser(new Author("Галактионов", "Владимир", "Михайлович"));
         RinzParser parser = new RinzParser(new Author("Ловягин", "Никита", "Юрьевич"));
 
+        Serializer.serializeData();
         Navigator.webClient.closeAllWindows();
 
+        Serializer.deserializeData();
     }
 
 }

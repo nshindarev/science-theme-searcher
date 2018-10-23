@@ -51,15 +51,20 @@ public class FileWriterWrap {
         }
     }
 
+    private static Author curDebugAuth;
     public static void writeAuthorsSetIntoFile (Set<Author> rows, String filename){
         try {
             FileWriter writer = new FileWriter("appl/src/main/resources/"+ filename + ".txt");
             for(Author str: rows) {
+                FileWriterWrap.curDebugAuth = str;
                 writer.write(str.getSurname() + " " + str.getN()+ ". " + str.getP() + "." +"\n");
             }
             writer.close();
         }
         catch (IOException ex){
+            logger.error(ex.getMessage());
+        }
+        catch (NullPointerException ex){
             logger.error(ex.getMessage());
         }
     }

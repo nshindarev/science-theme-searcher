@@ -1,5 +1,6 @@
 package util;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
@@ -17,9 +18,10 @@ public class Navigator {
     private HtmlPage currentPage;
     private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 
+//    public static final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6, "14.98.64.110", 80);
     public static final WebClient webClient = new WebClient();
     public static final int timeOut = 10000;
-    public static final int searchLimit = 5;
+    public static final int searchLimit = 1;
 
     public static HtmlPage authorSearchPage;
 
@@ -120,7 +122,7 @@ public class Navigator {
 
         HtmlPage  authorsPage = navigateToAuthor(author);
 
-
+        logger.trace(authorsPage.asText());
         FileWriterWrap.writePageIntoFile(authorsPage, "authPage");
         HtmlForm form = authorsPage.getFormByName("results");
         HtmlAnchor referenceToPublications = (HtmlAnchor)form.getElementsByAttribute("a", "title", "Список публикаций автора в РИНЦ").get(0);

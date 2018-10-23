@@ -3,9 +3,10 @@ package storage;
 import datamapper.ResearchStarters.Author;
 import datamapper.Publication;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class AuthorsDB {
+public class AuthorsDB implements Serializable {
 
     private static Map<Author, Set<Publication>> publicationsStorage;
     /**
