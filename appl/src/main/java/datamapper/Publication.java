@@ -2,9 +2,10 @@ package datamapper;
 
 import datamapper.ResearchStarters.Author;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Publication {
+public class Publication implements Serializable {
 
     private String name;
     private List<Author> authors;

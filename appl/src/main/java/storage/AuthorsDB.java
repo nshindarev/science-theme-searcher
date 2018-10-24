@@ -23,6 +23,9 @@ public class AuthorsDB implements Serializable {
     }
 
 
+    public static void removeFromAuthStorage(Author author){
+        authorsStorage.remove(author);
+    }
     public static void addToAuthorsStorage(Author author){
         AuthorsDB.authorsStorage.add(author);
 

@@ -21,7 +21,7 @@ public class Navigator {
 //    public static final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6, "14.98.64.110", 80);
     public static final WebClient webClient = new WebClient();
     public static final int timeOut = 10000;
-    public static final int searchLimit = 1;
+    public static final int searchLimit = 2;
 
     public static HtmlPage authorSearchPage;
 
@@ -120,14 +120,22 @@ public class Navigator {
 
     public static HtmlPage navigateToPublications(Author author) throws IOException{
 
-        HtmlPage  authorsPage = navigateToAuthor(author);
+        try {
+            HtmlPage  authorsPage = navigateToAuthor(author);
 
-        logger.trace(authorsPage.asText());
-        FileWriterWrap.writePageIntoFile(authorsPage, "authPage");
-        HtmlForm form = authorsPage.getFormByName("results");
-        HtmlAnchor referenceToPublications = (HtmlAnchor)form.getElementsByAttribute("a", "title", "Список публикаций автора в РИНЦ").get(0);
+            logger.trace(authorsPage.asText());
+            FileWriterWrap.writePageIntoFile(authorsPage, "authPage");
+            HtmlForm form = authorsPage.getFormByName("results");
+            HtmlAnchor referenceToPublications = (HtmlAnchor)form.getElementsByAttribute("a", "title", "Список публикаций автора в РИНЦ").get(0);
 
-        return (HtmlPage) referenceToPublications.openLinkInNewWindow();
+            return (HtmlPage) referenceToPublications.openLinkInNewWindow();
+        }
+        catch (NullPointerException ex){
+            logger.error(ex.getMessage());
+        }
+
+        return null;
+
     }
     public static HtmlPage navigateToAuthor(Author author) throws IOException {
         if (author.linkToUser != null){

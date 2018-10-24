@@ -98,10 +98,16 @@ public class RinzParser {
          */
         for(Author coAuthor: this.searchPoint.coAuthors){
             try{
+                if(coAuthor.linkToUser == null) continue;
+
                 HtmlPage publicationsPage = Navigator.navigateToPublications(coAuthor);
                 coAuthor = (Author) collectCoAuthors(publicationsPage, coAuthor);
 
+                AuthorsDB.removeFromAuthStorage(coAuthor);
+                AuthorsDB.addToAuthorsStorage(coAuthor);
+
                 LogStatistics.logAuthorsPublications(coAuthor);
+
             }
             catch (IOException ex){
                 logger.error(ex.getMessage());
@@ -169,40 +175,42 @@ public class RinzParser {
          * <a> Название публикации </a>
          * <i> Фамилия И.О., Фамилия И.О., ...</i>
          */
-        for (final HtmlTableRow row : rezultsTable.getRows()) {
-            if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
-                if (startPoint.coAuthors.size() >= Navigator.searchLimit){
-                    continue;
-                }
-                HtmlElement publName = row.getElementsByTagName("a").get(0);
-                HtmlElement authNames = row.getElementsByTagName("i").get(0);
+        if(publicationsPage != null){
+            for (final HtmlTableRow row : rezultsTable.getRows()) {
+                if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
+                    if (startPoint.coAuthors.size() >= Navigator.searchLimit){
+                        break;
+                    }
+                    HtmlElement publName = row.getElementsByTagName("a").get(0);
+                    HtmlElement authNames = row.getElementsByTagName("i").get(0);
 
 //                logger.trace(publName.asText());
 //                logger.trace(authNames.asText());
 
-                startPoint.publications.add(new Publication(publName.asText(), authNames.asText()));
+                    startPoint.publications.add(new Publication(publName.asText(), authNames.asText()));
 
-                List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
-                for (String auth : authInPubl) {
-                    Author authObj = Author.convertStringToAuthor(auth);
-                    startPoint.coAuthors.add(authObj);
+                    List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
+                    for (String auth : authInPubl) {
+                        Author authObj = Author.convertStringToAuthor(auth);
+                        startPoint.coAuthors.add(authObj);
+                    }
+
+                    logger.debug(publName.asText());
+                    logger.debug(authNames.asText());
+
+                    logger.debug("SIZE public = " + startPoint.publications.size());
+                    logger.debug("SIZE coAuth = " + startPoint.coAuthors.size());
                 }
-
-                logger.debug(publName.asText());
-                logger.debug(authNames.asText());
-
-                logger.debug("SIZE public = " + startPoint.publications.size());
-                logger.debug("SIZE coAuth = " + startPoint.coAuthors.size());
             }
-        }
 
-        if(Navigator.navigateToNextPublications(publicationsPage)!=null){
-            publicationsPage = Navigator.navigateToNextPublications(publicationsPage);
-            logger.debug("________________page ended___________________");
-            collectCoAuthors(publicationsPage, startPoint);
-        }
+            if(Navigator.navigateToNextPublications(publicationsPage)!=null && startPoint.coAuthors.size() <= Navigator.searchLimit){
+                publicationsPage = Navigator.navigateToNextPublications(publicationsPage);
+                logger.debug("________________page ended___________________");
+                collectCoAuthors(publicationsPage, startPoint);
+            }
 
-        FileWriterWrap.writeAuthorsSetIntoFile(startPoint.coAuthors, "authors");
+            FileWriterWrap.writeAuthorsSetIntoFile(startPoint.coAuthors, "authors");
+        }
         return startPoint;
     }
 }

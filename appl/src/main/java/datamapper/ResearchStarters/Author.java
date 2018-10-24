@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.*;
 
-public class Author extends ResearchPoint implements Serializable {
+public class Author extends ResearchPoint {
 
     private final Logger logger = LoggerFactory.getLogger(Author.class);
 
