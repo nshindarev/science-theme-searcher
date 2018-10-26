@@ -38,10 +38,6 @@ public class Serializer {
         catch (IOException ex){
             logger.error(ex.getMessage());
         }
-
-        for (Author auth: AuthorsDB.getAuthorsStorage()){
-            serializeData(auth);
-        }
     }
     public static void deserializeData(Author auth){
         try{
@@ -63,14 +59,6 @@ public class Serializer {
 
             ObjectInputStream oin = new ObjectInputStream(fis);
             Set<Author> ts = (Set<Author>) oin.readObject();
-
-            for(Author _auth: ts){
-                deserializeData(_auth);
-                ts.remove(_auth);
-                ts.add(_auth);
-            }
-
-            logger.info("");
         }
         catch (IOException ex){
             logger.error(ex.getMessage());

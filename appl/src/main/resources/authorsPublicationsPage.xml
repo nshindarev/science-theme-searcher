@@ -3,7 +3,7 @@
   <head id="">
     <meta name="robots" content="noindex,nofollow" id=""/>
     <title id="">
-      eLIBRARY.RU - Терехов Андрей Николаевич - Список публикаций
+      eLIBRARY.RU - Ловягин Никита Юрьевич - Список публикаций
     </title>
     <script src="https://ssl.google-analytics.com/ga.js" id="" type="text/javascript">
     </script>
@@ -149,14 +149,14 @@ var selids="";
 $('input:checkbox[id^="rubrics_"]:checked').each(function(){
   selids += $(this).attr('name').substring(8) + "|"});
 $('#rubrics_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$('#rubrics_options').load("author_items_rubrics.asp?id=98937&order=" + $('#rubric_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
+$('#rubrics_options').load("author_items_rubrics.asp?id=698672&order=" + $('#rubric_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
 rubricloaded=1;
 })
 $('*[id$="_rubrics"]').click(function() { 
 hideShowSel1('rubrics');
 if (rubricloaded==0){
 $('#rubrics_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$.get("author_items_rubrics.asp?id=98937&order=" + $('#rubric_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
+$.get("author_items_rubrics.asp?id=698672&order=" + $('#rubric_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
   $('#rubrics_options').html(data);
   if ($('#rubrics_table').height()<=200){$('#rubrics_options').height($('#rubrics_table').height()+10)}
   else {$('#rubrics_options').height(200)};
@@ -175,14 +175,14 @@ var selids="";
 $('input:checkbox[id^="titles_"]:checked').each(function(){
   selids += $(this).attr('name').substring(7) + "|"});
 $('#titles_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$('#titles_options').load("author_items_titles.asp?id=98937&order=" + $('#title_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
+$('#titles_options').load("author_items_titles.asp?id=698672&order=" + $('#title_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
 titleloaded=1;
 })
 $('*[id$="_titles"]').click(function() { 
 hideShowSel1('titles');
 if (titleloaded==0){
 $('#titles_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$.get("author_items_titles.asp?id=98937&order=" + $('#title_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
+$.get("author_items_titles.asp?id=698672&order=" + $('#title_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
   $('#titles_options').html(data);
   if ($('#titles_table').height()<=200){$('#titles_options').height($('#titles_table').height()+10)}
   else {$('#titles_options').height(200)};
@@ -201,14 +201,14 @@ var selids="";
 $('input:checkbox[id^="orgs_"]:checked').each(function(){
   selids += $(this).attr('name').substring(5) + "|"});
 $('#orgs_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$('#orgs_options').load("author_items_orgs.asp?id=98937&order=" + $('#org_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
+$('#orgs_options').load("author_items_orgs.asp?id=698672&order=" + $('#org_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
 orgloaded=1;
 })
 $('*[id$="_orgs"]').click(function() { 
 hideShowSel1('orgs');
 if (orgloaded==0){
 $('#orgs_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$.get("author_items_orgs.asp?id=98937&order=" + $('#org_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
+$.get("author_items_orgs.asp?id=698672&order=" + $('#org_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
   $('#orgs_options').html(data);
   if ($('#orgs_table').height()<=200){$('#orgs_options').height($('#orgs_table').height()+10)}
   else {$('#orgs_options').height(200)};
@@ -228,14 +228,14 @@ $('input:checkbox[id^="authors_"]:checked').each(function(){
   selids += $(this).attr('name').substring(8) + "|"});
 selids = encodeURIComponent(selids);
 $('#authors_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$('#authors_options').load("author_items_authors.asp?id=98937&order=" + $('#author_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
+$('#authors_options').load("author_items_authors.asp?id=698672&order=" + $('#author_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
 authorloaded=1;
 })
 $('*[id$="_authors"]').click(function() { 
 hideShowSel1('authors');
 if (authorloaded==0){
 $('#authors_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$.get("author_items_authors.asp?id=98937&order=" + $('#author_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
+$.get("author_items_authors.asp?id=698672&order=" + $('#author_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
   $('#authors_options').html(data);
   if ($('#authors_table').height()<=200){$('#authors_options').height($('#authors_table').height()+10)}
   else {$('#authors_options').height(200)};
@@ -254,14 +254,14 @@ var selids="";
 $('input:checkbox[id^="years_"]:checked').each(function(){
   selids += $(this).attr('name').substring(6) + "|"});
 $('#years_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$('#years_options').load("author_items_years.asp?id=98937&order=" + $('#year_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
+$('#years_options').load("author_items_years.asp?id=698672&order=" + $('#year_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
 yearloaded=1;
 })
 $('*[id$="_years"]').click(function() { 
 hideShowSel1('years');
 if (yearloaded==0){
 $('#years_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$.get("author_items_years.asp?id=98937&order=" + $('#year_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
+$.get("author_items_years.asp?id=698672&order=" + $('#year_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
   $('#years_options').html(data);
   if ($('#years_table').height()<=200){$('#years_options').height($('#years_table').height()+10)}
   else {$('#years_options').height(200)};
@@ -280,14 +280,14 @@ var selids="";
 $('input:checkbox[id^="types_"]:checked').each(function(){
   selids += $(this).attr('name').substring(6) + "|"});
 $('#types_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$('#types_options').load("author_items_types.asp?id=98937&order=" + $('#type_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
+$('#types_options').load("author_items_types.asp?id=698672&order=" + $('#type_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
 typeloaded=1;
 })
 $('*[id$="_types"]').click(function() { 
 hideShowSel1('types');
 if (typeloaded==0){
 $('#types_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$.get("author_items_types.asp?id=98937&order=" + $('#type_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
+$.get("author_items_types.asp?id=698672&order=" + $('#type_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
   $('#types_options').html(data);
   if ($('#types_table').height()<=200){$('#types_options').height($('#types_table').height()+10)}
   else {$('#types_options').height(200)};
@@ -306,14 +306,14 @@ var selids="";
 $('input:checkbox[id^="roles_"]:checked').each(function(){
   selids += $(this).attr('name').substring(6) + "|"});
 $('#roles_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$('#roles_options').load("author_items_roles.asp?id=98937&order=" + $('#role_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
+$('#roles_options').load("author_items_roles.asp?id=698672&order=" + $('#role_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
 roleloaded=1;
 })
 $('*[id$="_roles"]').click(function() { 
 hideShowSel1('roles');
 if (roleloaded==0){
 $('#roles_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$.get("author_items_roles.asp?id=98937&order=" + $('#role_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
+$.get("author_items_roles.asp?id=698672&order=" + $('#role_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
   $('#roles_options').html(data);
   if ($('#roles_table').height()<=200){$('#roles_options').height($('#roles_table').height()+10)}
   else {$('#roles_options').height(200)};
@@ -328,7 +328,7 @@ else {
 
 wait_load_options("role");
 roleloaded=1;
-$.get("author_items_roles.asp?id=98937&order=" + $('#role_order').val() + "&selids=100|" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
+$.get("author_items_roles.asp?id=698672&order=" + $('#role_order').val() + "&selids=100|" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
   $('#roles_options').html(data);
   checked_count("role");
   if ($('#roles_table').height()<=200){$('#roles_options').height($('#roles_table').height()+10)}
@@ -343,14 +343,14 @@ var selids="";
 $('input:checkbox[id^="keywords_"]:checked').each(function(){
   selids += $(this).attr('name').substring(9) + "|"});
 $('#keywords_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$('#keywords_options').load("author_items_keywords.asp?id=98937&order=" + $('#keyword_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
+$('#keywords_options').load("author_items_keywords.asp?id=698672&order=" + $('#keyword_order').val() + "&selids=" + selids + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random());
 keywordloaded=1;
 })
 $('*[id$="_keywords"]').click(function() { 
 hideShowSel1('keywords');
 if (keywordloaded==0){
 $('#keywords_options').html("<br>&nbsp;&nbsp;&nbsp;Загружается...");
-$.get("author_items_keywords.asp?id=98937&order=" + $('#keyword_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
+$.get("author_items_keywords.asp?id=698672&order=" + $('#keyword_order').val() + "&selids=" + "&show_hash=0&show_refs=1&show_option=0&hide_doubles=1&rand=" + Math.random(), function(data) {
   $('#keywords_options').html(data);
   if ($('#keywords_table').height()<=200){$('#keywords_options').height($('#keywords_table').height()+10)}
   else {$('#keywords_options').height(200)};
@@ -453,26 +453,42 @@ function show_help(topic){
 }
 function load_article(id){
 
-  alerts("Для доступа к полному тексту необходимо вначале войти в библиотеку!");
-  document.getElementById("win_login").className = "expanded";
-  document.getElementById("img_login").src = w_up.src;
-  document.forms["login"].login.focus();
+  anewwin=window.open("full_text.asp?id="+id, "fulltext", "resizable=yes,scrollbars=yes,height=900,width=900,top=20,left=20");
+  anewwin.resizeTo(900,900);
 
 }
 function html_article(id){
 
-  alerts("Для доступа к полному тексту необходимо вначале войти в библиотеку!");
-  document.getElementById("win_login").className = "expanded";
-  document.getElementById("img_login").src = w_up.src;
-  document.forms["login"].login.focus();
+    anewwin=window.open("html_article.asp?id="+id, "fulltext", "resizable=yes,scrollbars=yes,top=0,left=0");
 
 }
 function order_item(id, pr){
 
-  alerts("Для заказа полного текста публикации необходимо вначале войти в библиотеку!");
-  document.getElementById("win_login").className = "expanded";
-  document.getElementById("img_login").src = w_up.src;
-  document.forms["login"].login.focus();
+  var frm = document.forms["results"];
+  if (0-pr>=0){
+    ret = false;
+    confirms("На Вашем счету сейчас 0 руб. \nПри открытии доступа к полному тексту данной публикации с Вашего счета будет списано " + eval(pr) + " руб.\nПодтверждаете приобретение публикации?", function(){
+    if (ret) {
+      anewwin=window.open("", "fulltext", "resizable=yes,scrollbars=yes,top=0,left=0");
+      frm.action="buy_item.asp";
+      frm.payitemid.value=id;
+      frm.target="fulltext";
+      frm.submit()
+	  }
+    })
+  }
+  else {
+    ret = false;
+    confirms("На Вашем счету сейчас 0 руб. \nДля получения доступа к полному тексту этой публикации Вам необходимо пополнить счет как минимум на " + eval(pr-0) + " руб.\nХотите пополнить счет прямо сейчас?", function(){
+    if (ret) {
+      frm.paysum.value=pr-0;
+      frm.payitemid.value=id;
+      frm.action="account_add.asp";
+      frm.target="";
+      frm.submit()
+	  }
+    })
+  }
 
 }
 function goto_page(pnum){
@@ -485,9 +501,9 @@ function goto_page(pnum){
 
 function author_items_print(){
   var frm = document.forms["results"];
-  anewwin=window.open("", "author_items_print98937", "resizable=yes,scrollbars=yes,menubar=yes,height=600,width=700,top=50,left=50");
+  anewwin=window.open("", "author_items_print698672", "resizable=yes,scrollbars=yes,menubar=yes,height=600,width=700,top=50,left=50");
   frm.action="author_items_print.asp";
-  frm.target="author_items_print98937";
+  frm.target="author_items_print698672";
   frm.submit()
 }
 
@@ -495,9 +511,7 @@ function author_items_print(){
 
 function show_author_refs(iid){
 
-  alerts("Для доступа к этой странице необходимо вначале войти в библиотеку!");
-  document.getElementById("win_login").className = "expanded";
-  document.forms["login"].login.focus();
+  window.location.href="author_refs.asp?authorid=" + iid
 
 }
 
@@ -661,197 +675,6 @@ function search_enter(event){
                                           <td align="left" width="120" valign="top" id="">
                                             <a href="/querybox.asp?scope=newquery" id="">
                                               Расширенный поиск
-                                            </a>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                    <div style="height: 4px;" id="">
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                          </form>
-                          <tr id="">
-                            <td id="">
-                              <img src="/pic/1pix.gif" vspace="9" id=""/>
-                            </td>
-                          </tr>
-                          <script language="JavaScript" id="">
-//<![CDATA[
-
-function check_all(){
-  if (document.forms["login"].login.value==""){
-    alert("Не указано имя пользователя!");
-	return false;
-	}
-  else if (document.forms["login"].password.value==""){
-    alert("Не указан пароль!");
-	return false;
-	}
-  else{
-    var frm = document.forms["login"];
-    frm.action="https://elibrary.ru/start_session.asp";
-    frm.target="";
-    frm.submit();
-   }
-}
-function login_enter(event){ 
-  var keycode; 
-  event = event || window.event; 
-  keycode = event.keyCode || event.which;
-  if(keycode==13){
-    check_all();
-	return false;
-  }
-} 
-
-//]]>
-                          </script>
-                          <form method="post" name="login" onsubmit="return false" id="">
-                            <input type="hidden" name="rpage" value="http://elibrary.ru/author_items.asp?authorid=98937&amp;show_refs=1&amp;pubrole=100&amp;show_option=0&amp;" id=""/>
-                            <tr id="">
-                              <td width="100%" align="center" valign="top" id="">
-                                <div class="left-panel" id="">
-                                  <table border="0" cellspacing="0" cellpadding="0" width="140" id="">
-                                    <tbody id="">
-                                      <tr id="">
-                                        <td width="100%" align="center" valign="top" id="">
-                                          <font color="#F26C4F" id="">
-                                            <b id="">
-                                              <span class="expandable" onclick="$('#win_login').slideToggle(500, function(){didScroll = true;})" title="Вход в библиотеку для зарегистрированных пользователей" id="">
-                                                ВХОД
-                                              </span>
-                                            </b>
-                                          </font>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                  <div id="win_login" class="collapsed">
-                                    <div style="height: 10px;" id="">
-                                    </div>
-                                    <table border="0" cellspacing="0" cellpadding="2" width="140" id="">
-                                      <tbody id="">
-                                        <tr id="">
-                                          <td width="100%" align="left" valign="top" id="">
-                                             
-                                            <font color="#000000" id="">
-                                              IP-адрес компьютера:
-                                            </font>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td width="100%" align="center" valign="top" id="">
-                                            <font color="#00008f" id="">
-                                              91.151.187.33
-                                            </font>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td width="100%" align="left" valign="top" id="">
-                                            <div style="height: 2px;" id="">
-                                            </div>
-                                             
-                                            <font color="#000000" id="">
-                                              Название организации:
-                                            </font>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td width="100%" align="center" valign="top" id="">
-                                            <font color="#00008f" id="">
-                                              <a href="/org_about.asp?orgsid=489" id="">
-                                                Санкт-Петербургский институт информатики и автоматизации РАН
-                                              </a>
-                                            </font>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td width="100%" align="left" valign="top" id="">
-                                            <div style="height: 2px;" id="">
-                                            </div>
-                                             
-                                            <font color="#000000" id="">
-                                              Имя пользователя:
-                                            </font>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td width="100%" align="center" valign="top" id="">
-                                            <div class="formfr" style="width:126px;" id="">
-                                              <input type="text" id="login" name="login" value="" style="width:118px; text-align:center;" class="inputt" onkeypress="login_enter(event)"/>
-                                            </div>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td width="100%" align="left" valign="top" id="">
-                                            <div style="height: 2px;" id="">
-                                            </div>
-                                             
-                                            <font color="#000000" id="">
-                                              Пароль:
-                                            </font>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td align="center" width="100%" id="">
-                                            <div class="formfr" style="width:126px;" id="">
-                                              <input type="password" id="password" name="password" value="" style="width:118px; text-align:center;" class="inputt" onkeypress="login_enter(event)"/>
-                                            </div>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td align="center" width="100%" id="">
-                                            <div style="height: 9px;" id="">
-                                            </div>
-                                            <div class="butred" style="width: 52px;" onclick="check_all()" id="">
-                                              Вход
-                                            </div>
-                                            <div style="height: 9px;" id="">
-                                            </div>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                    <table border="0" cellspacing="3" cellpadding="0" width="140" id="">
-                                      <tbody id="">
-                                        <tr valign="middle" class="menub" id="">
-                                          <td align="center" width="30" id="">
-                                            <input type="checkbox" name="knowme" value="on" id=""/>
-                                          </td>
-                                          <td align="left" width="101" id="">
-                                            Запомнить меня
-                                          </td>
-                                        </tr>
-                                        <tr class="menub" id="">
-                                          <td align="right" width="30" valign="bottom" id="">
-                                            <img src="/images/or_kv.gif" width="7" height="7" hspace="9" vspace="1" class="shadow" id=""/>
-                                          </td>
-                                          <td align="left" width="101" valign="top" id="">
-                                            <a href="/access_terms.asp" id="">
-                                              Правила доступа
-                                            </a>
-                                          </td>
-                                        </tr>
-                                        <tr class="menub" id="">
-                                          <td align="right" width="30" valign="bottom" id="">
-                                            <img src="/images/or_kv.gif" width="7" height="7" hspace="9" vspace="1" class="shadow" id=""/>
-                                          </td>
-                                          <td align="left" width="101" valign="top" id="">
-                                            <a href="/author_info.asp?isnew=1&amp;rpage=http%3A%2F%2Felibrary%2Eru%2Fauthor%5Fitems%2Easp%3Fauthorid%3D98937%26show%5Frefs%3D1%26pubrole%3D100%26show%5Foption%3D0%26" id="">
-                                              Регистрация
-                                            </a>
-                                          </td>
-                                        </tr>
-                                        <tr class="menub" id="">
-                                          <td align="right" width="30" valign="bottom" id="">
-                                            <img src="/images/or_kv.gif" width="7" height="7" hspace="9" vspace="1" class="shadow" id=""/>
-                                          </td>
-                                          <td align="left" width="101" valign="top" id="">
-                                            <a href="/pass_request.asp" id="">
-                                              Забыли пароль?
                                             </a>
                                           </td>
                                         </tr>
@@ -1082,7 +905,7 @@ function login_enter(event){
 
 function end_session(){
 
-  document.forms["session"].saveuser.value="1";
+  document.forms["session"].saveuser.value="0";
 
   document.forms["session"].action="/end_session.asp";
   document.forms["session"].target="";
@@ -1127,7 +950,9 @@ function end_session(){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              Незарегистрированный пользователь
+                                              <a href="author_info.asp?isold=1" title="Персональная карточка пользователя" id="">
+                                                nshindarev 
+                                              </a>
                                             </font>
                                           </td>
                                         </tr>
@@ -1144,7 +969,7 @@ function end_session(){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              91.151.187.33
+                                              145.255.238.138
                                             </font>
                                           </td>
                                         </tr>
@@ -1161,9 +986,7 @@ function end_session(){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              <a href="/org_about.asp?orgsid=489" id="">
-                                                Санкт-Петербургский институт информатики и автоматизации РАН
-                                              </a>
+                                              не определена
                                             </font>
                                           </td>
                                         </tr>
@@ -1180,7 +1003,7 @@ function end_session(){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              05.10.2018 12:53
+                                              24.10.2018 15:16
                                             </font>
                                           </td>
                                         </tr>
@@ -1197,7 +1020,7 @@ function end_session(){
                                         <tr id="">
                                           <td width="100%" align="center" valign="top" id="">
                                             <font color="#00008f" id="">
-                                              00:00
+                                              00:01
                                             </font>
                                           </td>
                                         </tr>
@@ -1549,7 +1372,7 @@ function end_session(){
                       </table>
                     </td>
                     <td align="left" valign="top" id="">
-                      <form method="post" name="results" onsubmit="return false" id="" action="author_items.asp" target="">
+                      <form method="post" name="results" onsubmit="return false" id="">
                         <table border="0" cellspacing="0" cellpadding="0" id="">
                           <tbody id="">
                             <tr id="">
@@ -1593,9 +1416,9 @@ else {
                                 <table width="580" border="0" cellspacing="0" cellpadding="0" id="">
                                   <input type="hidden" name="itembox_name" value="" id=""/>
                                   <input type="hidden" name="auth" value="" id=""/>
-                                  <input type="hidden" name="authorid" value="98937" id=""/>
-                                  <input type="hidden" name="authorhash" value="Терехов А Н" id=""/>
-                                  <input type="hidden" name="pagenum" value="2" id=""/>
+                                  <input type="hidden" name="authorid" value="698672" id=""/>
+                                  <input type="hidden" name="authorhash" value="Ловягин Н Ю" id=""/>
+                                  <input type="hidden" name="pagenum" value="1" id=""/>
                                   <input type="hidden" name="add_all" value="" id=""/>
                                   <input type="hidden" name="paysum" value="" id=""/>
                                   <input type="hidden" name="slight" value="" id=""/>
@@ -1608,7 +1431,7 @@ else {
                                         <div style="width:540px; margin:0 20px 20px 20px; border:0; padding:0; text-align: center; font-size: 9pt;" id="">
                                           <font color="#F26C4F" id="">
                                             <b id="">
-                                              ТЕРЕХОВ АНДРЕЙ НИКОЛАЕВИЧ
+                                              ЛОВЯГИН НИКИТА ЮРЬЕВИЧ
                                             </b>
                                           </font>
                                           <span class="aster" title="Автор зарегистрирован в SCIENCE INDEX" id="">
@@ -2331,7 +2154,7 @@ else {
                                                   </font>
                                                   <b id="">
                                                     <font color="#ff0000" id="">
-                                                      79
+                                                      7
                                                     </font>
                                                   </b>
                                                   <font color="#00008f" id="">
@@ -2340,7 +2163,7 @@ else {
                                                   <b id="">
                                                     <font color="#ff0000" id="">
                                                       <span id="totalcited">
-                                                        312
+                                                        6
                                                       </span>
                                                     </font>
                                                   </b>
@@ -2353,7 +2176,7 @@ else {
                                                     </b>
                                                      по 
                                                     <b id="">
-                                                      20
+                                                      7
                                                     </b>
                                                     .
                                                   </font>
@@ -2399,7 +2222,7 @@ else {
                                             <tr id="">
                                               <td colspan="3" height="0" id=""/>
                                             </tr>
-                                            <tr valign="middle" id="arw32347999">
+                                            <tr valign="middle" id="arw25789715">
                                               <td align="center" valign="top" class="select-tr-left" id="">
                                                 <font color="#00008f" id="">
                                                   <b id="">
@@ -2407,31 +2230,33 @@ else {
                                                   </b>
                                                 </font>
                                                 <br id=""/>
-                                                <input type="checkbox" name="tid32347999" id="tid32347999" onclick="if (this.checked) {RowSelect(&quot;arw32347999&quot;,1)} else {RowSelect(&quot;arw32347999&quot;,0)}" value="on"/>
-                                                <div id="pdf_32347999">
-                                                  <a href="javascript:html_article(32347999)">
-                                                    <img src="/images/pdf_blue.gif" width="16" height="16" vspace="3" border="0" title="Полный текст доступен на внешнем сайте"/>
-                                                  </a>
+                                                <input type="checkbox" name="tid25789715" id="tid25789715" onclick="if (this.checked) {RowSelect(&quot;arw25789715&quot;,1)} else {RowSelect(&quot;arw25789715&quot;,0)}" value="on"/>
+                                                <div id="pdf_25789715">
                                                 </div>
                                               </td>
                                               <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=32347999" id="">
+                                                <a href="/item.asp?id=25789715" id="">
                                                   <b id="">
                                                     
-DETECTING NEAR DUPLICATES IN SOFTWARE DOCUMENTATION
+О НЕКОТОРЫХ РЕШЕНИЯХ, УНИВЕРСАЛИЗИРУЮЩИХ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ДЛЯ АНАЛИЗА СВОЙСТВ ПРОСТРАНСТВЕННОГО РАСПРЕДЕЛЕНИЯ ИЗОЛИРОВАННЫХ НАГРУЖЕННЫХ ТОЧЕК
                                                   </b>
                                                 </a>
                                                 <br id=""/>
                                                 <font color="#00008f" id="">
                                                   <i id="">
                                                     
-Lutsiv D.V., Koznov D.V., Chernyshev G.A., Terekhov A.N.
+Ловягин Н.Ю.
                                                   </i>
                                                 </font>
                                                 <br id=""/>
                                                 <font color="#00008f" id="">
                                                   
-статья в открытом архиве  № arXiv:1711.04705 13.11.2017
+ В сборнике: 
+                                                  <a href="/item.asp?id=25768322" id="">
+                                                    Некоторые актуальные проблемы современной математики и математического образования
+                                                  </a>
+                                                  
+материалы научной конференции Герценовские чтения LXIX. 2016.  С. 214-216.
 
                                                 </font>
                                               </td>
@@ -2443,11 +2268,11 @@ Lutsiv D.V., Koznov D.V., Chernyshev G.A., Terekhov A.N.
                                             <script type="text/javascript" id="">
 //<![CDATA[
 
-$('#pdf_32347999').load("ispdf.asp?itemid=32347999&rand=" + Math.random())
+$('#pdf_25789715').load("ispdf.asp?itemid=25789715&rand=" + Math.random())
 
 //]]>
                                             </script>
-                                            <tr valign="middle" id="arw29440302">
+                                            <tr valign="middle" id="arw26068289">
                                               <td align="center" valign="top" class="select-tr-left" id="">
                                                 <font color="#00008f" id="">
                                                   <b id="">
@@ -2455,297 +2280,39 @@ $('#pdf_32347999').load("ispdf.asp?itemid=32347999&rand=" + Math.random())
                                                   </b>
                                                 </font>
                                                 <br id=""/>
-                                                <input type="checkbox" name="tid29440302" id="tid29440302" onclick="if (this.checked) {RowSelect(&quot;arw29440302&quot;,1)} else {RowSelect(&quot;arw29440302&quot;,0)}" value="on"/>
-                                                <div id="pdf_29440302">
+                                                <input type="checkbox" name="tid26068289" id="tid26068289" onclick="if (this.checked) {RowSelect(&quot;arw26068289&quot;,1)} else {RowSelect(&quot;arw26068289&quot;,0)}" value="on"/>
+                                                <div id="pdf_26068289">
+                                                  <a href="javascript:load_article(26068289)" id="">
+                                                    <img src="/images/pdf_green.gif" width="16" height="16" vspace="3" border="0" title="Доступ к полному тексту открыт" id=""/>
+                                                  </a>
                                                 </div>
                                               </td>
                                               <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=29440302" id="">
+                                                <a href="/item.asp?id=26068289" id="">
                                                   <b id="">
                                                     
-ПЛАТФОРМА РУСИ ДЛЯ ОБУЧЕНИЯ И СОЗДАНИЯ ВЫСОКОНАДЕЖНЫХ ПРОГРАММНЫХ СИСТЕМ
+КРУПНОМАСШТАБНЫЕ ФЛУКТУАЦИИ ПЛОТНОСТИ ГАЛАКТИК В НЕЗАВИСИМЫХ ОБЗОРАХ ГЛУБОКИХ ПОЛЕЙ
                                                   </b>
                                                 </a>
                                                 <br id=""/>
                                                 <font color="#00008f" id="">
                                                   <i id="">
                                                     
-Терехов А.Н., Терехов М.А.
+Широков С.И., Ловягин Н.Ю., Барышев Ю.В., Горохов В.Л.
                                                   </i>
                                                 </font>
                                                 <br id=""/>
                                                 <font color="#00008f" id="">
-                                                  
- В сборнике: 
-                                                  <a href="/item.asp?id=28974859" id="">
-                                                    Языки программирования и компиляторы - 2017
-                                                  </a>
-                                                  
-Труды конференции. Редактор: Д.В. Дубров. 2017.  С. 237-247.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_29440302').load("ispdf.asp?itemid=29440302&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw30006980">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    3.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid30006980" id="tid30006980" onclick="if (this.checked) {RowSelect(&quot;arw30006980&quot;,1)} else {RowSelect(&quot;arw30006980&quot;,0)}" value="on"/>
-                                                <div id="pdf_30006980">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=30006980" id="">
-                                                  <b id="">
-                                                    
-ПРОЕКТ РУСИ ДЛЯ ОБУЧЕНИЯ И СОЗДАНИЯ ВЫСОКОНАДЕЖНЫХ ПРОГРАММНЫХ СИСТЕМ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н., Терехов М.А.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34535133" id="">
-                                                    Известия высших учебных заведений. Северо-Кавказский регион. Серия: Технические науки
-                                                  </a>
-                                                  . 
-2017. 
-
-                                                  <a href="/contents.asp?id=34535133&amp;selid=30006980" id="">
-                                                    № 3 (195)
-                                                  </a>
-                                                  .  С. 70-75.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_30006980').load("ispdf.asp?itemid=30006980&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw30561534">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    4.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid30561534" id="tid30561534" onclick="if (this.checked) {RowSelect(&quot;arw30561534&quot;,1)} else {RowSelect(&quot;arw30561534&quot;,0)}" value="on"/>
-                                                <div id="pdf_30561534">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=30561534" id="">
-                                                  <b id="">
-                                                    
-ИНСТРУМЕНТАЛЬНАЯ ИДЕНТИФИКАЦИЯ ГОВОРЯЩЕГО В УСЛОВИЯХ ПОМЕХ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Рысин Ю.С., Терехов А.Н., Яблочников С.Л.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34546009" id="">
-                                                    Вестник связи
-                                                  </a>
-                                                  . 
-2017. 
-
-                                                  <a href="/contents.asp?id=34546009&amp;selid=30561534" id="">
-                                                    № 11
-                                                  </a>
-                                                  .  С. 8-10.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                <a href="cit_items.asp?gritemid=30561534" title="Список статей, ссылающихся на данную" id="">
-                                                  1
-                                                </a>
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_30561534').load("ispdf.asp?itemid=30561534&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw29992380">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    5.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid29992380" id="tid29992380" onclick="if (this.checked) {RowSelect(&quot;arw29992380&quot;,1)} else {RowSelect(&quot;arw29992380&quot;,0)}" value="on"/>
-                                                <div id="pdf_29992380">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=29992380" id="">
-                                                  <b id="">
-                                                    
-СОЗДАНИЕ НА МАТЕМАТИКО-МЕХАНИЧЕСКОМ ФАКУЛЬТЕТЕ СПБГУ НАУЧНО-ОБРАЗОВАТЕЛЬНОГО ИТ-КЛАСТЕРА НА БАЗЕ СОВРЕМЕННОЙ ФУНДАМЕНТАЛЬНОЙ МАТЕМАТИКИ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н., Новиков Б.А., Крук Е.А., Нестеров В.М., Леонов Г.А.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34534688" id="">
-                                                    Компьютерные инструменты в образовании
-                                                  </a>
-                                                  . 
-2017. 
-
-                                                  <a href="/contents.asp?id=34534688&amp;selid=29992380" id="">
-                                                    № 2
-                                                  </a>
-                                                  .  С. 42-57.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                <a href="cit_items.asp?gritemid=29992380" title="Список статей, ссылающихся на данную" id="">
-                                                  1
-                                                </a>
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_29992380').load("ispdf.asp?itemid=29992380&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw27400960">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    6.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid27400960" id="tid27400960" onclick="if (this.checked) {RowSelect(&quot;arw27400960&quot;,1)} else {RowSelect(&quot;arw27400960&quot;,0)}" value="on"/>
-                                                <div id="pdf_27400960">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=27400960" id="">
-                                                  <b id="">
-                                                    
-DATABASE MIGRATION PROJECT: BRIDGING INDUSTRY-ACADEMIA GAP
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Chernishev G., Klyuchikov E., Smirnov K., Galaktionov V., Grigorev V., Terekhov A.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  
- В сборнике: 
-                                                  <a href="/item.asp?id=27400855" id="">
-                                                    Аналитика и управление данными в областях с интенсивным использованием данных
-                                                  </a>
-                                                  
-XVIII международная конференция. 2016.  С. 132-137.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_27400960').load("ispdf.asp?itemid=27400960&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw26477138">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    7.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid26477138" id="tid26477138" onclick="if (this.checked) {RowSelect(&quot;arw26477138&quot;,1)} else {RowSelect(&quot;arw26477138&quot;,0)}" value="on"/>
-                                                <div id="pdf_26477138">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=26477138" id="">
-                                                  <b id="">
-                                                    
-ЗАДАЧИ ПОИСКА НЕЧЕТКИХ ПОВТОРОВ ПРИ ОРГАНИЗАЦИИ ПОВТОРНОГО ИСПОЛЬЗОВАНИЯ ДОКУМЕНТАЦИИ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Луцив Д.В., Кознов Д.В., Басит Х.А., Терехов А.Н.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34255330" id="">
-                                                    Программирование
+                                                  <a href="/contents.asp?id=34239526" id="">
+                                                    Астрономический журнал
                                                   </a>
                                                   . 
 2016. 
-
-                                                  <a href="/contents.asp?id=34255330&amp;selid=26477138" id="">
-                                                    № 4
+Т. 93. 
+                                                  <a href="/contents.asp?id=34239526&amp;selid=26068289" id="">
+                                                    № 6
                                                   </a>
-                                                  .  С. 39-49.
+                                                  .  С. 546.
 
                                                   <div style="height: 5px;" id="">
                                                      
@@ -2760,20 +2327,20 @@ $('#pdf_27400960').load("ispdf.asp?itemid=27400960&rand=" + Math.random())
                                                         </td>
                                                         <td width="90%" align="left" valign="top" bgcolor="#f5f5f5" id="">
                                                           <span class="menug" id="">
-                                                            <a href="item.asp?id=27092846" id="">
+                                                            <a href="item.asp?id=27117905" id="">
                                                               
-ON FUZZY REPETITIONS DETECTION IN DOCUMENTATION REUSE
+LARGE-SCALE FLUCTUATIONS IN THE NUMBER DENSITY OF GALAXIES IN INDEPENDENT SURVEYS OF DEEP FIELDS
                                                               <br id=""/>
                                                               <i id="">
                                                                 
-Luciv D.V., Koznov D.V., Terekhov A.N., Basit H.A.
+Shirokov S.I., Lovyagin N.Y., Baryshev Y.V., Gorokhov V.L.
                                                               </i>
                                                               <br id=""/>
                                                               
 
-Programming and Computer Software. 
+Astronomy Reports. 
 2016. 
-Т. 42. № 4.  С. 216-224.
+Т. 60. № 6.  С. 563-578.
 
                                                             </a>
                                                           </span>
@@ -2788,61 +2355,7 @@ Programming and Computer Software.
                                                 </font>
                                               </td>
                                               <td align="center" valign="middle" class="select-tr-right" id="">
-                                                <a href="cit_items.asp?gritemid=26477138" title="Список статей, ссылающихся на данную" id="">
-                                                  6
-                                                </a>
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_26477138').load("ispdf.asp?itemid=26477138&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw25776743">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    8.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid25776743" id="tid25776743" onclick="if (this.checked) {RowSelect(&quot;arw25776743&quot;,1)} else {RowSelect(&quot;arw25776743&quot;,0)}" value="on"/>
-                                                <div id="pdf_25776743">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=25776743" id="">
-                                                  <b id="">
-                                                    
-ИНСТРУМЕНТАЛЬНОЕ СРЕДСТВО ОБУЧЕНИЯ ПРОГРАММИРОВАНИЮ И ТЕХНИКЕ ТРАНСЛЯЦИИ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34228644" id="">
-                                                    Компьютерные инструменты в образовании
-                                                  </a>
-                                                  . 
-2016. 
-
-                                                  <a href="/contents.asp?id=34228644&amp;selid=25776743" id="">
-                                                    № 1
-                                                  </a>
-                                                  .  С. 36-47.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                <a href="cit_items.asp?gritemid=25776743" title="Список статей, ссылающихся на данную" id="">
+                                                <a href="cit_items.asp?gritemid=26068289" title="Список статей, ссылающихся на данную" id="">
                                                   2
                                                 </a>
                                               </td>
@@ -2850,48 +2363,261 @@ $('#pdf_26477138').load("ispdf.asp?itemid=26477138&rand=" + Math.random())
                                             <script type="text/javascript" id="">
 //<![CDATA[
 
-$('#pdf_25776743').load("ispdf.asp?itemid=25776743&rand=" + Math.random())
+$('#pdf_26068289').load("ispdf.asp?itemid=26068289&rand=" + Math.random())
 
 //]]>
                                             </script>
-                                            <tr valign="middle" id="arw24040467">
+                                            <tr valign="middle" id="arw18878991">
                                               <td align="center" valign="top" class="select-tr-left" id="">
                                                 <font color="#00008f" id="">
                                                   <b id="">
-                                                    9.
+                                                    3.
                                                   </b>
                                                 </font>
                                                 <br id=""/>
-                                                <input type="checkbox" name="tid24040467" id="tid24040467" onclick="if (this.checked) {RowSelect(&quot;arw24040467&quot;,1)} else {RowSelect(&quot;arw24040467&quot;,0)}" value="on"/>
-                                                <div id="pdf_24040467">
+                                                <input type="checkbox" name="tid18878991" id="tid18878991" onclick="if (this.checked) {RowSelect(&quot;arw18878991&quot;,1)} else {RowSelect(&quot;arw18878991&quot;,0)}" value="on"/>
+                                                <div id="pdf_18878991">
+                                                  <a href="javascript:load_article(18878991)">
+                                                    <img src="/images/pdf_green.gif" width="16" height="16" vspace="3" border="0" title="Доступ к полному тексту открыт"/>
+                                                  </a>
                                                 </div>
                                               </td>
                                               <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=24040467" id="">
+                                                <a href="/item.asp?id=18878991" id="">
                                                   <b id="">
                                                     
-ТРАНСФОРМАЦИЯ ДИНАМИЧЕСКИХ ПРЕДСТАВЛЕНИЙ В ПРЕДМЕТНО-ОРИЕНТИРОВАННОМ ВИЗУАЛЬНОМ МОДЕЛИРОВАНИИ
+ПАМЯТИ ИГОРЯ ЛЕОНИДОВИЧА БРАТЧИКОВА
                                                   </b>
                                                 </a>
                                                 <br id=""/>
                                                 <font color="#00008f" id="">
                                                   <i id="">
                                                     
-Кознов Д.В., Ларчик Е.В., Терехов А.Н.
+Ампилова Н.Б., Графеева Н.Г., Демьянович Ю.К., Колесов А.К., Косовский Н.К., Костин В.А., Леонов Г.А., Ловягин Н.Ю., Ловягин Ю.Н., Лодкин А.А., Мартыненко Б.К., Новиков Б.А., Новикова Н.А., Петросян Л.А., Романовский И.В., Соловьев И.П., Тузова И.М., Чирков М.К.
                                                   </i>
                                                 </font>
                                                 <br id=""/>
                                                 <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34102507" id="">
-                                                    Программирование
+                                                  <a href="/contents.asp?id=33821858" id="">
+                                                    Вестник Санкт-Петербургского университета. Математика. Механика. Астрономия
                                                   </a>
                                                   . 
-2015. 
+2013. 
 
-                                                  <a href="/contents.asp?id=34102507&amp;selid=24040467" id="">
-                                                    № 4
+                                                  <a href="/contents.asp?id=33821858&amp;selid=18878991" id="">
+                                                    № 1
                                                   </a>
-                                                  .  С. 3-12.
+                                                  .  С. 147-149.
+
+                                                </font>
+                                              </td>
+                                              <td align="center" valign="middle" class="select-tr-right" id="">
+                                                
+0
+                                              </td>
+                                            </tr>
+                                            <script type="text/javascript" id="">
+//<![CDATA[
+
+$('#pdf_18878991').load("ispdf.asp?itemid=18878991&rand=" + Math.random())
+
+//]]>
+                                            </script>
+                                            <tr valign="middle" id="arw19279197">
+                                              <td align="center" valign="top" class="select-tr-left" id="">
+                                                <font color="#00008f" id="">
+                                                  <b id="">
+                                                    4.
+                                                  </b>
+                                                </font>
+                                                <br id=""/>
+                                                <input type="checkbox" name="tid19279197" id="tid19279197" onclick="if (this.checked) {RowSelect(&quot;arw19279197&quot;,1)} else {RowSelect(&quot;arw19279197&quot;,0)}" value="on"/>
+                                                <div id="pdf_19279197">
+                                                  <a href="javascript:html_article(19279197)">
+                                                    <img src="/images/pdf_blue.gif" width="16" height="16" vspace="3" border="0" title="Полный текст доступен на внешнем сайте"/>
+                                                  </a>
+                                                </div>
+                                              </td>
+                                              <td align="left" valign="top" id="">
+                                                <a href="/item.asp?id=19279197" id="">
+                                                  <b id="">
+                                                    
+ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ДЛЯ ИССЛЕДОВАНИЯ ФРАКТАЛЬНЫХ СВОЙСТВ ПРОСТРАНСТВЕННОГО РАСПРЕДЕЛЕНИЯ ИЗОЛИРОВАННЫХ НАГРУЖЕННЫХ ТОЧЕК
+                                                  </b>
+                                                </a>
+                                                <br id=""/>
+                                                <font color="#00008f" id="">
+                                                  <i id="">
+                                                    
+Ловягин Н.Ю.
+                                                  </i>
+                                                </font>
+                                                <br id=""/>
+                                                <font color="#00008f" id="">
+                                                  
+диссертация на соискание ученой степени кандидата физико-математических наук / Санкт-Петербургский государственный университет. 
+Санкт-Петербург, 2012
+
+                                                </font>
+                                              </td>
+                                              <td align="center" valign="middle" class="select-tr-right" id="">
+                                                
+0
+                                              </td>
+                                            </tr>
+                                            <script type="text/javascript" id="">
+//<![CDATA[
+
+$('#pdf_19279197').load("ispdf.asp?itemid=19279197&rand=" + Math.random())
+
+//]]>
+                                            </script>
+                                            <tr valign="middle" id="arw19375675">
+                                              <td align="center" valign="top" class="select-tr-left" id="">
+                                                <font color="#00008f" id="">
+                                                  <b id="">
+                                                    5.
+                                                  </b>
+                                                </font>
+                                                <br id=""/>
+                                                <input type="checkbox" name="tid19375675" id="tid19375675" onclick="if (this.checked) {RowSelect(&quot;arw19375675&quot;,1)} else {RowSelect(&quot;arw19375675&quot;,0)}" value="on"/>
+                                                <div id="pdf_19375675">
+                                                  <a href="javascript:html_article(19375675)">
+                                                    <img src="/images/pdf_blue.gif" width="16" height="16" vspace="3" border="0" title="Полный текст доступен на внешнем сайте"/>
+                                                  </a>
+                                                </div>
+                                              </td>
+                                              <td align="left" valign="top" id="">
+                                                <a href="/item.asp?id=19375675" id="">
+                                                  <b id="">
+                                                    
+ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ДЛЯ ИССЛЕДОВАНИЯ ФРАКТАЛЬНЫХ СВОЙСТВ ПРОСТРАНСТВЕННОГО РАСПРЕДЕЛЕНИЯ ИЗОЛИРОВАННЫХ НАГРУЖЕННЫХ ТОЧЕК
+                                                  </b>
+                                                </a>
+                                                <br id=""/>
+                                                <font color="#00008f" id="">
+                                                  <i id="">
+                                                    
+Ловягин Н.Ю.
+                                                  </i>
+                                                </font>
+                                                <br id=""/>
+                                                <font color="#00008f" id="">
+                                                  
+автореферат диссертации на соискание ученой степени кандидата физико-математических наук / Санкт-Петербургский государственный университет. 
+Санкт-Петербург, 2012
+
+                                                </font>
+                                              </td>
+                                              <td align="center" valign="middle" class="select-tr-right" id="">
+                                                
+0
+                                              </td>
+                                            </tr>
+                                            <script type="text/javascript" id="">
+//<![CDATA[
+
+$('#pdf_19375675').load("ispdf.asp?itemid=19375675&rand=" + Math.random())
+
+//]]>
+                                            </script>
+                                            <tr valign="middle" id="arw21785747">
+                                              <td align="center" valign="top" class="select-tr-left" id="">
+                                                <font color="#00008f" id="">
+                                                  <b id="">
+                                                    6.
+                                                  </b>
+                                                </font>
+                                                <br id=""/>
+                                                <input type="checkbox" name="tid21785747" id="tid21785747" onclick="if (this.checked) {RowSelect(&quot;arw21785747&quot;,1)} else {RowSelect(&quot;arw21785747&quot;,0)}" value="on"/>
+                                                <div id="pdf_21785747">
+                                                  <a href="javascript:load_article(21785747)">
+                                                    <img src="/images/pdf_green.gif" width="16" height="16" vspace="3" border="0" title="Доступ к полному тексту открыт"/>
+                                                  </a>
+                                                </div>
+                                              </td>
+                                              <td align="left" valign="top" id="">
+                                                <a href="/item.asp?id=21785747" id="">
+                                                  <b id="">
+                                                    
+ПАКЕТ ПРИКЛАДНЫХ ПРОГРАММ ДЛЯ АНАЛИЗА ФРАКТАЛЬНЫХ СВОЙСТВ МНОЖЕСТВ НАГРУЖЕННЫХ ТОЧЕК
+                                                  </b>
+                                                </a>
+                                                <br id=""/>
+                                                <font color="#00008f" id="">
+                                                  <i id="">
+                                                    
+Ловягин Н.Ю.
+                                                  </i>
+                                                </font>
+                                                <br id=""/>
+                                                <font color="#00008f" id="">
+                                                  <a href="/contents.asp?id=33974095" id="">
+                                                    Компьютерные инструменты в образовании
+                                                  </a>
+                                                  . 
+2011. 
+
+                                                  <a href="/contents.asp?id=33974095&amp;selid=21785747" id="">
+                                                    № 5
+                                                  </a>
+                                                  .  С. 30-37.
+
+                                                </font>
+                                              </td>
+                                              <td align="center" valign="middle" class="select-tr-right" id="">
+                                                
+0
+                                              </td>
+                                            </tr>
+                                            <script type="text/javascript" id="">
+//<![CDATA[
+
+$('#pdf_21785747').load("ispdf.asp?itemid=21785747&rand=" + Math.random())
+
+//]]>
+                                            </script>
+                                            <tr valign="middle" id="arw13050225">
+                                              <td align="center" valign="top" class="select-tr-left" id="">
+                                                <font color="#00008f" id="">
+                                                  <b id="">
+                                                    7.
+                                                  </b>
+                                                </font>
+                                                <br id=""/>
+                                                <input type="checkbox" name="tid13050225" id="tid13050225" onclick="if (this.checked) {RowSelect(&quot;arw13050225&quot;,1)} else {RowSelect(&quot;arw13050225&quot;,0)}" value="on"/>
+                                                <div id="pdf_13050225">
+                                                  <a href="javascript:load_article(13050225)">
+                                                    <img src="/images/pdf_green.gif" width="16" height="16" vspace="3" border="0" title="Доступ к полному тексту открыт"/>
+                                                  </a>
+                                                </div>
+                                              </td>
+                                              <td align="left" valign="top" id="">
+                                                <a href="/item.asp?id=13050225" id="">
+                                                  <b id="">
+                                                    
+СТАТИСТИЧЕСКИЕ СВОЙСТВА ПРОСТРАНСТВЕННОГО РАСПРЕДЕЛЕНИЯ ГАЛАКТИК
+                                                  </b>
+                                                </a>
+                                                <br id=""/>
+                                                <font color="#00008f" id="">
+                                                  <i id="">
+                                                    
+Ловягин Н.Ю.
+                                                  </i>
+                                                </font>
+                                                <br id=""/>
+                                                <font color="#00008f" id="">
+                                                  <a href="/contents.asp?id=33387899" id="">
+                                                    Астрофизический бюллетень
+                                                  </a>
+                                                  . 
+2009. 
+Т. 64. 
+                                                  <a href="/contents.asp?id=33387899&amp;selid=13050225" id="">
+                                                    № 3
+                                                  </a>
+                                                  .  С. 223-235.
 
                                                   <div style="height: 5px;" id="">
                                                      
@@ -2906,20 +2632,20 @@ $('#pdf_25776743').load("ispdf.asp?itemid=25776743&rand=" + Math.random())
                                                         </td>
                                                         <td width="90%" align="left" valign="top" bgcolor="#f5f5f5" id="">
                                                           <span class="menug" id="">
-                                                            <a href="item.asp?id=23995548" id="">
+                                                            <a href="item.asp?id=15308517" id="">
                                                               
-VIEW TO VIEW TRANSFORMATIONS IN DOMAIN SPECIFIC MODELING
+STATISTICAL PROPERTIES OF THE SPATIAL DISTRIBUTION OF GALAXIES
                                                               <br id=""/>
                                                               <i id="">
                                                                 
-Koznov D.V., Larchik E.V., Terekhov A.N.
+Lovyagin N.Y.
                                                               </i>
                                                               <br id=""/>
                                                               
 
-Programming and Computer Software. 
-2015. 
-Т. 41. № 4.  С. 208-214.
+Astrophysical Bulletin. 
+2009. 
+Т. 64. № 3.  С. 217-228.
 
                                                             </a>
                                                           </span>
@@ -2934,583 +2660,15 @@ Programming and Computer Software.
                                                 </font>
                                               </td>
                                               <td align="center" valign="middle" class="select-tr-right" id="">
-                                                <a href="cit_items.asp?gritemid=24040467" title="Список статей, ссылающихся на данную" id="">
-                                                  3
+                                                <a href="cit_items.asp?gritemid=13050225" title="Список статей, ссылающихся на данную" id="">
+                                                  4
                                                 </a>
                                               </td>
                                             </tr>
                                             <script type="text/javascript" id="">
 //<![CDATA[
 
-$('#pdf_24040467').load("ispdf.asp?itemid=24040467&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw25837365">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    10.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid25837365" id="tid25837365" onclick="if (this.checked) {RowSelect(&quot;arw25837365&quot;,1)} else {RowSelect(&quot;arw25837365&quot;,0)}" value="on"/>
-                                                <div id="pdf_25837365">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=25837365" id="">
-                                                  <b id="">
-                                                    
-ИНЖЕНЕРНАЯ ЛАБОРАТОРИЯ В ОБЩЕОБРАЗОВАТЕЛЬНЫХ УЧРЕЖДЕНИЯХ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н., Геворкян Т.Г., Киселев М.М., Немешев М.Х.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34231032" id="">
-                                                    Компьютерные инструменты в образовании
-                                                  </a>
-                                                  . 
-2015. 
-
-                                                  <a href="/contents.asp?id=34231032&amp;selid=25837365" id="">
-                                                    № 5
-                                                  </a>
-                                                  .  С. 42-52.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_25837365').load("ispdf.asp?itemid=25837365&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw23832925">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    11.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid23832925" id="tid23832925" onclick="if (this.checked) {RowSelect(&quot;arw23832925&quot;,1)} else {RowSelect(&quot;arw23832925&quot;,0)}" value="on"/>
-                                                <div id="pdf_23832925">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=23832925" id="">
-                                                  <b id="">
-                                                    
-ПРЕДИСЛОВИЕ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Камкин А.С., Петренко А.К., Терехов А.Н.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34085128" id="">
-                                                    Труды Института системного программирования РАН
-                                                  </a>
-                                                  . 
-2015. 
-Т. 27. 
-                                                  <a href="/contents.asp?id=34085128&amp;selid=23832925" id="">
-                                                    № 3
-                                                  </a>
-                                                  .  С. 5-6.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_23832925').load("ispdf.asp?itemid=23832925&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw23832926">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    12.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid23832926" id="tid23832926" onclick="if (this.checked) {RowSelect(&quot;arw23832926&quot;,1)} else {RowSelect(&quot;arw23832926&quot;,0)}" value="on"/>
-                                                <div id="pdf_23832926">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=23832926" id="">
-                                                  <b id="">
-                                                    
-FOREWORD
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Kamkin A.S., Petrenko A.K., Terekhov A.N.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34085128" id="">
-                                                    Труды Института системного программирования РАН
-                                                  </a>
-                                                  . 
-2015. 
-Т. 27. 
-                                                  <a href="/contents.asp?id=34085128&amp;selid=23832926" id="">
-                                                    № 3
-                                                  </a>
-                                                  .  С. 7-8.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_23832926').load("ispdf.asp?itemid=23832926&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw25024597">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    13.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid25024597" id="tid25024597" onclick="if (this.checked) {RowSelect(&quot;arw25024597&quot;,1)} else {RowSelect(&quot;arw25024597&quot;,0)}" value="on"/>
-                                                <div id="pdf_25024597">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=25024597" id="">
-                                                  <b id="">
-                                                    
-РОБОТОТЕХНИЧЕСКИЙ КОНСТРУКТОР ТРИК НА УРОКАХ "ТЕХНОЛОГИЯ" В ШКОЛЕ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н., Киселев М.М.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34190463" id="">
-                                                    Современные информационные технологии и ИТ-образование
-                                                  </a>
-                                                  . 
-2015. 
-Т. 11. 
-                                                  <a href="/contents.asp?id=34190463&amp;selid=25024597" id="">
-                                                    № 1
-                                                  </a>
-                                                  .  С. 296-301.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_25024597').load("ispdf.asp?itemid=25024597&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw26495845">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    14.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid26495845" id="tid26495845" onclick="if (this.checked) {RowSelect(&quot;arw26495845&quot;,1)} else {RowSelect(&quot;arw26495845&quot;,0)}" value="on"/>
-                                                <div id="pdf_26495845">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=26495845" id="">
-                                                  <b id="">
-                                                    
-ПРЕДИСЛОВИЕ К МАТЕРИАЛАМ КОНФЕРЕНЦИИ СПИСОК-2014
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н., Луцив Д.В., Кознов Д.В.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  
- В сборнике: 
-                                                  <a href="/item.asp?id=26226711" id="">
-                                                    СПИСОК-2014
-                                                  </a>
-                                                  
-Материалы Всероссийской научной конференции по проблемам информатики. 2014.  С. 10.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_26495845').load("ispdf.asp?itemid=26495845&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw26231434">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    15.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid26231434" id="tid26231434" onclick="if (this.checked) {RowSelect(&quot;arw26231434&quot;,1)} else {RowSelect(&quot;arw26231434&quot;,0)}" value="on"/>
-                                                <div id="pdf_26231434">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=26231434" id="">
-                                                  <b id="">
-                                                    
-ПРЕДИСЛОВИЕ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н., Луцив Д.В., Кознов Д.В.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  
- В сборнике: 
-                                                  <a href="/item.asp?id=26169838" id="">
-                                                    Лавровские чтения 2014
-                                                  </a>
-                                                  
-Материалы пленарных докладов всероссийской научной конференции по проблемам информатики. 2014.  С. 3.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_26231434').load("ispdf.asp?itemid=26231434&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw23596279">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    16.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid23596279" id="tid23596279" onclick="if (this.checked) {RowSelect(&quot;arw23596279&quot;,1)} else {RowSelect(&quot;arw23596279&quot;,0)}" value="on"/>
-                                                <div id="pdf_23596279">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=23596279" id="">
-                                                  <b id="">
-                                                    
-АЛГОЛ 68 И ЕГО ВЛИЯНИЕ НА ПРОГРАММИРОВАНИЕ В СССР И РОССИИ (ЧАСТЬ 1)
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  
- В сборнике: 
-                                                  <a href="/item.asp?id=23596026" id="">
-                                                    ТРУДЫ SORUCOM-2014. Третья Международная конференция Развитие вычислительной техники и ее программного обеспечения в России и странах бывшего СССР: история и перспективы
-                                                  </a>
-                                                  
-2014.  С. 342-347.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_23596279').load("ispdf.asp?itemid=23596279&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw23596280">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    17.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid23596280" id="tid23596280" onclick="if (this.checked) {RowSelect(&quot;arw23596280&quot;,1)} else {RowSelect(&quot;arw23596280&quot;,0)}" value="on"/>
-                                                <div id="pdf_23596280">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=23596280" id="">
-                                                  <b id="">
-                                                    
-АЛГОЛ 68 И ЕГО ВЛИЯНИЕ НА ПРОГРАММИРОВАНИЕ В СССР И РОССИИ (ЧАСТЬ 2)
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  
- В сборнике: 
-                                                  <a href="/item.asp?id=23596026" id="">
-                                                    ТРУДЫ SORUCOM-2014. Третья Международная конференция Развитие вычислительной техники и ее программного обеспечения в России и странах бывшего СССР: история и перспективы
-                                                  </a>
-                                                  
-2014.  С. 348-353.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_23596280').load("ispdf.asp?itemid=23596280&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw26229116">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    18.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid26229116" id="tid26229116" onclick="if (this.checked) {RowSelect(&quot;arw26229116&quot;,1)} else {RowSelect(&quot;arw26229116&quot;,0)}" value="on"/>
-                                                <div id="pdf_26229116">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=26229116" id="">
-                                                  <b id="">
-                                                    
-АЛГОЛ 68 И НАШ КОЛЛЕКТИВ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Терехов А.Н.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  
- В сборнике: 
-                                                  <a href="/item.asp?id=26169838" id="">
-                                                    Лавровские чтения 2014
-                                                  </a>
-                                                  
-Материалы пленарных докладов всероссийской научной конференции по проблемам информатики. 2014.  С. 4-21.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_26229116').load("ispdf.asp?itemid=26229116&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw22252187">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    19.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid22252187" id="tid22252187" onclick="if (this.checked) {RowSelect(&quot;arw22252187&quot;,1)} else {RowSelect(&quot;arw22252187&quot;,0)}" value="on"/>
-                                                <div id="pdf_22252187">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=22252187" id="">
-                                                  <b id="">
-                                                    
-К 60-ЛЕТИЮ АНДРЕЯ ЕВГЕНЬЕВИЧА БАРАБАНОВА
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Гелиг А.Х., Леонов Г.А., Терехов А.Н., Фрадков А.Л., Шепелявый А.И.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=34028696" id="">
-                                                    Вестник Санкт-Петербургского университета. Математика. Механика. Астрономия
-                                                  </a>
-                                                  . 
-2014. 
-Т. 1. 
-                                                  <a href="/contents.asp?id=34028696&amp;selid=22252187" id="">
-                                                    № 3
-                                                  </a>
-                                                  .  С. 506-507.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_22252187').load("ispdf.asp?itemid=22252187&rand=" + Math.random())
-
-//]]>
-                                            </script>
-                                            <tr valign="middle" id="arw21599839">
-                                              <td align="center" valign="top" class="select-tr-left" id="">
-                                                <font color="#00008f" id="">
-                                                  <b id="">
-                                                    20.
-                                                  </b>
-                                                </font>
-                                                <br id=""/>
-                                                <input type="checkbox" name="tid21599839" id="tid21599839" onclick="if (this.checked) {RowSelect(&quot;arw21599839&quot;,1)} else {RowSelect(&quot;arw21599839&quot;,0)}" value="on"/>
-                                                <div id="pdf_21599839">
-                                                </div>
-                                              </td>
-                                              <td align="left" valign="top" id="">
-                                                <a href="/item.asp?id=21599839" id="">
-                                                  <b id="">
-                                                    
-В. Ф. ДЕМЬЯНОВ
-                                                  </b>
-                                                </a>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <i id="">
-                                                    
-Иголкин В.Н., Карелин В.В., Мышков С.К., Полякова Л.Н., Тамасян Г.Ш., Петросян Л.А., Веремей Е.И., Даль Ю.М., Дривотин О.И., Добрынин В.Ю., Егоров Н.В., Жабко А.П., Камачкин А.М., Леонов Г.А., Новоселов В.С., Овсянников Д.А., Терехов А.Н., Чистяков С.В., Харитонов В.Л., Буре В.М. и др.
-                                                  </i>
-                                                </font>
-                                                <br id=""/>
-                                                <font color="#00008f" id="">
-                                                  <a href="/contents.asp?id=33963401" id="">
-                                                    Вестник Санкт-Петербургского университета. Прикладная математика. Информатика. Процессы управления
-                                                  </a>
-                                                  . 
-2014. 
-
-                                                  <a href="/contents.asp?id=33963401&amp;selid=21599839" id="">
-                                                    № 2
-                                                  </a>
-                                                  .  С. 153-156.
-
-                                                </font>
-                                              </td>
-                                              <td align="center" valign="middle" class="select-tr-right" id="">
-                                                
-0
-                                              </td>
-                                            </tr>
-                                            <script type="text/javascript" id="">
-//<![CDATA[
-
-$('#pdf_21599839').load("ispdf.asp?itemid=21599839&rand=" + Math.random())
+$('#pdf_13050225').load("ispdf.asp?itemid=13050225&rand=" + Math.random())
 
 //]]>
                                             </script>
@@ -3519,59 +2677,10 @@ $('#pdf_21599839').load("ispdf.asp?itemid=21599839&rand=" + Math.random())
                                         <script language="JavaScript" id="">
 //<![CDATA[
 
-document.getElementById('totalcited').innerHTML=312;
+document.getElementById('totalcited').innerHTML=6;
 
 //]]>
                                         </script>
-                                        <div style="width:578px; height:24px; border:#7f9db9 1px solid;padding:0;margin:20px 0 0 0; text-align:left; border-radius: 12px;" id="pages">
-                                          <table width="578" height="24" cellspacing="1" cellpadding="3" border="0" id="">
-                                            <tbody id="">
-                                              <tr align="center" valign="middle" class="menurb" id="">
-                                                <td width="15%" nowrap="" id="">
-                                                  <a href="javascript:goto_page(1)" id="">
-                                                    В начало
-                                                  </a>
-                                                </td>
-                                                <td width="10%" class="mouse-hovergr" nowrap="" id="">
-                                                  <font color="#aaaaaa" id="">
-                                                    &lt;&lt;
-                                                  </font>
-                                                </td>
-                                                <td width="5%" class="mouse-hovergr" bgcolor="#e8e8e8" nowrap="" id="">
-                                                  <font color="#F26C4F" id="">
-                                                    1
-                                                  </font>
-                                                </td>
-                                                <td width="5%" class="mouse-hovergr" bgcolor="#f5f5f5" nowrap="" id="">
-                                                  <a href="javascript:goto_page(2)" id="">
-                                                    2
-                                                  </a>
-                                                </td>
-                                                <td width="5%" class="mouse-hovergr" bgcolor="#f5f5f5" nowrap="" id="">
-                                                  <a href="javascript:goto_page(3)" id="">
-                                                    3
-                                                  </a>
-                                                </td>
-                                                <td width="5%" class="mouse-hovergr" bgcolor="#f5f5f5" nowrap="" id="">
-                                                  <a href="javascript:goto_page(4)" id="">
-                                                    4
-                                                  </a>
-                                                </td>
-                                                <td width="30%" nowrap="" id=""/>
-                                                <td width="10%" class="mouse-hovergr" nowrap="" id="">
-                                                  <a title="Следующая страница" href="javascript:goto_page(2)" id="">
-                                                    &gt;&gt;
-                                                  </a>
-                                                </td>
-                                                <td width="15%" nowrap="" id="">
-                                                  <a href="javascript:goto_page(4)" id="">
-                                                    В конец
-                                                  </a>
-                                                </td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
                                         <br id=""/>
                                       </td>
                                     </tr>
@@ -3581,7 +2690,7 @@ document.getElementById('totalcited').innerHTML=312;
                               <td align="right" valign="top" id="">
                                 <div id="panel_default" style="position: relative; width: 200px; height:0; margin: 0; border: 1px; padding: 0">
                                 </div>
-                                <div id="panel" style="position: relative; width: 200px; margin: 0; border: 0; padding: 0">
+                                <div id="panel" style="position: relative; width: 200px; margin: 0; border: 0; padding: 0; top: 0px;">
                                   <div style="width: 190px;" class="right-panel" id="">
                                     <table width="190" cellspacing="0" cellpadding="3" border="0" id="">
                                       <tbody id="">
@@ -3594,24 +2703,6 @@ document.getElementById('totalcited').innerHTML=312;
                                             </font>
                                             <br id=""/>
                                             <img src="/pic/1pix.gif" vspace="1" id=""/>
-                                            <br id=""/>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td width="15%" align="right" valign="top" id="">
-                                            <a href="javascript:goto_page(2)" id="">
-                                              <img src="images/but_orange.gif" width="15" height="15" hspace="3" border="0" id=""/>
-                                            </a>
-                                          </td>
-                                          <td width="85%" align="left" valign="middle" id="">
-                                            <a href="javascript:goto_page(2)" id="">
-                                              Следующая страница
-                                            </a>
-                                          </td>
-                                        </tr>
-                                        <tr id="">
-                                          <td colspan="2" id="">
-                                            <img src="/pic/1pix.gif" vspace="5" id=""/>
                                             <br id=""/>
                                           </td>
                                         </tr>
@@ -3690,36 +2781,36 @@ document.getElementById('totalcited').innerHTML=312;
                                         </tr>
                                         <tr id="">
                                           <td width="15%" align="right" valign="top" id="">
-                                            <a href="cit_author_items.asp?id=98937" id="">
+                                            <a href="cit_author_items.asp?id=698672" id="">
                                               <img src="images/but_orange.gif" width="15" height="15" hspace="3" border="0" id=""/>
                                             </a>
                                           </td>
                                           <td width="85%" align="left" valign="middle" id="">
-                                            <a href="cit_author_items.asp?id=98937" id="">
+                                            <a href="cit_author_items.asp?id=698672" id="">
                                               Вывести список публикаций, ссылающихся на работы автора
                                             </a>
                                           </td>
                                         </tr>
                                         <tr id="">
                                           <td width="15%" align="right" valign="top" id="">
-                                            <a href="javascript:show_author_refs(98937)" id="">
+                                            <a href="author_refs.asp?authorid=698672" id="">
                                               <img src="images/but_orange.gif" width="15" height="15" hspace="3" border="0" id=""/>
                                             </a>
                                           </td>
                                           <td width="85%" align="left" valign="middle" id="">
-                                            <a href="javascript:show_author_refs(98937)" id="">
+                                            <a href="author_refs.asp?authorid=698672" id="">
                                               Вывести список ссылок на работы автора
                                             </a>
                                           </td>
                                         </tr>
                                         <tr id="">
                                           <td width="15%" align="right" valign="top" id="">
-                                            <a href="author_profile.asp?id=98937" id="">
+                                            <a href="author_profile.asp?id=698672" id="">
                                               <img src="/pic/stat.gif" width="12" height="13" hspace="4" border="0" id=""/>
                                             </a>
                                           </td>
                                           <td width="85%" align="left" valign="middle" id="">
-                                            <a href="author_profile.asp?authorid=98937" id="">
+                                            <a href="author_profile.asp?authorid=698672" id="">
                                               Анализ публикационной активности автора
                                             </a>
                                           </td>
