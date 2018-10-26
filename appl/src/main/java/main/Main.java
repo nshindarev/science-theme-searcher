@@ -3,6 +3,7 @@ package main;
 import auth.ProxyHandler;
 import datamapper.ResearchStarters.Author;
 import datamapper.ResearchStarters.Theme;
+import graph.CitationGraphDB;
 import io.Serializer;
 import storage.AuthorsDB;
 import org.slf4j.Logger;
@@ -45,6 +46,9 @@ public class Main {
         Navigator.webClient.closeAllWindows();
 
         Serializer.deserializeData();
+
+        CitationGraphDB example = new CitationGraphDB("bolt://localhost:7687", "neo4j", "v3r0n1k4");
+        example.storeParserResults();
     }
 
 }
