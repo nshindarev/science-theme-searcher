@@ -42,4 +42,14 @@ public class EqualsTest {
 
         assert a1.equals(a2);
     }
+
+    @Test
+    public void testAuthor5(){
+        Author a1 = new Author("Терехов", 'А', ' ');
+        Author a2 = new Author("Терехов", 'А', 'Н');
+
+        a1.linkToUser = "   ";
+
+        assert a1.equals(a2);
+    }
 }

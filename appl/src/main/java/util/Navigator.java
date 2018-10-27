@@ -18,10 +18,10 @@ public class Navigator {
     private HtmlPage currentPage;
     private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 
-//    public static final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6, "14.98.64.110", 80);
+//    public static final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6, "31.211.83.67", 8080);
     public static final WebClient webClient = new WebClient();
     public static final int timeOut = 10000;
-    public static final int searchLimit = 2;
+    public static int searchLimit = Integer.MAX_VALUE;
 
     public static HtmlPage authorSearchPage;
 

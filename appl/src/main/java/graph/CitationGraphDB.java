@@ -25,20 +25,16 @@ public class CitationGraphDB {
     }
 
     private void addAuthor(Author author) {
-        // Sessions are lightweight and disposable connection wrappers.
         try (Session session = driver.session())
         {
-            // Wrapping Cypher in an explicit transaction provides atomicity
-            // and makes handling errors much easier.
-//            try (Transaction tx = session.beginTransaction())
-//            {
-//                tx.run("MERGE (a:Author {surname: {x}, name: {y}})", parameters("x", author.getSurname(), "y", author.getName()));
-//                tx.success();  // Mark this write as successful.
-//            }
             try (Transaction tx = session.beginTransaction())
             {
-                tx.run("MERGE (a:Author {surname: {x}})", parameters("x", author.getSurname()));
-                tx.success();  // Mark this write as successful.
+                if(author.linkToUser!=null)
+                    tx.run("MERGE (a:Author {fullname: {x}, link: {y}})", parameters("x", author.toString(), "y", author.linkToUser));
+                else
+                    tx.run("MERGE (a:Author {fullname: {x}})", parameters("x", author.toString()));
+
+                tx.success();
             }
         }
     }
@@ -47,14 +43,13 @@ public class CitationGraphDB {
         {
             try (Transaction tx = session.beginTransaction())
             {
-                tx.run("MATCH (u:Author {name: {x}, surname: {y}}), (r:Author {name: {x1}, surname: {y1}})\n" +
-                        "CREATE (u)-[:CO_AUTHORS]->(r)\n", parameters("x", author1.getName(), "y", author1.getSurname(),
-                                                                            "x1", author2.getName(), "y1", author2.getSurname()));
+                tx.run("MATCH (u:Author {fullname: {x}}), (r:Author {fullname: {x1}})\n" +
+                        "CREATE (u)-[:coauthor]->(r)\n", parameters("x", author1.toString(), "x1", author2.toString()));
                 tx.success();
             }
         }
     }
-    private void cleanDB (){
+    public void cleanDB (){
         try (Session session = driver.session())
         {
             try (Transaction tx = session.beginTransaction())
@@ -65,18 +60,5 @@ public class CitationGraphDB {
                 tx.success();
             }
         }
-    }
-
-    public static void main(String... args) {
-        CitationGraphDB example = new CitationGraphDB("bolt://localhost:7687", "neo4j", "v3r0n1k4");
-        Author a1 = new Author("Ловягин", "Никита", "Юрьевич");
-        Author a2 = new Author("Ловягин", "Юрий", "Никитич");
-
-        example.addAuthor(a1);
-        example.addAuthor(a2);
-        example.addRelation(a1, a2);
-
-//        example.cleanDB();
-//        example.close();
     }
 }

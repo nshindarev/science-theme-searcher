@@ -13,6 +13,8 @@ public class ProxyHandler {
         -  14.98.64.110:80
         -  14.0.92.119:80
         -  124.41.213.33:80
+
+        -  212.232.75.195:53531
      */
 
      public static void setNewProxy(){

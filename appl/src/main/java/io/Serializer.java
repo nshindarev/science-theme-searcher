@@ -53,12 +53,12 @@ public class Serializer {
             logger.error(ex.getMessage());
         }
     }
-    public static void deserializeData(){
+    public static Set<Author> deserializeData(){
         try{
             FileInputStream fis = new FileInputStream("appl/src/main/resources/serialized/authDB.out");
 
             ObjectInputStream oin = new ObjectInputStream(fis);
-            Set<Author> ts = (Set<Author>) oin.readObject();
+            return (Set<Author>) oin.readObject();
         }
         catch (IOException ex){
             logger.error(ex.getMessage());
@@ -66,7 +66,7 @@ public class Serializer {
         catch (ClassNotFoundException ex){
             logger.error(ex.getMessage());
         }
-
+        return null;
     }
 
 }

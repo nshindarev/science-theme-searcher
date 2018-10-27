@@ -27,7 +27,7 @@ public class Author extends ResearchPoint {
 
     public String linkToUser;
 
-    public Author(String name, String surname){
+    public Author(String surname, String name){
         this.name = name;
         this.surname = surname;
     }
@@ -90,23 +90,25 @@ public class Author extends ResearchPoint {
         return null;
     }
 
+
     @Override
     public boolean equals (Object o){
         if (o == this) return true;
         if (!(o instanceof Author)) return false;
 
         Author auth = (Author) o;
-        if (this.name != null && this.patronymic != null){
-            if(auth.getName().equals(this.name)
-                    && auth.getSurname().equals(this.getSurname())
-                    && auth.getPatronymic().equals(this.getPatronymic())) return true;
-        }
-        else if (Character.isLetter(this.n)){
-            if(auth.getSurname().equals(this.surname)
-                    && auth.getN() == this.n) return true;
+        if (this.surname!= null && auth.surname!=null){
+            if(Character.isLetter(this.n) && Character.isLetter(auth.getN())){
+                if(Character.isLetter(this.p) && Character.isLetter(auth.getP())){
+                    if (this.n == auth.n && this.p == auth.p) return true;
+                }
+                else if (this.n == auth.n) return true;
+            }
+            else if (this.surname.equals(auth.surname)) return true;
         }
         return false;
     }
+
 
     @Override
     public int hashCode(){

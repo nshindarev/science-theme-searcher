@@ -27,29 +27,34 @@ public class RinzParser {
     private Theme theme;
     private ResearchPoint searchPoint;
 
+    public RinzParser (ResearchPoint point){
+        if (point instanceof Theme){
+            this.theme = (Theme)point;
+        }
+        else if(point instanceof Author){
+            this.author = (Author)point;
+        }
+    }
     public RinzParser (Theme theme){
         this.theme = theme;
-        startResearch();
     }
     public RinzParser (Author author){
         this.author = author;
-        startResearch();
     }
 
 
-    private void startResearch(){
+    public void startResearch(){
         // __________authorization______________
         ElibAuthorize auth = new ElibAuthorize();
         HtmlPage startPage = auth.getElibraryStartPage();
 
 
-        //TODO: объединить author и theme для класса RinzParser
         //___________search by author_____________________________________________
         if (this.author != null){
             HtmlPage authPage  = Navigator.navigateToAuthorsSearchPage(startPage);
-            logger.debug(authPage.asText());
+            logger.trace(authPage.asText());
             HtmlPage resPage   = Navigator.navigateToAuthorsSearchResults(this.author, authPage);
-            logger.debug(resPage.asText());
+            logger.trace(resPage.asText());
 
             // method fills link to user
             setLinkToAuthor(this.author, resPage);
@@ -66,8 +71,8 @@ public class RinzParser {
                 this.searchPoint = this.author;
                 FileWriterWrap.writePageIntoFile(publicationsPage, "authorsPublicationsPage");
 
-                //TODO: переделать хранилище
-                for(Author author: this.author.coAuthors) AuthorsDB.addToAuthorsStorage(author);
+                for(Author author: this.author.coAuthors)
+                    if (!this.author.equals(author))AuthorsDB.addToAuthorsStorage(author);
             }
             catch (IOException ex){
                 logger.error(ex.getMessage());
@@ -87,7 +92,14 @@ public class RinzParser {
             this.searchPoint = this.theme;
 
 
-            for(Author author: this.theme.coAuthors) AuthorsDB.addToAuthorsStorage(author);
+
+            try{
+                for(Author author: this.theme.coAuthors) AuthorsDB.addToAuthorsStorage(author);
+            }
+            catch (NullPointerException ex){
+                logger.error(author.toString());
+                logger.error(this.author.toString());
+            }
         }
 
         LogStatistics.logAuthorsPublications(this.searchPoint);
@@ -164,53 +176,59 @@ public class RinzParser {
      * @return
      */
     public ResearchPoint collectCoAuthors (HtmlPage publicationsPage, ResearchPoint startPoint){
-        final HtmlTable rezultsTable = publicationsPage.getHtmlElementById("restab");
+        try{
+            final HtmlTable rezultsTable = publicationsPage.getHtmlElementById("restab");
 
-        if (startPoint.coAuthors == null || startPoint.publications == null){
-            startPoint.publications = new HashSet<>();
-            startPoint.coAuthors = new HashSet<>();
-        }
+            if (startPoint.coAuthors == null || startPoint.publications == null){
+                startPoint.publications = new HashSet<>();
+                startPoint.coAuthors = new HashSet<>();
+            }
 
-        /**
-         * <a> Название публикации </a>
-         * <i> Фамилия И.О., Фамилия И.О., ...</i>
-         */
-        if(publicationsPage != null){
-            for (final HtmlTableRow row : rezultsTable.getRows()) {
-                if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
-                    if (startPoint.coAuthors.size() >= Navigator.searchLimit){
-                        break;
-                    }
-                    HtmlElement publName = row.getElementsByTagName("a").get(0);
-                    HtmlElement authNames = row.getElementsByTagName("i").get(0);
+            /**
+             * <a> Название публикации </a>
+             * <i> Фамилия И.О., Фамилия И.О., ...</i>
+             */
+            if(publicationsPage != null){
+                for (final HtmlTableRow row : rezultsTable.getRows()) {
+                    if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
+                        if (startPoint.coAuthors.size() >= Navigator.searchLimit){
+                            break;
+                        }
+                        HtmlElement publName = row.getElementsByTagName("a").get(0);
+                        HtmlElement authNames = row.getElementsByTagName("i").get(0);
 
 //                logger.trace(publName.asText());
 //                logger.trace(authNames.asText());
 
-                    startPoint.publications.add(new Publication(publName.asText(), authNames.asText()));
+                        startPoint.publications.add(new Publication(publName.asText(), authNames.asText()));
 
-                    List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
-                    for (String auth : authInPubl) {
-                        Author authObj = Author.convertStringToAuthor(auth);
-                        startPoint.coAuthors.add(authObj);
+                        List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
+                        for (String auth : authInPubl) {
+                            Author authObj = Author.convertStringToAuthor(auth);
+                            if(!authObj.equals(startPoint)) startPoint.coAuthors.add(authObj);
+                        }
+
+                        logger.debug(publName.asText());
+                        logger.debug(authNames.asText());
+
+                        logger.debug("SIZE public = " + startPoint.publications.size());
+                        logger.debug("SIZE coAuth = " + startPoint.coAuthors.size());
                     }
-
-                    logger.debug(publName.asText());
-                    logger.debug(authNames.asText());
-
-                    logger.debug("SIZE public = " + startPoint.publications.size());
-                    logger.debug("SIZE coAuth = " + startPoint.coAuthors.size());
                 }
-            }
 
-            if(Navigator.navigateToNextPublications(publicationsPage)!=null && startPoint.coAuthors.size() <= Navigator.searchLimit){
-                publicationsPage = Navigator.navigateToNextPublications(publicationsPage);
-                logger.debug("________________page ended___________________");
-                collectCoAuthors(publicationsPage, startPoint);
-            }
+                if(Navigator.navigateToNextPublications(publicationsPage)!=null && startPoint.coAuthors.size() <= Navigator.searchLimit){
+                    publicationsPage = Navigator.navigateToNextPublications(publicationsPage);
+                    logger.debug("________________page ended___________________");
+                    collectCoAuthors(publicationsPage, startPoint);
+                }
 
-            FileWriterWrap.writeAuthorsSetIntoFile(startPoint.coAuthors, "authors");
+                FileWriterWrap.writeAuthorsSetIntoFile(startPoint.coAuthors, "authors");
+            }
+            return startPoint;
         }
-        return startPoint;
+       catch (ElementNotFoundException ex){
+            logger.error(ex.getMessage());
+            return startPoint;
+       }
     }
 }
