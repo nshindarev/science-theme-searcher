@@ -1,6 +1,8 @@
 package io;
 
 import datamapper.ResearchStarters.Author;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import storage.AuthorsDB;
@@ -54,11 +56,55 @@ public class Serializer {
         }
     }
     public static Set<Author> deserializeData(){
+
+        FileInputStream fis;
         try{
-            FileInputStream fis = new FileInputStream("appl/src/main/resources/serialized/authDB.out");
+            fis = new FileInputStream("src/main/resources/serialized/authDB.out");
 
             ObjectInputStream oin = new ObjectInputStream(fis);
             return (Set<Author>) oin.readObject();
+        }
+        catch (IOException ex){
+            try{
+                fis = new FileInputStream("appl/src/main/resources/serialized/authDB.out");
+
+                ObjectInputStream oin = new ObjectInputStream(fis);
+                return (Set<Author>) oin.readObject();
+            }
+            catch (ClassNotFoundException ex1){
+                logger.error(ex1.getMessage());
+
+            }
+            catch (IOException ex1){
+                logger.error(ex1.getMessage());
+
+            }
+        }
+        catch (ClassNotFoundException ex){
+            logger.error(ex.getMessage());
+        }
+        return null;
+    }
+
+    public static void serializeData(DefaultUndirectedGraph graph){
+        try{
+            FileOutputStream fos = new FileOutputStream("appl/src/main/resources/serialized/jgraph_obj.out");
+
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(graph);
+            oos.flush();
+            oos.close();
+        }
+        catch (IOException ex){
+            logger.error(ex.getMessage());
+        }
+    }
+    public static DefaultUndirectedGraph<Author, DefaultEdge> deserializeGraph(){
+        try{
+            FileInputStream fis = new FileInputStream("src/main/resources/serialized/jgraph_obj.out");
+
+            ObjectInputStream oin = new ObjectInputStream(fis);
+            return (DefaultUndirectedGraph<Author, DefaultEdge>) oin.readObject();
         }
         catch (IOException ex){
             logger.error(ex.getMessage());

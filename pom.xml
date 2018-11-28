@@ -54,6 +54,13 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>clust4j</id>
+            <name>clust4j</name>
+            <url>https://github.com/tgsmith61591/clust4j.git</url>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -127,6 +134,35 @@
                 <groupId>org.neo4j.driver</groupId>
                 <artifactId>neo4j-java-driver</artifactId>
                 <version>1.4.4</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/jung/jung -->
+            <dependency>
+                <groupId>jung</groupId>
+                <artifactId>jung</artifactId>
+                <version>1.7.6</version>
+            </dependency>
+            <dependency>
+                <groupId>jung</groupId>
+                <artifactId>jung</artifactId>
+                <version>1.7.6</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apporiented</groupId>
+                <artifactId>hierarchical-clustering</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jgrapht</groupId>
+                <artifactId>jgrapht</artifactId>
+                <version>0.6.0</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core -->
+            <dependency>
+                <groupId>org.jgrapht</groupId>
+                <artifactId>jgrapht-core</artifactId>
+                <version>1.3.0</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.ccil.cowan.tagsoup/tagsoup -->

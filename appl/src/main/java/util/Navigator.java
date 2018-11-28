@@ -21,7 +21,8 @@ public class Navigator {
 //    public static final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6, "31.211.83.67", 8080);
     public static final WebClient webClient = new WebClient();
     public static final int timeOut = 10000;
-    public static int searchLimit = Integer.MAX_VALUE;
+//    public static int searchLimit = Integer.MAX_VALUE;
+    public static int searchLimit = 3;
 
     public static HtmlPage authorSearchPage;
 

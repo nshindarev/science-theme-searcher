@@ -7,6 +7,7 @@ import datamapper.ResearchStarters.Author;
 import datamapper.Publication;
 import datamapper.ResearchStarters.Theme;
 import datamapper.ResearchPoint;
+import graph.Clusterizer;
 import io.FileWriterWrap;
 import io.LogStatistics;
 import org.slf4j.Logger;
@@ -126,6 +127,7 @@ public class RinzParser {
             }
         }
         logger.info("");
+        logger.info(Clusterizer.convertDbToGraph().toString());
     }
 
     /**
@@ -216,7 +218,7 @@ public class RinzParser {
                     }
                 }
 
-                if(Navigator.navigateToNextPublications(publicationsPage)!=null && startPoint.coAuthors.size() <= Navigator.searchLimit){
+                if(Navigator.navigateToNextPublications(publicationsPage)!=null && startPoint.coAuthors.size() < Navigator.searchLimit){
                     publicationsPage = Navigator.navigateToNextPublications(publicationsPage);
                     logger.debug("________________page ended___________________");
                     collectCoAuthors(publicationsPage, startPoint);
