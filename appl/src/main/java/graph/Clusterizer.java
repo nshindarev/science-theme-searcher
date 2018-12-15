@@ -11,19 +11,17 @@ import io.Serializer;
 import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.traverse.BreadthFirstIterator;
-import org.jgrapht.traverse.GraphIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import storage.AuthorsDB;
+import util.Navigator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedList;
+
+import java.util.*;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Clusterizer {
     private static final Logger logger = LoggerFactory.getLogger(Clusterizer.class);
@@ -32,6 +30,7 @@ public class Clusterizer {
 
     private String[] names = new String[] { "O1", "O2", "03","04","05","06","07","08","09"};
     private double[][] distances;
+
 
     public Clusterizer (){
         this.authorsGraph = convertDbToGraph();
@@ -86,7 +85,8 @@ public class Clusterizer {
         return distances;
     }
 
-    public void clustering () {JFrame frame = new JFrame();
+    public void clustering () {
+        JFrame frame = new JFrame();
         frame.setSize(1024, 768);
         frame.setLocation(400, 300);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -107,20 +107,54 @@ public class Clusterizer {
         dp.setShowDistances(false);
 
         ClusteringAlgorithm alg = new DefaultClusteringAlgorithm();
+        names = generateNames();
         Cluster cluster = alg.performClustering(distances, names,
                 new AverageLinkageStrategy());
 
         dp.setModel(cluster);
         frame.setVisible(true);
+
+
+
+        getClusters(cluster);
+        int i = 0;
+        for(Cluster cl: getClusters(cluster)){
+            logger.info("___________________________");
+            logger.info("LEAFS OF CLUSTER NUMBER "+ i);
+            logger.info(dfs(cl).toString());
+            i++;
+
+        }
     }
 
-    public void main(){
 
+    public List<Cluster> getClusters (Cluster root){
+
+        List<Cluster>  visited = new LinkedList<>();
+        LinkedBlockingQueue<Cluster> clusterQueue = new LinkedBlockingQueue<>();
+
+        try {
+            clusterQueue.put(root);
+
+            while (visited.size()< Navigator.clusterNumber){
+                Cluster curGroup = clusterQueue.poll();
+                visited.add(curGroup);
+                for(Cluster child: curGroup.getChildren())
+                    clusterQueue.add(child);
+            }
+        }
+        catch (InterruptedException ex){
+            logger.error(ex.getMessage());
+        }
+
+        logger.info(visited.toString());
+        return visited;
     }
 
 
+    //___________help methods__________________________
     public static List<Author> getAllAuthAsList (){
-        List<Author> res = new ArrayList<Author>();
+        List<Author> res = new ArrayList<>();
         res.addAll(AuthorsDB.getAuthorsStorage());
 
         for(Author authFirstLevel: res){
@@ -131,6 +165,31 @@ public class Clusterizer {
 
         return res;
     }
+    public String[] generateNames(){
+
+        String[] names = new String[authorsGraph.vertexSet().size()];
+        for(int i = 0; i < authorsGraph.vertexSet().size(); i++){
+            names[i] = Integer.toString(i);
+        }
+        return names;
+    }
+    public Set<Cluster> dfs (Cluster cluster){
+        Set<Cluster> leafs = new HashSet<>();
+
+        for(Cluster cl: cluster.getChildren()){
+            if(cl.isLeaf()){
+                leafs.add(cl);
+            }
+            else {
+                for(Cluster dfs_leaf: dfs(cl))
+                    leafs.add(dfs_leaf);
+            }
+        }
+        return leafs;
+    }
+
+
+    //_____________print______________________
     public void printMatrix(double[][] m){
         try{
             int rows = m.length;
@@ -148,5 +207,4 @@ public class Clusterizer {
 
         }catch(Exception e){System.out.println("Matrix is empty!!");}
     }
-
 }
