@@ -29,7 +29,9 @@ public class CitationGraphDB {
         {
             try (Transaction tx = session.beginTransaction())
             {
-                if(author.linkToUser!=null)
+                if (author.getCluster() != null && author.linkToUser!=null)
+                    tx.run("MERGE (a:Author" + author.getCluster()+ " {fullname: {x}, link: {y}})", parameters("x", author.toString(), "y", author.linkToUser));
+                else if(author.linkToUser!=null)
                     tx.run("MERGE (a:Author {fullname: {x}, link: {y}})", parameters("x", author.toString(), "y", author.linkToUser));
                 else
                     tx.run("MERGE (a:Author {fullname: {x}})", parameters("x", author.toString()));

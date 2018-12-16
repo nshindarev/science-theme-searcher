@@ -24,19 +24,23 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Clusterizer {
+
     private static final Logger logger = LoggerFactory.getLogger(Clusterizer.class);
 
+    /**
+     *  результирующая переменная, содержит перечень кластеров
+     */
+    public List<Author> authorList;
     private DefaultUndirectedGraph authorsGraph;
 
     private String[] names = new String[] { "O1", "O2", "03","04","05","06","07","08","09"};
     private double[][] distances;
-
+    
 
     public Clusterizer (){
         this.authorsGraph = convertDbToGraph();
         evaluateDistances(this.authorsGraph);
     }
-
     public Clusterizer(boolean serialized){
         if (serialized){
             AuthorsDB.initAuthorsStorage();
@@ -49,41 +53,7 @@ public class Clusterizer {
         clustering();
     }
 
-    public static DefaultUndirectedGraph convertDbToGraph(){
-        DefaultUndirectedGraph<Author, DefaultEdge> graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
 
-        for (Author auth: AuthorsDB.getAuthorsStorage()){
-            graph.addVertex(auth);
-            for(Author auth1: auth.coAuthors){
-                graph.addVertex(auth1);
-                graph.addEdge(auth, auth1);
-            }
-        }
-
-        Serializer.serializeData(graph);
-        return graph;
-    }
-    public double[][] evaluateDistances(DefaultUndirectedGraph graph) {
-        FloydWarshallShortestPaths shortestPaths = new FloydWarshallShortestPaths(this.authorsGraph);
-
-        List<Author> authorList = new LinkedList<Author>(graph.vertexSet());
-        distances = new double[authorList.size()][authorList.size()];
-
-        for (int i = 0; i < authorList.size(); i++){
-            for (int j = i + 1; j < authorList.size(); j++) {
-                try {
-                    distances[i][j] = shortestPaths.getPath(authorList.get(i), authorList.get(j)).getLength();
-                    distances[j][i] = distances[i][j];
-                } catch (NullPointerException ex) {
-                    distances[i][j] = 100;
-                    distances[j][i] = distances[i][j];
-                }
-            }
-        }
-
-        printMatrix(distances);
-        return distances;
-    }
 
     public void clustering () {
         JFrame frame = new JFrame();
@@ -119,15 +89,15 @@ public class Clusterizer {
         getClusters(cluster);
         int i = 0;
         for(Cluster cl: getClusters(cluster)){
-            logger.info("___________________________");
-            logger.info("LEAFS OF CLUSTER NUMBER "+ i);
-            logger.info(dfs(cl).toString());
+            logger.trace("___________________________");
+            logger.trace("LEAFS OF CLUSTER NUMBER "+ i);
+            logger.trace(dfs(cl).toString());
             i++;
-
         }
+
+        insertClustersIntoGraph(getClusters(cluster));
+        printClusters();
     }
-
-
     public List<Cluster> getClusters (Cluster root){
 
         List<Cluster>  visited = new LinkedList<>();
@@ -153,6 +123,28 @@ public class Clusterizer {
 
 
     //___________help methods__________________________
+    public static DefaultUndirectedGraph convertDbToGraph(){
+        DefaultUndirectedGraph<Author, DefaultEdge> graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
+
+        for (Author auth: AuthorsDB.getAuthorsStorage()){
+            graph.addVertex(auth);
+            for(Author auth1: auth.coAuthors){
+                graph.addVertex(auth1);
+                graph.addEdge(auth, auth1);
+            }
+        }
+
+        Serializer.serializeData(graph);
+        return graph;
+    }
+    public String[] generateNames(){
+
+        String[] names = new String[authorsGraph.vertexSet().size()];
+        for(int i = 0; i < authorsGraph.vertexSet().size(); i++){
+            names[i] = Integer.toString(i);
+        }
+        return names;
+    }
     public static List<Author> getAllAuthAsList (){
         List<Author> res = new ArrayList<>();
         res.addAll(AuthorsDB.getAuthorsStorage());
@@ -165,13 +157,26 @@ public class Clusterizer {
 
         return res;
     }
-    public String[] generateNames(){
+    public double[][] evaluateDistances(DefaultUndirectedGraph graph) {
+        FloydWarshallShortestPaths shortestPaths = new FloydWarshallShortestPaths(this.authorsGraph);
 
-        String[] names = new String[authorsGraph.vertexSet().size()];
-        for(int i = 0; i < authorsGraph.vertexSet().size(); i++){
-            names[i] = Integer.toString(i);
+        authorList = new LinkedList<Author>(graph.vertexSet());
+        distances = new double[authorList.size()][authorList.size()];
+
+        for (int i = 0; i < authorList.size(); i++){
+            for (int j = i + 1; j < authorList.size(); j++) {
+                try {
+                    distances[i][j] = shortestPaths.getPath(authorList.get(i), authorList.get(j)).getLength();
+                    distances[j][i] = distances[i][j];
+                } catch (NullPointerException ex) {
+                    distances[i][j] = 100;
+                    distances[j][i] = distances[i][j];
+                }
+            }
         }
-        return names;
+
+        printMatrix(distances);
+        return distances;
     }
     public Set<Cluster> dfs (Cluster cluster){
         Set<Cluster> leafs = new HashSet<>();
@@ -187,8 +192,23 @@ public class Clusterizer {
         }
         return leafs;
     }
+    public void insertClustersIntoGraph(List<Cluster> clusters){
+        Integer i = 0;
+        for(Cluster subTree: clusters){
+            Set<Cluster> leafs = dfs(subTree);
+            for(Cluster leaf: leafs){
+                authorList.get(new Integer(leaf.getName())).setCluster(i.toString());
+            }
+            i++;
+        }
+    }
+    public void storeSearchResults(){
+        for(Author toInsert: this.authorList){
+            AuthorsDB.replaceInAuthStorage(toInsert);
+        }
 
-
+        logger.info(AuthorsDB.getAuthorsStorage().toString());
+    }
     //_____________print______________________
     public void printMatrix(double[][] m){
         try{
@@ -206,5 +226,10 @@ public class Clusterizer {
             }
 
         }catch(Exception e){System.out.println("Matrix is empty!!");}
+    }
+    public void printClusters(){
+        for(Author auth: this.authorList){
+           logger.debug(auth.toString() + "CLUSTER: "+ auth.getCluster());
+        }
     }
 }

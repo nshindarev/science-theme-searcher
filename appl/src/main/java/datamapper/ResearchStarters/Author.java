@@ -68,7 +68,8 @@ public class Author extends ResearchPoint {
     public Set<Publication> getPublications() { return publications; }
     public Set<Author> getCoAuthors(){ return coAuthors; }
     public void setCluster(String cluster){
-        if (this.cluster == null) this.cluster = cluster;
+        //if (this.cluster == null)
+            this.cluster = cluster;
     }
 
     public static Author convertStringToAuthor (String auth){

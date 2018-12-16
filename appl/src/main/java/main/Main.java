@@ -4,6 +4,7 @@ import auth.ProxyHandler;
 import datamapper.ResearchStarters.Author;
 import datamapper.ResearchStarters.Theme;
 import graph.CitationGraphDB;
+import graph.Clusterizer;
 import io.LogStatistics;
 import io.Parameters;
 import io.Serializer;
@@ -48,6 +49,7 @@ public class Main {
 
         Navigator.webClient.closeAllWindows();
 
+        Clusterizer clusterizer = new Clusterizer(true);
 
         CitationGraphDB neo4jDB = new CitationGraphDB("bolt://localhost:7687", "neo4j", "v3r0n1k4");
         neo4jDB.cleanDB();
