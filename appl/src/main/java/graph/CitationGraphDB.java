@@ -4,6 +4,8 @@ import datamapper.ResearchStarters.Author;
 import org.neo4j.driver.v1.*;
 import storage.AuthorsDB;
 
+import java.util.Set;
+
 import static org.neo4j.driver.v1.Values.parameters;
 
 public class CitationGraphDB {
@@ -14,6 +16,7 @@ public class CitationGraphDB {
     }
 
     public void storeParserResults(){
+        Set<Author> auth = AuthorsDB.getAuthorsStorage();
         for(Author author: AuthorsDB.getAuthorsStorage()){
             addAuthor(author);
 
@@ -33,8 +36,10 @@ public class CitationGraphDB {
                     tx.run("MERGE (a:Author" + author.getCluster()+ " {fullname: {x}, link: {y}})", parameters("x", author.toString(), "y", author.linkToUser));
                 else if(author.linkToUser!=null)
                     tx.run("MERGE (a:Author {fullname: {x}, link: {y}})", parameters("x", author.toString(), "y", author.linkToUser));
-                else
+                else if (author.getCluster() != null)
                     tx.run("MERGE (a:Author {fullname: {x}})", parameters("x", author.toString()));
+                else
+                    tx.run("MERGE (a:Author" + author.getCluster()+ " {fullname: {x}})", parameters("x", author.toString()));
 
                 tx.success();
             }
@@ -45,7 +50,7 @@ public class CitationGraphDB {
         {
             try (Transaction tx = session.beginTransaction())
             {
-                tx.run("MATCH (u:Author {fullname: {x}}), (r:Author {fullname: {x1}})\n" +
+                tx.run("MATCH (u:Author" + author1.getCluster()+ " {fullname: {x}}), (r:Author" + author.getCluster()+ " {fullname: {x1}})\n" +
                         "CREATE (u)-[:coauthor]->(r)\n", parameters("x", author1.toString(), "x1", author2.toString()));
                 tx.success();
             }

@@ -27,8 +27,16 @@ public class AuthorsDB implements Serializable {
         authorsStorage.remove(author);
     }
     public static void replaceInAuthStorage (Author author){
-        authorsStorage.remove(author);
-        authorsStorage.add(author);
+        if (authorsStorage.contains(author)){
+            authorsStorage.remove(author);
+            authorsStorage.add(author);
+        }
+        else for (Author subAuthor: authorsStorage){
+            if(subAuthor.coAuthors.contains(author)){
+                subAuthor.coAuthors.remove(author);
+                subAuthor.coAuthors.add(author);
+            }
+        }
     }
 
     public static void addToAuthorsStorage (Set<Author> authors){

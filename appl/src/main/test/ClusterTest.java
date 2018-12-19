@@ -1,11 +1,13 @@
 import com.apporiented.algorithm.clustering.ClusteringAlgorithm;
 import com.apporiented.algorithm.clustering.DefaultClusteringAlgorithm;
 import datamapper.ResearchStarters.Author;
+import graph.CitationGraphDB;
+import graph.Clusterer;
 import graph.Clusterizer;
 import io.Serializer;
 import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -20,7 +22,7 @@ public class ClusterTest {
 
     private static final Logger logger = LoggerFactory.getLogger(ClusterTest.class);
 
-    DefaultUndirectedGraph<Author, DefaultEdge> graph;
+    DefaultDirectedGraph<Author, DefaultEdge> graph;
 
     @Before
     public void testFileReader(){
@@ -49,9 +51,16 @@ public class ClusterTest {
 
     }
 
-    @Test
-    public void testClusterizerInit(){
-        Clusterizer clusterizer = new Clusterizer(true);
 
+    @Test
+    public void testClustererInit(){
+        Clusterer clusterizer = new Clusterer(Serializer.convertDbToGraph());
+        clusterizer.splitConnectedComponents();
+
+        clusterizer.executeClustering();
+
+        CitationGraphDB neo4jDB = new CitationGraphDB("bolt://localhost:7687", "neo4j", "v3r0n1k4");
+        neo4jDB.cleanDB();
+        neo4jDB.storeParserResults();
     }
 }

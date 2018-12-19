@@ -5,12 +5,15 @@ import com.apporiented.algorithm.clustering.Cluster;
 import com.apporiented.algorithm.clustering.ClusteringAlgorithm;
 import com.apporiented.algorithm.clustering.DefaultClusteringAlgorithm;
 import com.apporiented.algorithm.clustering.visualization.DendrogramPanel;
+import com.sun.istack.internal.NotNull;
 import datamapper.ResearchStarters.Author;
 
 import io.Serializer;
+
+import org.jgrapht.alg.connectivity.GabowStrongConnectivityInspector;
+import org.jgrapht.alg.interfaces.StrongConnectivityAlgorithm;
 import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultUndirectedGraph;
+import org.jgrapht.graph.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import storage.AuthorsDB;
@@ -30,18 +33,24 @@ public class Clusterizer {
     /**
      *  результирующая переменная, содержит перечень кластеров
      */
+    public List<List<Author>> historyAuthorLists = new LinkedList<>();
     public List<Author> authorList;
-    private DefaultUndirectedGraph authorsGraph;
+    public Set<List<Author>> authorsConnectedComponents;
+
+    private DefaultDirectedGraph authorsGraph;
+    private StrongConnectivityAlgorithm connectivityAlgorithm;
 
     private String[] names = new String[] { "O1", "O2", "03","04","05","06","07","08","09"};
-    private double[][] distances;
-    
+    private List<String[]> namesList;
 
-    public Clusterizer (){
-        this.authorsGraph = convertDbToGraph();
-        evaluateDistances(this.authorsGraph);
-    }
+    private double[][] distances;
+    private List<double[][]> connectedComponentsDistances = new ArrayList<>();
+    private List<AsSubgraph> subgraphs;
+
+
     public Clusterizer(boolean serialized){
+        this.authorsConnectedComponents = new HashSet<>();
+
         if (serialized){
             AuthorsDB.initAuthorsStorage();
             AuthorsDB.initPublicationsStorage();
@@ -49,6 +58,8 @@ public class Clusterizer {
         }
 
         this.authorsGraph = convertDbToGraph();
+        connectivityAlgorithm = new GabowStrongConnectivityInspector(authorsGraph);
+
         evaluateDistances(this.authorsGraph);
         clustering();
     }
@@ -76,32 +87,60 @@ public class Clusterizer {
         dp.setScaleValueInterval(1);
         dp.setShowDistances(false);
 
-        ClusteringAlgorithm alg = new DefaultClusteringAlgorithm();
-        names = generateNames();
-        Cluster cluster = alg.performClustering(distances, names,
-                new AverageLinkageStrategy());
-
-        dp.setModel(cluster);
-        frame.setVisible(true);
+        List<Cluster> finalList = new LinkedList<>();
+        this.connectedComponentsDistances = evaluateDistancesInGraph(authorsGraph);
+//        generateNamesList(this.subgraphs);
 
 
+        int j =0;
+        for (int i = 0; i < subgraphs.size(); i++){
+            ClusteringAlgorithm alg = new DefaultClusteringAlgorithm();
+            names = generateNames(subgraphs.get(i));
+            Cluster cluster = alg.performClustering(evaluateDistances(subgraphs.get(i)), names,
+                    new AverageLinkageStrategy());
 
-        getClusters(cluster);
-        int i = 0;
-        for(Cluster cl: getClusters(cluster)){
-            logger.trace("___________________________");
-            logger.trace("LEAFS OF CLUSTER NUMBER "+ i);
-            logger.trace(dfs(cl).toString());
-            i++;
+            List<Cluster> curClusters = getClusters(cluster);
+            for(Cluster cl: curClusters){
+                logger.trace("___________________________");
+                logger.trace("LEAFS OF CLUSTER NUMBER "+ j);
+                logger.trace(dfs(cl).toString());
+                j++;
+            }
+
+            finalList.addAll(curClusters);
         }
 
-        insertClustersIntoGraph(getClusters(cluster));
-        printClusters();
+        insertClustersIntoGraph(finalList);
+        storeSearchResults();
+
+//        ClusteringAlgorithm alg = new DefaultClusteringAlgorithm();
+//        names = generateNames(authorsGraph);
+//        Cluster cluster = alg.performClustering(distances, names,
+//                new AverageLinkageStrategy());
+//
+//        dp.setModel(cluster);
+//        frame.setVisible(true);
+//
+//
+//        getClusters(cluster);
+//        generateNamesList(this.subgraphs);
+//        int i = 0;
+//        for(Cluster cl: getClusters(cluster)){
+//            logger.trace("___________________________");
+//            logger.trace("LEAFS OF CLUSTER NUMBER "+ i);
+//            logger.trace(dfs(cl).toString());
+//            i++;
+//        }
+//
+//        logger.info("");
+//        insertClustersIntoGraph(getClusters(cluster));
+//        printClusters();
     }
-    public List<Cluster> getClusters (Cluster root){
+    public List<Cluster> getClusters (@NotNull Cluster root){
 
         List<Cluster>  visited = new LinkedList<>();
         LinkedBlockingQueue<Cluster> clusterQueue = new LinkedBlockingQueue<>();
+
 
         try {
             clusterQueue.put(root);
@@ -116,6 +155,8 @@ public class Clusterizer {
         catch (InterruptedException ex){
             logger.error(ex.getMessage());
         }
+        catch (NullPointerException ex){
+        }
 
         logger.info(visited.toString());
         return visited;
@@ -123,24 +164,36 @@ public class Clusterizer {
 
 
     //___________help methods__________________________
-    public static DefaultUndirectedGraph convertDbToGraph(){
-        DefaultUndirectedGraph<Author, DefaultEdge> graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
+    public static DefaultDirectedGraph convertDbToGraph(){
+        DefaultDirectedGraph<Author, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
         for (Author auth: AuthorsDB.getAuthorsStorage()){
             graph.addVertex(auth);
             for(Author auth1: auth.coAuthors){
                 graph.addVertex(auth1);
                 graph.addEdge(auth, auth1);
+                graph.addEdge(auth1, auth);
+
             }
         }
 
         Serializer.serializeData(graph);
         return graph;
     }
-    public String[] generateNames(){
+//    public List<String[]> generateNamesList(List<DefaultDirectedGraph> graphs){
+//        List<String[]> rez = new LinkedList<>();
+//        for(DefaultDirectedGraph graph: graphs){
+//            rez.add(generateNames(graph));
+//        }
+//
+//        this.namesList = rez;
+//        return  rez;
+//    }
+    public String[] generateNames(AsSubgraph graph){
 
-        String[] names = new String[authorsGraph.vertexSet().size()];
-        for(int i = 0; i < authorsGraph.vertexSet().size(); i++){
+
+        String[] names = new String[graph.vertexSet().size()];
+        for(int i = 0; i < graph.vertexSet().size(); i++){
             names[i] = Integer.toString(i);
         }
         return names;
@@ -157,10 +210,25 @@ public class Clusterizer {
 
         return res;
     }
-    public double[][] evaluateDistances(DefaultUndirectedGraph graph) {
+
+    public List<double[][]> evaluateDistancesInGraph (AbstractGraph graph){
+        subgraphs = connectivityAlgorithm.getStronglyConnectedComponents();
+
+        List<double[][]> distances = new ArrayList<>(subgraphs.size());
+        for(int i = 0; i< subgraphs.size(); i++){
+            subgraphs.get(i);
+
+            double[][] x =  evaluateDistances(subgraphs.get(i));
+            distances.add(i,x);
+        }
+
+        return distances;
+    }
+    public double[][] evaluateDistances(AbstractGraph graph) {
         FloydWarshallShortestPaths shortestPaths = new FloydWarshallShortestPaths(this.authorsGraph);
 
         authorList = new LinkedList<Author>(graph.vertexSet());
+        historyAuthorLists.add(authorList);
         distances = new double[authorList.size()][authorList.size()];
 
         for (int i = 0; i < authorList.size(); i++){
@@ -180,27 +248,44 @@ public class Clusterizer {
     }
     public Set<Cluster> dfs (Cluster cluster){
         Set<Cluster> leafs = new HashSet<>();
-
-        for(Cluster cl: cluster.getChildren()){
-            if(cl.isLeaf()){
-                leafs.add(cl);
+        try{
+            if (!cluster.isLeaf()){
+                for(Cluster cl: cluster.getChildren()){
+                    if(cl.isLeaf()){
+                        leafs.add(cl);
+                    }
+                    else {
+                        for(Cluster dfs_leaf: dfs(cl))
+                            leafs.add(dfs_leaf);
+                    }
+                }
             }
             else {
-                for(Cluster dfs_leaf: dfs(cl))
-                    leafs.add(dfs_leaf);
+                leafs.add(cluster);
             }
+        }
+        catch (NullPointerException ex){
+            logger.error(ex.getMessage());
         }
         return leafs;
+
     }
     public void insertClustersIntoGraph(List<Cluster> clusters){
+
         Integer i = 0;
         for(Cluster subTree: clusters){
-            Set<Cluster> leafs = dfs(subTree);
-            for(Cluster leaf: leafs){
-                authorList.get(new Integer(leaf.getName())).setCluster(i.toString());
+            try{
+                Set<Cluster> leafs = dfs(subTree);
+                for(Cluster leaf: leafs){
+                    historyAuthorLists.get(i).get(new Integer(leaf.getName())).setCluster(i.toString());
+                }
+                i++;
             }
-            i++;
+            catch (IndexOutOfBoundsException ex){
+                logger.error("iteration "+i+" exception" );
+            }
         }
+
     }
     public void storeSearchResults(){
         for(Author toInsert: this.authorList){
@@ -232,4 +317,5 @@ public class Clusterizer {
            logger.debug(auth.toString() + "CLUSTER: "+ auth.getCluster());
         }
     }
+
 }

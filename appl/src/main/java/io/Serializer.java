@@ -1,8 +1,8 @@
 package io;
 
 import datamapper.ResearchStarters.Author;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import storage.AuthorsDB;
@@ -86,7 +86,7 @@ public class Serializer {
         return null;
     }
 
-    public static void serializeData(DefaultUndirectedGraph graph){
+    public static void serializeData(DefaultDirectedGraph graph){
         try{
             FileOutputStream fos = new FileOutputStream("appl/src/main/resources/serialized/jgraph_obj.out");
 
@@ -99,12 +99,12 @@ public class Serializer {
             logger.error(ex.getMessage());
         }
     }
-    public static DefaultUndirectedGraph<Author, DefaultEdge> deserializeGraph(){
+    public static DefaultDirectedGraph<Author, DefaultEdge> deserializeGraph(){
         try{
             FileInputStream fis = new FileInputStream("src/main/resources/serialized/jgraph_obj.out");
 
             ObjectInputStream oin = new ObjectInputStream(fis);
-            return (DefaultUndirectedGraph<Author, DefaultEdge>) oin.readObject();
+            return (DefaultDirectedGraph<Author, DefaultEdge>) oin.readObject();
         }
         catch (IOException ex){
             logger.error(ex.getMessage());
@@ -113,6 +113,29 @@ public class Serializer {
             logger.error(ex.getMessage());
         }
         return null;
+    }
+
+    public static DefaultDirectedGraph convertDbToGraph(){
+
+        // выгружает граф из памяти
+        AuthorsDB.initAuthorsStorage();
+        AuthorsDB.initPublicationsStorage();
+        AuthorsDB.addToAuthorsStorage(Serializer.deserializeData());
+
+        DefaultDirectedGraph<Author, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
+
+        for (Author auth: AuthorsDB.getAuthorsStorage()){
+            graph.addVertex(auth);
+            for(Author auth1: auth.coAuthors){
+                graph.addVertex(auth1);
+                graph.addEdge(auth, auth1);
+                graph.addEdge(auth1, auth);
+
+            }
+        }
+
+        Serializer.serializeData(graph);
+        return graph;
     }
 
 }

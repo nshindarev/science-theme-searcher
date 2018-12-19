@@ -2,6 +2,7 @@ package io;
 
 import datamapper.ResearchPoint;
 import datamapper.ResearchStarters.Author;
+import org.jgrapht.graph.AsSubgraph;
 import storage.AuthorsDB;
 import datamapper.Publication;
 import org.slf4j.Logger;
@@ -9,8 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 public class LogStatistics {
     private static final Logger logger = LoggerFactory.getLogger(LogStatistics.class);
@@ -55,6 +55,45 @@ public class LogStatistics {
             logger.debug(a.getSurname()+" "+a.getN()+". "+a.getP()+".");
         }
 
+    }
+
+    public static void logClustersStatistics(List<AsSubgraph> splittedGraph){
+        for (AsSubgraph subGraph: splittedGraph){
+            logger.debug(subGraph.toString());
+        }
+    }
+
+    public static void logDistancesMatrixNames(String[] names){
+        logger.debug(Arrays.toString(names));
+    }
+    public static void logDistancesMatrix(double[][] m){
+        try{
+            int rows = m.length;
+            int columns = m[0].length;
+            String str = "|\t";
+
+            for(int i=0;i<rows;i++){
+                for(int j=0;j<columns;j++){
+                    str += m[i][j] + "\t";
+                }
+
+                logger.debug(str + "|");
+                str = "|\t";
+            }
+
+        }
+        catch(Exception e){logger.error("Matrix is empty!!");}
+    }
+
+    public static void logClusterInfoUpdates (List<Author> authorsToUpdate){
+
+        logger.debug("________________________");
+        logger.debug("NEW CLUSTER UPDATE");
+        logger.debug("________________________");
+
+        for(Author auth: authorsToUpdate){
+            logger.debug(auth.toString()+ " CLUSTER: "+ auth.getCluster());
+        }
     }
 
 }
