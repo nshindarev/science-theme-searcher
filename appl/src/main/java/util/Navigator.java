@@ -22,7 +22,7 @@ public class Navigator {
     public static final WebClient webClient = new WebClient();
     public static final int timeOut = 10000;
 //    public static int searchLimit = Integer.MAX_VALUE;
-    public static int searchLimit = 8;
+    public static int searchLimit = 15;
     public static int clusterNumber = 5;
 
     public static HtmlPage authorSearchPage;
@@ -163,7 +163,4 @@ public class Navigator {
             return null;
         }
     }
-
-
-
 }

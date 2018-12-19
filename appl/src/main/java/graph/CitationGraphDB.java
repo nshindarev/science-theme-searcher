@@ -2,6 +2,9 @@ package graph;
 
 import datamapper.ResearchStarters.Author;
 import org.neo4j.driver.v1.*;
+import org.neo4j.driver.v1.exceptions.ClientException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import storage.AuthorsDB;
 
 import java.util.Set;
@@ -9,6 +12,8 @@ import java.util.Set;
 import static org.neo4j.driver.v1.Values.parameters;
 
 public class CitationGraphDB {
+    private static final Logger logger = LoggerFactory.getLogger(CitationGraphDB.class);
+
     private Driver driver;
     public CitationGraphDB(String uri, String user, String password)
     {
@@ -16,8 +21,9 @@ public class CitationGraphDB {
     }
 
     public void storeParserResults(){
-        Set<Author> auth = AuthorsDB.getAuthorsStorage();
+
         for(Author author: AuthorsDB.getAuthorsStorage()){
+            if (author.getCluster() == null) author.setCluster("0");
             addAuthor(author);
 
             for(Author coAuthor: author.coAuthors){
@@ -32,15 +38,10 @@ public class CitationGraphDB {
         {
             try (Transaction tx = session.beginTransaction())
             {
-                if (author.getCluster() != null && author.linkToUser!=null)
-                    tx.run("MERGE (a:Author" + author.getCluster()+ " {fullname: {x}, link: {y}})", parameters("x", author.toString(), "y", author.linkToUser));
-                else if(author.linkToUser!=null)
-                    tx.run("MERGE (a:Author {fullname: {x}, link: {y}})", parameters("x", author.toString(), "y", author.linkToUser));
-                else if (author.getCluster() != null)
-                    tx.run("MERGE (a:Author {fullname: {x}})", parameters("x", author.toString()));
+                if (author.getCluster() != null)
+                    tx.run("MERGE (a:Author {fullname: {x}, cluster: {z}})", parameters("x", author.toString(), "z", author.getCluster()));
                 else
-                    tx.run("MERGE (a:Author" + author.getCluster()+ " {fullname: {x}})", parameters("x", author.toString()));
-
+                    tx.run("MERGE (a:Author {fullname: {x}})", parameters("x", author.toString()));
                 tx.success();
             }
         }
@@ -50,8 +51,8 @@ public class CitationGraphDB {
         {
             try (Transaction tx = session.beginTransaction())
             {
-                tx.run("MATCH (u:Author" + author1.getCluster()+ " {fullname: {x}}), (r:Author" + author.getCluster()+ " {fullname: {x1}})\n" +
-                        "CREATE (u)-[:coauthor]->(r)\n", parameters("x", author1.toString(), "x1", author2.toString()));
+                tx.run("MATCH (u:Author {fullname: {x}, cluster: {z}}), (r:Author {fullname: {x1}, cluster: {z1}})\n" +
+                        "CREATE (u)-[:coauthor]->(r)\n", parameters("x", author1.toString(), "x1", author2.toString(), "z", author1.getCluster(),"z1", author2.getCluster()));
                 tx.success();
             }
         }

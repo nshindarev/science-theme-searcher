@@ -169,7 +169,7 @@ public class Clusterer {
             // все листья из одного кластера
             try{
                 for(Cluster leaf: dfs(cutClusters.get(i))){
-                    authInConComp.get(new Integer(leaf.getName())).setCluster(componentId.toString()+"_"+i.toString());
+                    authInConComp.get(new Integer(leaf.getName())).setCluster(componentId.toString()+ i.toString());
                 }
             }
             catch (IndexOutOfBoundsException ex){

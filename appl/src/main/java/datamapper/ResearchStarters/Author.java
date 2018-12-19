@@ -15,7 +15,7 @@ public class Author extends ResearchPoint {
     private String name;
     private String surname;
     private String patronymic;
-    private String cluster;
+    private String cluster = "0";
 
     /**
      * initials:
@@ -64,7 +64,11 @@ public class Author extends ResearchPoint {
         return surname;
     }
     public String getPatronymic() { return patronymic; }
-    public String getCluster() {return cluster;}
+    public String getCluster() {
+        if (this.cluster != null) return cluster;
+        else return "0";
+    }
+
     public Set<Publication> getPublications() { return publications; }
     public Set<Author> getCoAuthors(){ return coAuthors; }
     public void setCluster(String cluster){
