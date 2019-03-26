@@ -14,11 +14,12 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
-    <logger name="appl"                                    level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
-    <logger name="appl.src.main.java.auth.ElibAuthorize"   level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
-    <logger name="appl.src.main.java.RinzParser"           level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl"                                    level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.main.java.graph.Clusterer"      level="trace"    additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.main.java.auth.ElibAuthorize"   level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.main.java.RinzParser"           level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.java"                      level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
-    <logger name="appl.src.main.test"                      level="trace"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.main.test"                      level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
 
     <!-- root -->
     <root level="TRACE">

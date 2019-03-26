@@ -15,6 +15,7 @@ public class ClusterAuthors {
     //TODO: equals определяется на основе имени
     public Set<Author> authors;
     public String clusterName;
+    public double[][] distances;
 
     public ClusterAuthors (){
         this.authors = new HashSet<>();
@@ -24,6 +25,13 @@ public class ClusterAuthors {
 
         this.authors = new HashSet<>();
         this.clusterName = name;
+    }
+
+    public ClusterAuthors(String name, double[][] distances){
+
+        this.authors = new HashSet<>();
+        this.clusterName = name;
+        this.distances = distances;
     }
 
     @Override

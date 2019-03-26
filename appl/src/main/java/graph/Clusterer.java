@@ -18,10 +18,7 @@ import org.slf4j.LoggerFactory;
 import storage.AuthorsDB;
 import util.Navigator;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -35,12 +32,12 @@ public class Clusterer {
         this.graphDistances = evaluateDistances(graph);
     }
 
-        public AbstractGraph graph;
+    public AbstractGraph graph;
     private double[][] graphDistances;
 
     public void executeClustering (){
 
-        ClusteringAlgorithm alg = new DefaultClusteringAlgorithm();
+        ClusteringAlgorithm alg        = new DefaultClusteringAlgorithm();
         List<AsSubgraph> splittedGraph = this.splitConnectedComponents();
         List<Author> allAuthors = new LinkedList<>();
 
@@ -50,17 +47,22 @@ public class Clusterer {
          */
         for (int i = 0; i < splittedGraph.size(); i++ ){
 
-            Cluster rootCluster = alg.performClustering(evaluateDistances(splittedGraph.get(i)),
-                    generateNames(splittedGraph.get(i),i),
+            //матрица дальностей для компоненты связности
+            double[][] subDistances = evaluateDistances(splittedGraph.get(i));
+
+            Cluster rootCluster = alg.performClustering(subDistances,
+                    generateNames(splittedGraph.get(i)),
                     new AverageLinkageStrategy());
 
             List<Cluster> cutClusters = getClusters(rootCluster);
 
-            //---------- score ------------
-//            ClustererScore score = new ClustererScore(cutClusters, evaluateDistances(splittedGraph.get(i)));
-
             //---------- store ------------
             allAuthors.addAll(insertClustersIntoGraph(cutClusters, splittedGraph.get(i), new Integer(i)));
+
+            //---------- score ------------
+            if (splittedGraph.get(i).vertexSet().size()>1){
+                ClustererScore score = new ClustererScore(splittedGraph.get(i), evaluateDistances(splittedGraph.get(i)), i);
+            }
         }
 
         storeSearchResults(allAuthors);
@@ -78,7 +80,7 @@ public class Clusterer {
     }
 
 
-    public String[] generateNames(AsSubgraph connectedComponent, Integer clusterNumber){
+    public String[] generateNames(AsSubgraph connectedComponent){
 
         List<Author> authors =  new LinkedList<Author>(connectedComponent.vertexSet());
         String[] names = new String[connectedComponent.vertexSet().size()];
@@ -120,11 +122,12 @@ public class Clusterer {
         try {
             clusterQueue.put(root);
 
-            while (visited.size()< Navigator.clusterNumber){
+            while (clusterQueue.size()< Navigator.clusterNumber){
                 Cluster curGroup = clusterQueue.poll();
-                visited.add(curGroup);
-                for(Cluster child: curGroup.getChildren())
+                for(Cluster child: curGroup.getChildren()){
                     clusterQueue.add(child);
+                }
+                clusterQueue.remove(curGroup);
             }
         }
         catch (InterruptedException ex){
@@ -134,7 +137,8 @@ public class Clusterer {
         }
 
         logger.info(visited.toString());
-        return visited;
+        return new LinkedList<>(clusterQueue);
+
     }
     public List<Cluster> dfs (Cluster cluster){
         Set<Cluster> leafs = new HashSet<>();
@@ -190,8 +194,11 @@ public class Clusterer {
 
                     //=============заполнение объекта кластера===============
                     clusterObj.authors.add(authInConComp.get(new Integer(leaf.getName())));
-
                 }
+
+                clusterObj.distances = evaluateDistances(connectedComponent);
+
+                logger.debug(clusterObj.toString());
                 splittedGraph.add(clusterObj);
             }
             catch (IndexOutOfBoundsException ex){
@@ -214,33 +221,4 @@ public class Clusterer {
 
         Serializer.exportGraphToCsv(graph);
     }
-
-    //======================== выбор числа компонент связности =========================
-//    public double RMSSTD (AsSubgraph connectedComponent){
-//
-//    }
-
-//    public double med (int j){
-//        double rez = 0;
-//        for(int i = 0; i < graphDistances[j].length; i++){
-//            rez += graphDistances[j][i];
-//        }
-//
-//        rez /= graphDistances[j].length;
-//        return rez;
-//    }
-//    public double SS (int j){
-//        double rez = 0;
-//        for (int i = 1; i < graphDistances[j].length; i ++){
-//            rez += Math.pow(graphDistances[j][i] - med(j), 2);
-//        }
-//
-//        return rez;
-//    }
-//    public double SS_total (){
-//
-//    }
-//    public double SS_between (){
-//
-//    }
 }

@@ -108,8 +108,8 @@ public class Author extends ResearchPoint {
 
         Author auth = (Author) o;
         if (this.surname!= null && auth.surname!=null){
-            this.surname = Translator.translate(this.surname);
-            auth.surname = Translator.translate(auth.surname);
+//            this.surname = Translator.translate(this.surname);
+//            auth.surname = Translator.translate(auth.surname);
 
 
             if(Character.isLetter(this.n) && Character.isLetter(auth.getN())){
