@@ -4,6 +4,7 @@ import datamapper.Publication;
 import datamapper.ResearchPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.Translator;
 
 import java.io.Serializable;
 import java.util.*;
@@ -101,11 +102,16 @@ public class Author extends ResearchPoint {
 
     @Override
     public boolean equals (Object o){
+
         if (o == this) return true;
         if (!(o instanceof Author)) return false;
 
         Author auth = (Author) o;
         if (this.surname!= null && auth.surname!=null){
+            this.surname = Translator.translate(this.surname);
+            auth.surname = Translator.translate(auth.surname);
+
+
             if(Character.isLetter(this.n) && Character.isLetter(auth.getN())){
                 if(Character.isLetter(this.p) && Character.isLetter(auth.getP())){
                     if (this.n == auth.n && this.p == auth.p) return true;

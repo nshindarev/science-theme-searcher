@@ -2,6 +2,7 @@ package io;
 
 import datamapper.ResearchPoint;
 import datamapper.ResearchStarters.Author;
+import graph.ClusterAuthors;
 import org.jgrapht.graph.AsSubgraph;
 import storage.AuthorsDB;
 import datamapper.Publication;
@@ -93,6 +94,12 @@ public class LogStatistics {
 
         for(Author auth: authorsToUpdate){
             logger.debug(auth.toString()+ " CLUSTER: "+ auth.getCluster());
+        }
+    }
+
+    public static void logClusterObj (Set<ClusterAuthors> clusters){
+        for(ClusterAuthors cl : clusters){
+            logger.info(cl.toString());
         }
     }
 

@@ -51,8 +51,8 @@ public class Main {
         Navigator.webClient.closeAllWindows();
 
         Clusterer clusterizer = new Clusterer(Serializer.convertDbToGraph());
-        clusterizer.splitConnectedComponents();
 
+        clusterizer.splitConnectedComponents();
         clusterizer.executeClustering();
 
         CitationGraphDB neo4jDB = new CitationGraphDB("bolt://localhost:7687", "neo4j", "v3r0n1k4");

@@ -1,8 +1,10 @@
 package io;
 
 import datamapper.ResearchStarters.Author;
+import org.jgrapht.graph.AbstractGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.io.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import storage.AuthorsDB;
@@ -98,6 +100,8 @@ public class Serializer {
         catch (IOException ex){
             logger.error(ex.getMessage());
         }
+
+
     }
     public static DefaultDirectedGraph<Author, DefaultEdge> deserializeGraph(){
         try{
@@ -135,7 +139,39 @@ public class Serializer {
         }
 
         Serializer.serializeData(graph);
+        Serializer.exportGraphToCsv(graph);
         return graph;
     }
+
+    public static void exportGraphToCsv (AbstractGraph g){
+
+        ComponentNameProvider<Author> vertexIdProvider = new ComponentNameProvider<Author>() {
+            public String getName(Author author)
+            {
+//                return author.getSurname();
+                return author.toString().replaceAll(" ", "");
+                }
+        };
+
+        try{
+            CSVExporter<Author, DefaultEdge> csv =
+                new CSVExporter<>(vertexIdProvider, null, ' ');
+
+            csv.setFormat(CSVFormat.EDGE_LIST);
+            csv.exportGraph(g, new File("src/main/resources/authorsGraphCsv"));
+        }
+        catch (Exception ex){
+            logger.error(ex.getMessage());
+        }
+
+
+
+//        GraphExporter<URI, DefaultEdge> exporter =
+//                new DOTExporter<>(vertexIdProvider, vertexLabelProvider, null);
+//        Writer writer = new StringWriter();
+//        exporter.exportGraph(hrefGraph, writer);
+//        System.out.println(writer.toString());
+    }
+
 
 }

@@ -2,6 +2,7 @@ package storage;
 
 import datamapper.ResearchStarters.Author;
 import datamapper.Publication;
+import graph.ClusterAuthors;
 
 import java.io.Serializable;
 import java.util.*;
@@ -14,6 +15,13 @@ public class AuthorsDB implements Serializable {
      *  case Author search:  contains all co-authors
      */
     private static Set<Author>  authorsStorage;
+
+    /**
+     * Key: number of connected component
+     * Value: Set of cluster
+     */
+    public static Map<Integer,Set<ClusterAuthors>> authorsInCluster = new HashMap<>();
+
 
     public static Set<Author> getAuthorsStorage(){
         return AuthorsDB.authorsStorage;
@@ -58,4 +66,5 @@ public class AuthorsDB implements Serializable {
     public static void initAuthorsStorage(){
         AuthorsDB.authorsStorage = new HashSet<>();
     }
+
 }
