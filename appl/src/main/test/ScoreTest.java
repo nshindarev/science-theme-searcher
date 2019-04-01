@@ -20,7 +20,7 @@ import java.util.List;
 
 import static io.Serializer.deserializeGraph;
 
-public class ClusterTest {
+public class ScoreTest {
 
     private static final Logger logger = LoggerFactory.getLogger(ClusterTest.class);
 
@@ -29,28 +29,6 @@ public class ClusterTest {
     @Before
     public void testFileReader(){
         this.graph = deserializeGraph();
-    }
-
-    @Test
-    public void testFloydWarshall(){
-        FloydWarshallShortestPaths shortestPaths = new FloydWarshallShortestPaths(this.graph);
-        for(Author author: graph.vertexSet()) {
-                for (Author author1 : graph.vertexSet()) {
-                    try{
-                        logger.info(author.toString() + " ---> " + author1.toString() + " = " + shortestPaths.getPath(author, author1).getLength());
-                    }
-                    catch (NullPointerException ex){
-                        logger.error(author.toString() + " " + author1.toString());
-                    }
-                }
-        }
-        double [][] distanceMatrix = new double[][]{};
-        List<Author> firstLevel = Clusterizer.getAllAuthAsList();
-
-        for(int i=0; i< AuthorsDB.getAuthorsStorage().size(); i++ ){
-
-        }
-
     }
 
 
@@ -66,6 +44,8 @@ public class ClusterTest {
         neo4jDB.storeParserResults();
 
         LogStatistics.logFinalParseStatistic(clusterizer.graph);
+
+
     }
 
     @Test

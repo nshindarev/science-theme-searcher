@@ -45,27 +45,42 @@ public class Clusterer {
          * input: distances + names
          * output: list<cluster>
          */
+
+        HashMap<String, Double> QScoreStat = new HashMap<String, Double>();
         for (int i = 0; i < splittedGraph.size(); i++ ){
 
             //матрица дальностей для компоненты связности
+
             double[][] subDistances = evaluateDistances(splittedGraph.get(i));
 
-            Cluster rootCluster = alg.performClustering(subDistances,
-                    generateNames(splittedGraph.get(i)),
-                    new AverageLinkageStrategy());
+            for (Navigator.clusterNumber = 0; Navigator.clusterNumber < subDistances.length; Navigator.clusterNumber++){
+                Cluster rootCluster = alg.performClustering(subDistances,
+                        generateNames(splittedGraph.get(i)),
+                        new AverageLinkageStrategy());
 
-            List<Cluster> cutClusters = getClusters(rootCluster);
+                List<Cluster> cutClusters = getClusters(rootCluster);
 
-            //---------- store ------------
-            allAuthors.addAll(insertClustersIntoGraph(cutClusters, splittedGraph.get(i), new Integer(i)));
+                //---------- store ------------
+                allAuthors.addAll(insertClustersIntoGraph(cutClusters, splittedGraph.get(i), new Integer(i)));
 
-            //---------- score ------------
-            if (splittedGraph.get(i).vertexSet().size()>1){
-                ClustererScore score = new ClustererScore(splittedGraph.get(i), evaluateDistances(splittedGraph.get(i)), i);
+                //---------- score ------------
+                if (splittedGraph.get(i).vertexSet().size()>20){
+                    List<ClusterAuthors> clusters = getClusterObjects(cutClusters, splittedGraph.get(i), new Integer(i));
+
+                    ClustererScore score = new ClustererScore(clusters, splittedGraph.get(i), evaluateDistances(splittedGraph.get(i)), i);
+
+                    String data = "size = " + splittedGraph.get(i).vertexSet().size() + " clusters = " + Navigator.clusterNumber;
+                    QScoreStat.put(data, new Double(score.QScore()));
+                }
             }
+
         }
 
+
+
+
         storeSearchResults(allAuthors);
+        QScoreStat.forEach((k,v) -> {logger.info(k + " " + v);});
     }
 
     public List<AsSubgraph> splitConnectedComponents(){
@@ -213,6 +228,55 @@ public class Clusterer {
 
 
         return authInConComp;
+    }
+
+    public List<ClusterAuthors> getClusterObjects(List<Cluster> cutClusters, AsSubgraph connectedComponent, Integer componentId){
+
+        List<ClusterAuthors> res = new LinkedList();
+
+        //номер кластера
+        Integer number = 0;
+
+        // index -> author
+        List<Author> authInConComp = new LinkedList<>();
+        Set<ClusterAuthors> splittedGraph = new HashSet<>();
+
+        authInConComp.addAll(connectedComponent.vertexSet());
+
+        // все кластеры в к.с.
+        for(Integer i = 0; i< cutClusters.size(); i++){
+
+
+            // все листья из одного кластера
+            try{
+                ClusterAuthors clusterObj = new ClusterAuthors(componentId.toString()+ i.toString());
+                for(Cluster leaf: dfs(cutClusters.get(i))){
+                    authInConComp.get(new Integer(leaf.getName())).setCluster(componentId.toString()+ i.toString());
+
+
+                    //=============заполнение объекта кластера===============
+                    clusterObj.authors.add(authInConComp.get(new Integer(leaf.getName())));
+                }
+
+                clusterObj.distances = evaluateDistances(connectedComponent);
+
+                logger.debug(clusterObj.toString());
+                splittedGraph.add(clusterObj);
+
+                res.add(clusterObj);
+            }
+            catch (IndexOutOfBoundsException ex){
+                logger.error("iteration "+i+" exception" );
+            }
+        }
+
+
+        AuthorsDB.authorsInCluster.put(AuthorsDB.authorsInCluster.size(), splittedGraph);
+        LogStatistics.logClusterInfoUpdates(authInConComp);
+        LogStatistics.logClusterObj(splittedGraph);
+
+
+        return res;
     }
     public void storeSearchResults(List<Author> allAuthorsToUpdate){
         for(Author toInsert: allAuthorsToUpdate){

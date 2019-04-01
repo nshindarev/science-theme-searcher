@@ -4,9 +4,6 @@ import datamapper.Publication;
 import datamapper.ResearchPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.Translator;
-
-import java.io.Serializable;
 import java.util.*;
 
 public class Author extends ResearchPoint {

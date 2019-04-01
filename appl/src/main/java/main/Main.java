@@ -33,9 +33,7 @@ public class Main {
         Navigator.webClient.setTimeout(Navigator.timeOut);
 
 //      RinzParser parser = new RinzParser(new Author("Терехов", "Андрей", "Николаевич"));
-//      RinzParser parser = new RinzParser(new Author("Ловягин", "Юрий", "Никитич"));
 //      RinzParser parser = new RinzParser(new Theme("социоинженерные атаки"));
-//      RinzParser parser = new RinzParser(new Theme("МЕМЫ И СОЦИОИНЖЕНЕРНЫЕ АТАКИ В ВИРТУАЛЬНОМ ПРОСТРАНСТВЕ"));
 //      RinzParser parser = new RinzParser(new Author("Галактионов", "Владимир", "Михайлович"));
 
         if (params.deserializeMode) {

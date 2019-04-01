@@ -20,14 +20,17 @@ public class ClustererScore {
     // ========= distances =========================
     private FloydWarshallShortestPaths shortestPaths;
     private double[][]    A;
+    private List<ClusterAuthors> clusters;
 
     Set<ClusterAuthors> splittedComponent = new HashSet<>();
 
-    public ClustererScore(AsSubgraph subgraph, double[][] distances, int i){
+    public ClustererScore(List<ClusterAuthors> clusters, AsSubgraph subgraph, double[][] distances, int i){
 
         this.subgraph = subgraph;
         this.A  = distances;
         this.shortestPaths = new FloydWarshallShortestPaths(subgraph);
+
+        this.clusters = clusters;
 
         this.splittedComponent.addAll(AuthorsDB.authorsInCluster.get(i));
         logger.info(new Double(this.m()).toString());
@@ -70,8 +73,15 @@ public class ClustererScore {
     }
 
     public int sigm(int i, int j){
+
         List<Author> auth = new  LinkedList<Author>(subgraph.vertexSet());
-        if (auth.get(i).getCluster() == auth.get(j).getCluster()) return 1;
-        else return 0;
+        if (auth.get(i).getCluster() == auth.get(j).getCluster())
+
+        for(ClusterAuthors clusterAuthors: this.clusters){
+            if (clusterAuthors.authors.contains(auth.get(i)) && clusterAuthors.authors.contains(auth.get(j))){
+                return 1;
+            }
+        }
+        return 0;
     }
 }

@@ -3,6 +3,7 @@ package io;
 import datamapper.ResearchPoint;
 import datamapper.ResearchStarters.Author;
 import graph.ClusterAuthors;
+import org.jgrapht.graph.AbstractGraph;
 import org.jgrapht.graph.AsSubgraph;
 import storage.AuthorsDB;
 import datamapper.Publication;
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static storage.AuthorsDB.authorsInCluster;
 
 public class LogStatistics {
     private static final Logger logger = LoggerFactory.getLogger(LogStatistics.class);
@@ -101,6 +104,27 @@ public class LogStatistics {
         for(ClusterAuthors cl : clusters){
             logger.info(cl.toString());
         }
+    }
+
+    public static void logFinalParseStatistic(AbstractGraph graph){
+
+        logger.info("=========================");
+        logger.info("=====FINAL STATISTIC=====");
+        logger.info("=========================");
+
+        logger.info("Authors to analyze size:      " + AuthorsDB.getAuthorsStorage().size());
+        logger.info("All analyzed authors:         " + graph.vertexSet().size());
+
+        authorsInCluster.forEach((numberOfComponent, setClusters )->{
+            int[] iarr = {0}; // final not neccessary here if no other array is assigned
+            setClusters.forEach((set) -> iarr[0] +=set.authors.size());
+
+            if (iarr[0]!=0)
+                logger.info("elements in component "+ numberOfComponent+  " =  " +iarr[0]);
+
+        });
+
+        logger.info("Connected components: " + authorsInCluster.size());
     }
 
 }
