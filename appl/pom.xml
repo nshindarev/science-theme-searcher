@@ -20,10 +20,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.ccil.cowan.tagsoup</groupId>-->
-            <!--<artifactId>tagsoup</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -32,10 +28,6 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>net.htmlparser.jericho</groupId>-->
-            <!--<artifactId>jericho-html</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -72,7 +64,6 @@
             <groupId>jgrapht</groupId>
             <artifactId>jgrapht</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core -->
         <dependency>
             <groupId>org.jgrapht</groupId>
             <artifactId>jgrapht-core</artifactId>
@@ -81,13 +72,20 @@
             <groupId>org.jgrapht</groupId>
             <artifactId>jgrapht-io</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.ibm.icu/icu4j -->
         <dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1212.jre7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.12.Final</version>
+        </dependency>
         <!-- Тестирование -->
         <dependency>
             <groupId>junit</groupId>
