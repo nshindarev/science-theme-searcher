@@ -29,9 +29,9 @@ CREATE TABLE postgres_sts.science_theme_searcher.Publication (
     PRIMARY KEY (Id)
     );
 
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Keywords;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Keyword;
 
-CREATE TABLE postgres_sts.science_theme_searcher.Keywords (
+CREATE TABLE postgres_sts.science_theme_searcher.Keyword (
                             Id SERIAL,
                             Keyword VARCHAR(255) NOT NULL,
     PRIMARY KEY (Id)
@@ -76,16 +76,16 @@ CREATE TABLE postgres_sts.science_theme_searcher.LinkToAuthor (
 DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.KeywordToPublication;
 
 CREATE TABLE postgres_sts.science_theme_searcher.KeywordToPublication (
-                                        Id_Keywords INTEGER NOT NULL,
+                                        Id_Keyword INTEGER NOT NULL,
                                         Id_Publication INTEGER NOT NULL
     );
 
 
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.ClusterToKeywords;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.clustertokeyword;
 
-CREATE TABLE postgres_sts.science_theme_searcher.ClusterToKeywords (
+CREATE TABLE postgres_sts.science_theme_searcher.ClusterToKeyword (
                                      Id_Cluster INTEGER NOT NULL,
-                                     Id_Keywords INTEGER NOT NULL
+                                     Id_Keyword INTEGER NOT NULL
     );
 
 ALTER TABLE postgres_sts.science_theme_searcher.ClusterToAuthor ADD FOREIGN KEY (Id_Cluster) REFERENCES Cluster (Id);
@@ -94,7 +94,7 @@ ALTER TABLE postgres_sts.science_theme_searcher.AuthorToPublication ADD FOREIGN 
 ALTER TABLE postgres_sts.science_theme_searcher.AuthorToPublication ADD FOREIGN KEY (Id_Publication) REFERENCES Publication (Id);
 ALTER TABLE postgres_sts.science_theme_searcher.LinkToAuthor ADD FOREIGN KEY (Id_Link) REFERENCES Link (Id);
 ALTER TABLE postgres_sts.science_theme_searcher.LinkToAuthor ADD FOREIGN KEY (Id_Author) REFERENCES Author (Id);
-ALTER TABLE postgres_sts.science_theme_searcher.KeywordToPublication ADD FOREIGN KEY (Id_Keywords) REFERENCES Keywords (Id);
+ALTER TABLE postgres_sts.science_theme_searcher.KeywordToPublication ADD FOREIGN KEY (id_keyword) REFERENCES Keyword (Id);
 ALTER TABLE postgres_sts.science_theme_searcher.KeywordToPublication ADD FOREIGN KEY (Id_Publication) REFERENCES Publication (Id);
-ALTER TABLE postgres_sts.science_theme_searcher.ClusterToKeywords ADD FOREIGN KEY (Id_Cluster) REFERENCES Cluster (Id);
-ALTER TABLE postgres_sts.science_theme_searcher.ClusterToKeywords ADD FOREIGN KEY (Id_Keywords) REFERENCES Keywords (Id);
+ALTER TABLE postgres_sts.science_theme_searcher.clustertokeyword ADD FOREIGN KEY (Id_Cluster) REFERENCES Cluster (Id);
+ALTER TABLE postgres_sts.science_theme_searcher.clustertokeyword ADD FOREIGN KEY (id_keyword) REFERENCES Keyword (Id);
