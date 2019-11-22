@@ -1,3 +1,5 @@
+package auth;
+
 import datamapper.ResearchStarters.Author;
 import org.junit.Test;
 

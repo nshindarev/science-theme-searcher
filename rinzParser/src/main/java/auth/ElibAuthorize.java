@@ -1,10 +1,10 @@
 package auth;
 
 import com.gargoylesoftware.htmlunit.html.*;
-import io.FileWriterWrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.Navigator;
+import parser.Navigator;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -37,7 +37,7 @@ public class ElibAuthorize {
     private void auth() throws IOException {
             HtmlPage startPage = Navigator.webClient.getPage(elib_start);
             logger.info("received page from " + elib_start);
-            logger.info(startPage.asXml());
+            logger.info(startPage.asText());
 
             for (HtmlForm form : startPage.getForms()) {
                 logger.debug(form.toString());
@@ -59,11 +59,5 @@ public class ElibAuthorize {
 
             logger.debug(searchResults.asText());
             this.elibraryStartPage = searchResults;
-    }
-
-    public HtmlPage getElibraryStartPage(){
-        logger.trace(this.elibraryStartPage.asText());
-        return this.elibraryStartPage;
-
     }
 }

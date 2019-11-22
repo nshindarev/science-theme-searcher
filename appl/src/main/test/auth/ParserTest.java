@@ -1,3 +1,5 @@
+package auth;
+
 import com.apporiented.algorithm.clustering.ClusteringAlgorithm;
 import com.apporiented.algorithm.clustering.DefaultClusteringAlgorithm;
 import org.junit.Test;

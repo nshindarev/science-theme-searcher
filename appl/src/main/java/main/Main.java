@@ -27,14 +27,11 @@ public class Main {
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
         java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
 
+
         AuthorsDB.initAuthorsStorage();
         AuthorsDB.initPublicationsStorage();
 
         Navigator.webClient.setTimeout(Navigator.timeOut);
-
-//      RinzParser parser = new RinzParser(new Author("Терехов", "Андрей", "Николаевич"));
-//      RinzParser parser = new RinzParser(new Theme("социоинженерные атаки"));
-//      RinzParser parser = new RinzParser(new Author("Галактионов", "Владимир", "Михайлович"));
 
         if (params.deserializeMode) {
              AuthorsDB.addToAuthorsStorage(Serializer.deserializeData());
