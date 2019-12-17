@@ -2,6 +2,7 @@ package service;
 
 import dao.PublicationDao;
 import model.Publication;
+import util.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
@@ -29,5 +30,13 @@ public class PublicationService {
 
     public List<Publication> findAllPublications() {
         return publicationDao.findAll();
+    }
+
+    public void openConnection() {
+        publicationDao.openConnection();
+    }
+
+    public void closeConnection() {
+        publicationDao.closeConnection();
     }
 }

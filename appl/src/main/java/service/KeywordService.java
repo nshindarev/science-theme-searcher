@@ -2,6 +2,7 @@ package service;
 
 import dao.KeywordDao;
 import model.Keyword;
+import util.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
@@ -29,5 +30,13 @@ public class KeywordService {
 
     public List<Keyword> findAllKeywords() {
         return keywordDao.findAll();
+    }
+
+    public void openConnection() {
+        keywordDao.openConnection();
+    }
+
+    public void closeConnection() {
+        keywordDao.closeConnection();
     }
 }

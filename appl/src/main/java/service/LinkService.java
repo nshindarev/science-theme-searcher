@@ -2,6 +2,7 @@ package service;
 
 import dao.LinkDao;
 import model.Link;
+import util.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
@@ -29,5 +30,13 @@ public class LinkService {
 
     public List<Link> findAllLinks() {
         return linkDao.findAll();
+    }
+
+    public void openConnection() {
+        linkDao.openConnection();
+    }
+
+    public void closeConnection() {
+        linkDao.closeConnection();
     }
 }

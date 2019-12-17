@@ -2,6 +2,7 @@ package service;
 
 import dao.AuthorDao;
 import model.Author;
+import util.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
@@ -29,5 +30,14 @@ public class AuthorService {
 
     public List<Author> findAllAuthors() {
         return authorDao.findAll();
+    }
+
+
+    public void openConnection() {
+        authorDao.openConnection();
+    }
+
+    public void closeConnection() {
+        authorDao.closeConnection();
     }
 }

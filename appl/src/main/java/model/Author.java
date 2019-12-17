@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "author", schema = "science_theme_schema")
+@Entity(name = "author")
+@Table(name = "author", schema = "science_theme_searcher")
 public class Author {
 
     @Id
@@ -45,10 +46,10 @@ public class Author {
     @Getter
     @Setter
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "authortopublication",
+    @JoinTable(name = "authortopublication", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_publication"))
-    private Set<Publication> publications;
+    private Set<Publication> publications = new HashSet<>();
 
     public void addPublication(Publication publication) {
         this.publications.add(publication);
@@ -57,22 +58,22 @@ public class Author {
     @Getter
     @Setter
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "clustertoauthor",
+    @JoinTable(name = "clustertoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_cluster"))
-    private Set<Cluster> clusters;
+    public Set<Cluster> clusters = new HashSet<>();
 
     public void addCluster(Cluster cluster) {
-        this.clusters.add(cluster);
+        clusters.add(cluster);
     }
 
     @Getter
     @Setter
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "linktoauthor",
+    @JoinTable(name = "linktoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_link"))
-    private Set<Link> links;
+    private Set<Link> links = new HashSet<>();
 
     public void addLink(Link link) {
         this.links.add(link);

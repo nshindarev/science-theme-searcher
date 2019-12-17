@@ -8,36 +8,41 @@ import util.HibernateSessionFactoryUtil;
 import java.util.List;
 
 public class PublicationDao {
+    Session session;
+
     public Publication findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Publication.class, id);
+        Publication publication = session.get(Publication.class, id);
+        return publication;
     }
 
     public void save(Publication publication) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.save(publication);
         tx1.commit();
-        session.close();
     }
 
     public void update(Publication publication) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.update(publication);
         tx1.commit();
-        session.close();
     }
 
     public void delete(Publication publication) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(publication);
         tx1.commit();
-        session.close();
     }
 
     public List<Publication> findAll() {
-        List<Publication> publications = (List<Publication>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From publication").list();
+        List<Publication> publications = (List<Publication>) session.createQuery("From science_theme_searcher.publication").list();
         return publications;
+    }
+
+    public void openConnection() {
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+    }
+
+    public void closeConnection() {
+        session.close();
     }
 }

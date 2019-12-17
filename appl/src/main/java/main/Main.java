@@ -1,26 +1,31 @@
 package main;
 
-import auth.ProxyHandler;
-import datamapper.ResearchStarters.Author;
 import datamapper.ResearchStarters.Theme;
 import graph.CitationGraphDB;
 import graph.Clusterer;
-import graph.Clusterizer;
 import io.LogStatistics;
 import io.Parameters;
-import io.Serializer;
+import model.Author;
+import model.Cluster;
+import model.Keyword;
 import org.apache.commons.cli.*;
-import storage.AuthorsDB;
+import service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.ClusterService;
+import service.KeywordService;
+import storage.AuthorsDB;
 import util.Navigator;
+import io.Serializer;
 
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.logging.Level;
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main (String[] args) throws IOException {
         Parameters params = parseParameters(args);
 
@@ -57,6 +62,29 @@ public class Main {
         neo4jDB.cleanDB();
         neo4jDB.storeParserResults();
     }
+
+    //TODO: Example of adding many-to-many connections into the database. Delete before merge into muster.
+//    public static void main(String[] args) {
+//        AuthorService authorService = new AuthorService();
+//        authorService.openConnection();
+//        KeywordService keywordService = new KeywordService();
+//        keywordService.openConnection();
+//        ClusterService clusterService = new ClusterService();
+//        clusterService.openConnection();
+//
+//
+//        Author author = authorService.findAuthor(3);
+//        Keyword key = keywordService.findKeyword(2);
+//        Cluster cluster = clusterService.findCluster(2);
+//
+//        keywordService.closeConnection();
+//        cluster.addKeyword(key);
+//        clusterService.updateCluster(cluster);
+//
+//        clusterService.closeConnection();
+//        author.addCluster(cluster);
+//        authorService.updateAuthor(author);
+//    }
 
 
     private static final String theme =          "theme";
@@ -95,7 +123,7 @@ public class Main {
                     parameters.startPoint = new Theme(cl.getOptionValue(theme));
                 }
                 else if(cl.hasOption(surname) && cl.hasOption(name)){
-                    parameters.startPoint = new Author(cl.getOptionValue(surname), cl.getOptionValue(name));
+//                    parameters.startPoint = new Author(cl.getOptionValue(surname), cl.getOptionValue(name));
                 }
 
                 if (cl.hasOption(searchLimit)){

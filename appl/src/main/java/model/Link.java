@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "link", schema = "science_theme_schema")
+@Entity(name = "link")
+@Table(name = "link", schema = "science_theme_searcher")
 public class Link {
 
     @Id
@@ -25,10 +26,10 @@ public class Link {
     @Getter
     @Setter
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "linktoauthor",
+    @JoinTable(name = "linktoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_link"),
             inverseJoinColumns = @JoinColumn(name = "id_author"))
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>();
 
     public void addAuthor(Author author) {
         this.authors.add(author);

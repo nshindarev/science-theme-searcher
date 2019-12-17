@@ -2,6 +2,7 @@ package service;
 
 import dao.ClusterDao;
 import model.Cluster;
+import util.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
@@ -29,5 +30,13 @@ public class ClusterService {
 
     public List<Cluster> findAllClusters() {
         return clusterDao.findAll();
+    }
+
+    public void openConnection() {
+        clusterDao.openConnection();
+    }
+
+    public void closeConnection() {
+        clusterDao.closeConnection();
     }
 }

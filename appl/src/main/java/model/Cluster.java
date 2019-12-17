@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "cluster", schema = "science_theme_schema")
+@Entity(name = "cluster")
+@Table(name = "cluster", schema = "science_theme_searcher")
 public class Cluster {
 
     @Id
@@ -20,10 +21,10 @@ public class Cluster {
     @Getter
     @Setter
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "clustertoauthor",
+    @JoinTable(name = "clustertoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_cluster"),
             inverseJoinColumns = @JoinColumn(name = "id_author"))
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>();
 
     public void addAuthor(Author author) {
         this.authors.add(author);
@@ -32,10 +33,10 @@ public class Cluster {
     @Getter
     @Setter
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "clustertokeyword",
+    @JoinTable(name = "clustertokeyword", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_cluster"),
             inverseJoinColumns = @JoinColumn(name = "id_keyword"))
-    private Set<Keyword> keywords;
+    private Set<Keyword> keywords = new HashSet<>();
 
     public void addKeyword(Keyword keyword) {
         this.keywords.add(keyword);
