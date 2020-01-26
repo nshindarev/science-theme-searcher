@@ -18,13 +18,12 @@ DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Link;
 DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Cluster;
 
 CREATE TABLE postgres_sts.science_theme_searcher.Author (
-                          Id SERIAL,
+                          Id integer,
                           Name VARCHAR(255) NULL,
     Patronymic VARCHAR(255) NULL,
     Surname VARCHAR(255) NOT NULL,
     N VARCHAR(1) NULL,
     P VARCHAR(1) NULL,
-    UNIQUE (Surname, N, P),
     PRIMARY KEY (Id)
     );
 

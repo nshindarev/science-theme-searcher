@@ -20,12 +20,12 @@ public class Author {
         this.surname = surname;
         this.n = n;
         this.p = p;
+        this.id = hashCode();
     }
 
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Getter
@@ -103,9 +103,9 @@ public class Author {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        int result = surname != null ? surname.hashCode() : 0;
+        result = 31 * result + (n != null ? n.hashCode() : 0);
+        result = 1024 * result + (p != null ? p.hashCode() : 0);
         return result;
     }
 

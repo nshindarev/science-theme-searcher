@@ -69,8 +69,14 @@ public class Main {
 
         Author author = new Author("Aleksei", "Aleksandrovich", "Suleimanov", "A", "A");
 
-        authorService.saveAuthor(author);
-        authorService.closeConnection();
+        Author old = authorService.findAuthor(author.getId());
+        if (old==null) {
+            authorService.saveAuthor(author);
+            authorService.closeConnection();
+        }
+        else {
+            System.out.println("XEXEXEXE");
+        }
     }
 
     private static final String theme =          "theme";
