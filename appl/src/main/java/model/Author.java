@@ -12,6 +12,16 @@ import java.util.Set;
 @Table(name = "author", schema = "science_theme_searcher")
 public class Author {
 
+    public Author() {}
+
+    public Author (String name, String patronymic, String surname, String n, String p) {
+        this.name = name;
+        this.patronymic = patronymic;
+        this.surname = surname;
+        this.n = n;
+        this.p = p;
+    }
+
     @Id
     @Getter
     @Setter
