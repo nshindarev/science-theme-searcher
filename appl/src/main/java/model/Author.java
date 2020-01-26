@@ -35,13 +35,13 @@ public class Author {
 
     @Getter
     @Setter
-    @Column(name = "abbreviationn")
-    private String abbreviationn;
+    @Column(name = "n")
+    private String n;
 
     @Getter
     @Setter
-    @Column(name = "abbreviations")
-    private String abbreviations;
+    @Column(name = "p")
+    private String p;
 
     @Getter
     @Setter

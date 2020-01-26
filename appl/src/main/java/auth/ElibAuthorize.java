@@ -12,8 +12,8 @@ import java.util.List;
 public class ElibAuthorize {
 
     private static final Logger logger = LoggerFactory.getLogger(ElibAuthorize.class);
-    private static final String login    = "nshindarev";
-    private static final String password = "v3r0n1k4";
+    private static final String login    = "lex.suleimanov";
+    private static final String password = "FtXTk4Vd";
 
     public static final String elib_start_authors  = "https://elibrary.ru/authors.asp";
     public static final String elib_start          = "https://elibrary.ru";

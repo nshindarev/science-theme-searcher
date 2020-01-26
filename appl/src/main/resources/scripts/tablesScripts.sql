@@ -13,8 +13,8 @@ CREATE TABLE postgres_sts.science_theme_searcher.Author (
                           Name VARCHAR(255) NOT NULL,
     Patronymic VARCHAR(255) NOT NULL,
     Surname VARCHAR(255) NOT NULL,
-    AbbreviationN VARCHAR(7) NOT NULL,
-    AbbreviationS VARCHAR(7) NOT NULL,
+    N VARCHAR(1) NOT NULL,
+    P VARCHAR(1) NOT NULL,
     PRIMARY KEY (Id)
     );
 
