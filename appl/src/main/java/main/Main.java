@@ -1,11 +1,12 @@
 package main;
 
+import datamapper.ResearchStarters.Author;
 import datamapper.ResearchStarters.Theme;
 import graph.CitationGraphDB;
 import graph.Clusterer;
 import io.LogStatistics;
 import io.Parameters;
-import model.Author;
+//import model.Author;
 import model.Cluster;
 import model.Keyword;
 import org.apache.commons.cli.*;
@@ -16,6 +17,7 @@ import service.ClusterService;
 import service.KeywordService;
 import storage.AuthorsDB;
 import util.Navigator;
+import parser.*;
 import io.Serializer;
 
 
@@ -26,6 +28,28 @@ import java.util.logging.Level;
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
+    public static void main (String[] args) throws IOException {
+
+        // ------- read console arguments -------
+        Parameters params = parseParameters(args);
+
+        // ------- configure work ---------------
+        java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
+        java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
+        Navigator.webClient.setTimeout(Navigator.timeOut);
+
+        // ------- initialize parser ------------
+        Keyword key = new Keyword();
+        key.setKeyword("социоинженерные атаки");
+        MyRinzParser parser = new MyRinzParser(key);
+
+        // ------- parser action ----------------
+        parser.search();
+
+        // ------- save data --------------------
+        // ------- clusterize -------------------
+    }
+/*
     public static void main (String[] args) throws IOException {
         Parameters params = parseParameters(args);
 
@@ -38,7 +62,7 @@ public class Main {
         Navigator.webClient.setTimeout(Navigator.timeOut);
 
 //      RinzParser parser = new RinzParser(new Author("Терехов", "Андрей", "Николаевич"));
-//      RinzParser parser = new RinzParser(new Theme("социоинженерные атаки"));
+      RinzParser parser = new RinzParser(new Keyword());
 //      RinzParser parser = new RinzParser(new Author("Галактионов", "Владимир", "Михайлович"));
 
         if (params.deserializeMode) {
@@ -62,8 +86,9 @@ public class Main {
         neo4jDB.cleanDB();
         neo4jDB.storeParserResults();
     }
+*/
 
-    //TODO: Example of adding many-to-many connections into the database. Delete before merge into muster.
+//    //TODO: Example of adding many-to-many connections into the database. Delete before merge into muster.
 //    public static void main(String[] args) {
 //        AuthorService authorService = new AuthorService();
 //        authorService.openConnection();

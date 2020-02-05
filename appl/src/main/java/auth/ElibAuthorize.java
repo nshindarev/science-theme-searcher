@@ -30,29 +30,18 @@ public class ElibAuthorize {
        }
     }
 
-    /**
-     * auth is necessary only when it's exception thrown with current IP address
-     * in other case elib_start_authors can be used
-     */
     private void auth() throws IOException {
             HtmlPage startPage = Navigator.webClient.getPage(elib_start);
             logger.info("received page from " + elib_start);
-            logger.info(startPage.asXml());
-
-            for (HtmlForm form : startPage.getForms()) {
-                logger.debug(form.toString());
-            }
 
             // goto form "login"
             HtmlForm form = startPage.getFormByName("login");
-
             HtmlTextInput txtField      = form.getInputByName("login");
-            txtField.setValueAttribute(this.login);
-
             HtmlPasswordInput pswField = form.getInputByName("password");
+
+            txtField.setValueAttribute(this.login);
             pswField.setValueAttribute(this.password);
 
-            logger.trace(form.asText());
 
             List<HtmlElement> elements = form.getElementsByAttribute("div", "class", "butred");
             HtmlPage searchResults = elements.get(0).click();
@@ -62,8 +51,6 @@ public class ElibAuthorize {
     }
 
     public HtmlPage getElibraryStartPage(){
-        logger.trace(this.elibraryStartPage.asText());
         return this.elibraryStartPage;
-
     }
 }

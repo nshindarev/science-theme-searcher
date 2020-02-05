@@ -7,6 +7,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 import datamapper.ResearchStarters.Author;
 import datamapper.ResearchStarters.Theme;
 import io.FileWriterWrap;
+import model.Keyword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,6 @@ public class Navigator {
     private HtmlPage currentPage;
     private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 
-//    public static final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6, "110.172.140.57", 63141);
     public static final WebClient webClient = new WebClient();
     public static final int timeOut = 10000;
 
@@ -28,11 +28,28 @@ public class Navigator {
     public static HtmlPage authorSearchPage;
 
     private Navigator(){
-
     }
 
 
+
+    public static HtmlPage navigateByKeyword (Keyword key, HtmlPage homePage){
+        HtmlForm form = homePage.getFormByName("search");
+        HtmlTextInput textField = form.getInputByName("ftext");
+        textField.setValueAttribute(key.getKeyword());
+
+        try{
+            List<HtmlElement> listElements = form.getElementsByAttribute("div", "class", "butblue");
+            HtmlPage resultPage = listElements.get(0).click();
+            return resultPage;
+        }
+        catch(IOException ex){
+            logger.error("===== btn click error ======");
+            logger.error(ex.getMessage());
+            return homePage;
+        }
+    }
     // дефолтная страница с полями для ввода автора
+    @Deprecated
     public static HtmlPage navigateToAuthorsSearchPage(HtmlPage startPage){
         HtmlAnchor anchor = startPage.getAnchorByHref("/authors.asp");
 //        logger.trace(anchor.toString());
@@ -50,6 +67,7 @@ public class Navigator {
         return startPage;
     }
 
+    @Deprecated
     public static HtmlPage navigateToThemeSearchResults(Theme theme, HtmlPage homePage){
         HtmlForm form = homePage.getFormByName("search");
         HtmlTextInput textField = form.getInputByName("ftext");
@@ -70,7 +88,9 @@ public class Navigator {
             return homePage;
         }
     }
+
     // метод вводит ФИО автора и кликает на поиск
+    @Deprecated
     public static HtmlPage navigateToAuthorsSearchResults(Author authorInfo, HtmlPage defaultAuthSearchPage){
 
 
@@ -119,7 +139,7 @@ public class Navigator {
         }
     }
 
-
+    @Deprecated
     public static HtmlPage navigateToPublications(Author author) throws IOException{
 
         try {
@@ -139,6 +159,8 @@ public class Navigator {
         return null;
 
     }
+
+    @Deprecated
     public static HtmlPage navigateToAuthor(Author author) throws IOException {
         if (author.linkToUser != null){
             return Navigator.webClient.getPage(author.linkToUser);
@@ -146,8 +168,7 @@ public class Navigator {
         else return null;
     }
 
-
-
+    @Deprecated
     public static HtmlPage navigateToNextPublications(HtmlPage page){
         try{
             HtmlForm form = page.getFormByName("results");

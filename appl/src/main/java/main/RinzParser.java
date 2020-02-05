@@ -11,6 +11,7 @@ import datamapper.ResearchPoint;
 import graph.Clusterizer;
 import io.FileWriterWrap;
 import io.LogStatistics;
+import model.Keyword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import storage.AuthorsDB;
@@ -23,9 +24,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class RinzParser {
     private static final Logger logger  = LoggerFactory.getLogger(RinzParser.class);
 
+
     private Author author;
     private Theme theme;
     private ResearchPoint searchPoint;
+
+    private Keyword keyword;
 
     public RinzParser (ResearchPoint point){
         if (point instanceof Theme){
@@ -41,8 +45,19 @@ public class RinzParser {
     public RinzParser (Author author){
         this.author = author;
     }
+    public RinzParser (Keyword keyword){ this.keyword = keyword; }
 
+    public void search(){
+        // __________authorization______________
+        ElibAuthorize auth = new ElibAuthorize();
+        HtmlPage startPage = auth.getElibraryStartPage();
 
+        if (this.keyword!=null){
+            HtmlPage resPage   = Navigator.navigateByKeyword(keyword, startPage);
+        }
+    }
+
+    @Deprecated
     public void startResearch(){
         // __________authorization______________
         ElibAuthorize auth = new ElibAuthorize();

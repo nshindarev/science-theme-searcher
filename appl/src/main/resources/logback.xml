@@ -15,11 +15,23 @@
     </appender>
 
     <logger name="appl"                                    level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
-    <logger name="appl.src.main.java.graph.Clusterer"      level="trace"    additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.main.java.graph.Clusterer"      level="trace"   additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.java.auth.ElibAuthorize"   level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.java.RinzParser"           level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.java"                      level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.test"                      level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.main.java.parser"               level="trace"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.model"                          level="trace"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="o.hibernate"                              level="error"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="o.h"                                      level="error"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+
+<!--     hibernate log disable -->
+    <logger name="org.hibernate" level="warn" />
+    <logger name="org.hibernate.SQL" level="debug" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="warn" />
+    <logger name="org.hibernate.type.BasicTypeRegistry" level="warn" />
+    <logger name="net.sf.ehcache" level="warn" />
+    <logger name="org.jboss" level="warn" />
 
     <!-- root -->
     <root level="TRACE">

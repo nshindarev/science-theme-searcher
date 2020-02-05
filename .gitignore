@@ -14,3 +14,12 @@ buildNumber.properties
 authorsSearchPage.xml
 basicSearchResults.xml
 authorSearchRezults.xml
+appl/src/main/resources/authors.txt
+appl/src/main/resources/authorSearchResults.xml
+appl/src/main/resources/authorsGraphCsv
+appl/src/main/resources/authPage.xml
+appl/src/main/resources/graphCsvFormat
+appl/src/main/resources/graphForPython
+appl/src/main/resources/error/authorSearchFieldNotFound.xml
+appl/src/main/resources/serialized/authDB.out
+appl/src/main/resources/serialized/jgraph_obj.out
