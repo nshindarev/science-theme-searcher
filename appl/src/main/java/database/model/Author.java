@@ -1,4 +1,4 @@
-package model;
+package database.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,12 +14,11 @@ public class Author {
 
     public Author() {}
 
-    public Author (String name, String patronymic, String surname, String n, String p) {
-        this.name = name;
-        this.patronymic = patronymic;
+    public Author (String surname, String n, String p) {
         this.surname = surname;
         this.n = n;
         this.p = p;
+        this.revision = 0;
         this.id = hashCode();
     }
 
@@ -52,6 +51,11 @@ public class Author {
     @Setter
     @Column(name = "p")
     private String p;
+
+    @Getter
+    @Setter
+    @Column(name = "revision")
+    private Integer revision;
 
     @Getter
     @Setter

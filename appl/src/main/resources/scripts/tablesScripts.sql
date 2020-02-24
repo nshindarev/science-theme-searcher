@@ -24,6 +24,7 @@ CREATE TABLE postgres_sts.science_theme_searcher.Author (
     Surname VARCHAR(255) NOT NULL,
     N VARCHAR(1) NULL,
     P VARCHAR(1) NULL,
+    Revision integer DEFAULT 0,
     PRIMARY KEY (Id)
     );
 

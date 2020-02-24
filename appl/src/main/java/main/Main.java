@@ -1,25 +1,16 @@
 package main;
 
 import datamapper.ResearchStarters.Theme;
-import graph.CitationGraphDB;
-import graph.Clusterer;
-import io.LogStatistics;
 import io.Parameters;
-import model.Author;
-import model.Cluster;
-import model.Keyword;
+import database.model.Author;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import service.AuthorService;
-import service.ClusterService;
-import service.KeywordService;
-import storage.AuthorsDB;
-import util.Navigator;
-import io.Serializer;
+import database.service.AuthorService;
+import database.service.ClusterService;
+import database.service.KeywordService;
 
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
@@ -62,12 +53,8 @@ public class Main {
 
         AuthorService authorService = new AuthorService();
         authorService.openConnection();
-        KeywordService keywordService = new KeywordService();
-        keywordService.openConnection();
-        ClusterService clusterService = new ClusterService();
-        clusterService.openConnection();
 
-        Author author = new Author("Aleksei", "Aleksandrovich", "Suleimanov", "A", "A");
+        Author author = new Author("Suleimanov", "A", "A");
 
         Author old = authorService.findAuthor(author.getId());
         if (old==null) {
@@ -75,7 +62,7 @@ public class Main {
             authorService.closeConnection();
         }
         else {
-            System.out.println("XEXEXEXE");
+            System.out.println("TEST COMPLETED");
         }
     }
 

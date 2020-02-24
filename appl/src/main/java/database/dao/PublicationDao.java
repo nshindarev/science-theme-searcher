@@ -1,6 +1,6 @@
-package dao;
+package database.dao;
 
-import model.Publication;
+import database.model.Publication;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateSessionFactoryUtil;

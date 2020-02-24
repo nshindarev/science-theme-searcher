@@ -1,4 +1,4 @@
-package model;
+package database.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity(name = "cluster")
-@Table(name = "cluster", schema = "science_theme_searcher")
-public class Cluster {
+@Entity(name = "publication")
+@Table(name = "publication", schema = "science_theme_searcher")
+public class Publication {
 
     @Id
     @Getter
@@ -20,9 +20,29 @@ public class Cluster {
 
     @Getter
     @Setter
+    @Column(name = "name")
+    private String name;
+
+    @Getter
+    @Setter
+    @Column(name = "annotation")
+    private String annotation;
+
+    @Getter
+    @Setter
+    @Column(name = "descriptioneng")
+    private String descriptioneng;
+
+    @Getter
+    @Setter
+    @Column(name = "descriptionrus")
+    private String descriptionrus;
+
+    @Getter
+    @Setter
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "clustertoauthor", schema = "science_theme_searcher",
-            joinColumns = @JoinColumn(name = "id_cluster"),
+    @JoinTable(name = "authortopublication", schema = "science_theme_searcher",
+            joinColumns = @JoinColumn(name = "id_publication"),
             inverseJoinColumns = @JoinColumn(name = "id_author"))
     private Set<Author> authors = new HashSet<>();
 
@@ -33,8 +53,8 @@ public class Cluster {
     @Getter
     @Setter
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "clustertokeyword", schema = "science_theme_searcher",
-            joinColumns = @JoinColumn(name = "id_cluster"),
+    @JoinTable(name = "keywordtopublication", schema = "science_theme_searcher",
+            joinColumns = @JoinColumn(name = "id_publication"),
             inverseJoinColumns = @JoinColumn(name = "id_keyword"))
     private Set<Keyword> keywords = new HashSet<>();
 
@@ -47,20 +67,24 @@ public class Cluster {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Cluster that = (Cluster) o;
+        Publication that = (Publication) o;
         if (id != that.id) return false;
+        if (!Objects.equals(name, that.name)) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
-        return "Cluster {" +
+        return "Publication {" +
                 "id: " + id +
+                ", name: '" + name + '\'' +
                 '}';
     }
 }

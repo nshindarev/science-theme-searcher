@@ -1,8 +1,7 @@
-package service;
+package database.service;
 
-import dao.AuthorDao;
-import model.Author;
-import util.HibernateSessionFactoryUtil;
+import database.dao.AuthorDao;
+import database.model.Author;
 
 import java.util.List;
 

@@ -1,8 +1,6 @@
-package dao;
+package database.dao;
 
-import model.Author;
-import model.Cluster;
-import model.Keyword;
+import database.model.Cluster;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateSessionFactoryUtil;
