@@ -19,7 +19,7 @@ public class Navigator {
     private HtmlPage currentPage;
     private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 
-    public static final WebClient webClient = new WebClient();
+    public static final WebClient webClient = new WebClient(BrowserVersion.CHROME);
     public static final int timeOut = 10000;
 
     public static int searchLimit = 30;

@@ -1,5 +1,6 @@
 package auth;
 
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.html.*;
 import io.FileWriterWrap;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ public class ElibAuthorize {
     private static final String password = "v3r0n1k4";
 
     public static final String elib_start_authors  = "https://elibrary.ru/authors.asp";
-    public static final String elib_start          = "https://elibrary.ru";
+    public static final String elib_start          = "https://www.elibrary.ru";
 
     //page returned after
     private HtmlPage elibraryStartPage;
@@ -32,22 +33,29 @@ public class ElibAuthorize {
 
     private void auth() throws IOException {
             HtmlPage startPage = Navigator.webClient.getPage(elib_start);
+            logger.trace(startPage.asText());
+
             logger.info("received page from " + elib_start);
 
-            // goto form "login"
-            HtmlForm form = startPage.getFormByName("login");
-            HtmlTextInput txtField      = form.getInputByName("login");
-            HtmlPasswordInput pswField = form.getInputByName("password");
+            try{
+                // goto form "login"
+                HtmlForm form = startPage.getFormByName("login");
+                HtmlTextInput txtField      = form.getInputByName("login");
+                HtmlPasswordInput pswField = form.getInputByName("password");
 
-            txtField.setValueAttribute(this.login);
-            pswField.setValueAttribute(this.password);
+                txtField.setValueAttribute(this.login);
+                pswField.setValueAttribute(this.password);
 
 
-            List<HtmlElement> elements = form.getElementsByAttribute("div", "class", "butred");
-            HtmlPage searchResults = elements.get(0).click();
+                List<HtmlElement> elements = form.getElementsByAttribute("div", "class", "butred");
+                HtmlPage searchResults = elements.get(0).click();
 
-            logger.debug(searchResults.asText());
-            this.elibraryStartPage = searchResults;
+                logger.debug(searchResults.asText());
+                this.elibraryStartPage = searchResults;
+            }
+            catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex){
+                this.elibraryStartPage = startPage;
+            }
     }
 
     public HtmlPage getElibraryStartPage(){

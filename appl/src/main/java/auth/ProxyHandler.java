@@ -18,8 +18,8 @@ public class ProxyHandler {
      */
 
      public static void setNewProxy(){
-        WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6, "139.59.73.89", 80);
-
-        webClient.getProxyConfig().toString();
+//        WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6, "139.59.73.89", 80);
+//
+//        webClient.getProxyConfig().toString();
     }
 }

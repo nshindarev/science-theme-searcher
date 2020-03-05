@@ -151,13 +151,11 @@ public class RinzParser {
      * @return
      */
     private Author setLinkToAuthor(Author author, HtmlPage curPage){
-        logger.debug(curPage.asText());
         List<String> result = new LinkedList<>();
 
         try{
             HtmlTable table = curPage.getHtmlElementById("restab");
 
-            List<HtmlTableRow> rows = table.getRows();
             for (HtmlTableRow row : table.getRows()) {
                 if (row.getIndex() < 3) {
                     continue;

@@ -36,7 +36,7 @@ public class Main {
         // ------- configure work ---------------
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
         java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
-        Navigator.webClient.setTimeout(Navigator.timeOut);
+        Navigator.webClient.setJavaScriptTimeout(Navigator.timeOut);
 
         // ------- initialize parser ------------
         Keyword key = new Keyword();
