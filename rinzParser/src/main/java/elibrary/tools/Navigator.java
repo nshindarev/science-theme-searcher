@@ -18,6 +18,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -78,8 +79,33 @@ public class Navigator {
 
     public static HtmlPage getAuthorSearchResultsPage(Author authorInfo){
         try {
-            HtmlPage authSearchPage = new WebClient().getPage(Pages.authorSearchPage.getUrl());
+
+            WebClient wc = new WebClient(BrowserVersion.CHROME);
+            wc.getOptions().setCssEnabled(true);
+            wc.getOptions().setJavaScriptEnabled(true);
+            wc.getOptions().setThrowExceptionOnScriptError(true);
+            wc.waitForBackgroundJavaScript(25000);
+            wc.setJavaScriptTimeout(25000);
+            wc.getCache().clear();
+
+
+            HtmlPage authSearchPage = wc.getPage(Pages.authorSearchPage.getUrl());
             HtmlTextInput surnameInput = authSearchPage.getHtmlElementById("surname");
+
+            HtmlElement _form = authSearchPage.getHtmlElementById("show_param");
+            List<HtmlElement> _listElements = _form.getElementsByAttribute("div","class", "butblue");
+
+            try{
+                if (_listElements.size()>0) {
+                    HtmlElement firstRes = _listElements.get(0);
+                    firstRes.click();
+                }
+            }
+            catch (IndexOutOfBoundsException ex){
+                logger.warn("cannot click clear button: " +  authorInfo.toString());
+                return Pages.authorSearchPage;
+            }
+
 
 
             // check if patronymic was inserted
@@ -104,19 +130,20 @@ public class Navigator {
                 surnameInput.setDefaultValue(authorInfo.getSurname());
             }
 
-
-            /**
-             *  throws IndexOutOfBoundsException ???
-             */
-//            HtmlPage resultPage = (HtmlPage)surnameInput.type('\n');
-//            return resultPage;
-
-
+            // find search button
             HtmlElement form = authSearchPage.getHtmlElementById("show_param");
             List<HtmlElement> listElements = form.getElementsByAttribute("div","class", "butred");
             HtmlPage resultPage = Pages.authorSearchPage;
+
+            //sort list by publications
+            HtmlSelect select = (HtmlSelect) authSearchPage.getElementById("sortorder");
+            select.getOptionByText("по числу публикаций").setSelected(true);
+
+
+            // click search button
             try{
                 if (listElements.size()>0) {
+
                     HtmlElement firstRes = listElements.get(0);
                     resultPage = firstRes.click();
                 }
@@ -124,7 +151,8 @@ public class Navigator {
             }
             catch (IndexOutOfBoundsException ex){
                 logger.warn("IndexOutOfBoundsException for " +  authorInfo.toString());
-                return getAuthorSearchResultsPage(authorInfo);
+                logger.warn(resultPage.asText());
+                return Pages.authorSearchPage;
             }
         }
         catch (IOException ex){
@@ -137,32 +165,19 @@ public class Navigator {
         }
     }
     public static Author  setLinkToAuthor (Author author, HtmlPage curPage){
-//        logger.trace(curPage.asText());
-        List<String> result = new LinkedList<>();
-
         try{
             HtmlTable table = curPage.getHtmlElementById("restab");
 
-            for (HtmlTableRow row : table.getRows()) {
-                if (row.getIndex() < 3) {
-                    continue;
-                }
+            HtmlAnchor anchor = (HtmlAnchor)table.getRow(3)
+                    .getElementsByAttribute("a", "title", "Список публикаций данного автора в РИНЦ")
+                    .get(0);
 
-               List a = table.getRow(3).getCell(3).getElementsByAttribute("a", "title", "Анализ публикационной активности автора");
-
-                if (!a.isEmpty()) {
-                    HtmlAnchor anchor = (HtmlAnchor) a.get(0);
-                    String value = anchor.getAttribute("href");
-                    result.add("http://elibrary.ru/" + value);
-
-                    author.addLink(new Link("http://elibrary.ru/" + value));
-                }
-            }
+            author.addLink(new Link("http://elibrary.ru/" + anchor.getAttribute("href")));
         }
         catch(ElementNotFoundException ex){
             logger.warn("Found author without page " + author.getSurname());
         }
-
+        
         logger.trace("LINK TO "+author.toString()+" ==> " + author.getLinks().toString());
         return author;
     }
