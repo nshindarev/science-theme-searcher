@@ -77,6 +77,11 @@ public class Navigator {
     }
 
 
+    /**
+     * returns result search page for author's page
+     * @param authorInfo
+     * @return
+     */
     public static HtmlPage getAuthorSearchResultsPage(Author authorInfo){
         try {
 
@@ -164,22 +169,6 @@ public class Navigator {
             return Pages.authorSearchPage;
         }
     }
-    public static Author  setLinkToAuthor (Author author, HtmlPage curPage){
-        try{
-            HtmlTable table = curPage.getHtmlElementById("restab");
 
-            HtmlAnchor anchor = (HtmlAnchor)table.getRow(3)
-                    .getElementsByAttribute("a", "title", "Список публикаций данного автора в РИНЦ")
-                    .get(0);
-
-            author.addLink(new Link("http://elibrary.ru/" + anchor.getAttribute("href")));
-        }
-        catch(ElementNotFoundException ex){
-            logger.warn("Found author without page " + author.getSurname());
-        }
-        
-        logger.trace("LINK TO "+author.toString()+" ==> " + author.getLinks().toString());
-        return author;
-    }
 
 }

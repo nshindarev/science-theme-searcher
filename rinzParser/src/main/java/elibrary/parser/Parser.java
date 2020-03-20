@@ -1,14 +1,13 @@
 package elibrary.parser;
 
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
-import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import com.gargoylesoftware.htmlunit.html.*;
 import elibrary.tools.LogParser;
 import elibrary.tools.Navigator;
 import elibrary.tools.Pages;
 import model.Author;
 import model.Keyword;
+import model.Link;
 import model.Publication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +35,15 @@ public class Parser {
     }
 
     /**
-     *  method starts handles keyword search results:
+     *  method starts handling keyword search results:
      *  <a> {publicationName} <a/>
      *  <i> {author 1},{author 2}<i/>
      */
     private Map<Publication, List<Author>> getKeywordResults (HtmlPage page){
+        //TODO: unique search!!!
+        Set<Author> authorSet = new HashSet<>();
+        Set<Publication> publicationSet = new HashSet<>();
+
         Map result = new HashMap<Publication, List<Author>>();
         final HtmlTable rezultsTable = page.getHtmlElementById("restab");
 
@@ -48,7 +51,6 @@ public class Parser {
             if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
                 HtmlElement publName = row.getElementsByTagName("a").get(0);
                 HtmlElement authNames = row.getElementsByTagName("i").get(0);
-
 
 
                 List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
@@ -59,19 +61,45 @@ public class Parser {
                 // --- get link for authors pages
                 for (String auth : authInPubl) {
                     Author authBO = Author.convertStringToAuthor(auth);
+                    if (!authorSet.contains(authBO)) {
+                        //get page
+                        HtmlPage authSearchPage = Navigator.getAuthorSearchResultsPage(authBO);
 
-                    //get page
-                    HtmlPage authSearchPage = Navigator.getAuthorSearchResultsPage(authBO);
-
-                    //set link
-                    authBO = Navigator.setLinkToAuthor(authBO, authSearchPage);
-                    authors.add(authBO);
+                        //set link
+                        authBO = Parser.setLinkToAuthor(authBO, authSearchPage);
+                        authors.add(authBO);
+                        authorSet.add(authBO);
+                    }
                 }
 
                 result.put(publ, authors);
             }
         }
         return result;
+    }
+
+    /**
+     * fills in link to page with authors publications
+     * @param author
+     * @param curPage after clicking red search button
+     * @return
+     */
+    private static Author setLinkToAuthor (Author author, HtmlPage curPage){
+        try{
+            HtmlTable table = curPage.getHtmlElementById("restab");
+
+            HtmlAnchor anchor = (HtmlAnchor)table.getRow(3)
+                    .getElementsByAttribute("a", "title", "Список публикаций данного автора в РИНЦ")
+                    .get(0);
+
+            author.addLink(new Link("http://elibrary.ru/" + anchor.getAttribute("href")));
+        }
+        catch(ElementNotFoundException ex){
+            logger.warn("Found author without page " + author.getSurname());
+        }
+
+        logger.trace("LINK TO "+author.toString()+" ==> " + author.getLinks().toString());
+        return author;
     }
 
 }
