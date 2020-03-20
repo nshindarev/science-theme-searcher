@@ -87,12 +87,16 @@ public class Parser {
     private static Author setLinkToAuthor (Author author, HtmlPage curPage){
         try{
             HtmlTable table = curPage.getHtmlElementById("restab");
+            if (table.getRows().size() >= 3){
+                HtmlAnchor anchor = (HtmlAnchor)table.getRow(3)
+                        .getElementsByAttribute("a", "title", "Список публикаций данного автора в РИНЦ")
+                        .get(0);
 
-            HtmlAnchor anchor = (HtmlAnchor)table.getRow(3)
-                    .getElementsByAttribute("a", "title", "Список публикаций данного автора в РИНЦ")
-                    .get(0);
-
-            author.addLink(new Link("http://elibrary.ru/" + anchor.getAttribute("href")));
+                author.addLink(new Link("http://elibrary.ru/" + anchor.getAttribute("href")));
+            }
+            else {
+                logger.warn("Found author without page " + author.getSurname());
+            }
         }
         catch(ElementNotFoundException ex){
             logger.warn("Found author without page " + author.getSurname());
