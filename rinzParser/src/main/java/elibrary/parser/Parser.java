@@ -40,7 +40,7 @@ public class Parser {
      *  <i> {author 1},{author 2}<i/>
      */
     private Map<Publication, List<Author>> getKeywordResults (HtmlPage page){
-        //TODO: unique search!!!
+
         Set<Author> authorSet = new HashSet<>();
         Set<Publication> publicationSet = new HashSet<>();
 

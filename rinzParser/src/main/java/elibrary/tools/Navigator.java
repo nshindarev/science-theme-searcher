@@ -60,7 +60,6 @@ public class Navigator {
     public static HtmlPage getKeywordSearchResultsPage (Keyword key){
         HtmlElement form = Pages.startPage.getHtmlElementById("win_search");
 
-//        List<HtmlElement> elt  = form.getElementsByAttribute("input", "name", "ftext");
         HtmlTextInput textField = (HtmlTextInput)form.getElementsByAttribute("input", "name", "ftext").get(0);
         textField.setValueAttribute(key.getKeyword());
 
