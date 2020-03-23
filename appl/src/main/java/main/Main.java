@@ -1,94 +1,72 @@
 package main;
 
-import datamapper.ResearchStarters.Author;
 import datamapper.ResearchStarters.Theme;
-import graph.CitationGraphDB;
-import graph.Clusterer;
-import io.LogStatistics;
 import io.Parameters;
-//import model.Author;
-import model.Cluster;
-import model.Keyword;
+import database.model.Author;
 import org.apache.commons.cli.*;
-import service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import service.ClusterService;
-import service.KeywordService;
-import storage.AuthorsDB;
-import util.Navigator;
-import parser.*;
-import io.Serializer;
-
+import database.service.AuthorService;
+import database.service.ClusterService;
+import database.service.KeywordService;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.logging.Level;
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main (String[] args) throws IOException {
+//        Parameters params = parseParameters(args);
+//
+//        java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
+//        java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
+//
+//        AuthorsDB.initAuthorsStorage();
+//        AuthorsDB.initPublicationsStorage();
+//
+//        Navigator.webClient.setTimeout(Navigator.timeOut);
+//
+////      RinzParser parser = new RinzParser(new Author("Терехов", "Андрей", "Николаевич"));
+////      RinzParser parser = new RinzParser(new Theme("социоинженерные атаки"));
+////      RinzParser parser = new RinzParser(new Author("Галактионов", "Владимир", "Михайлович"));
+//
+//        if (params.deserializeMode) {
+//             AuthorsDB.addToAuthorsStorage(Serializer.deserializeData());
+//             LogStatistics.logAuthorsDB_auth();
+//             logger.info("");
+//        }
+//        else {
+//            new RinzParser(params.startPoint).startResearch();
+//            Serializer.serializeData();
+//        }
+//
+//        Navigator.webClient.closeAllWindows();
+//
+//        Clusterer clusterizer = new Clusterer(Serializer.convertDbToGraph());
+//        clusterizer.splitConnectedComponents();
+//        clusterizer.executeClustering();
+//
+//        CitationGraphDB neo4jDB = new CitationGraphDB("bolt://localhost:7687", "neo4j", "v3r0n1k4");
+//        neo4jDB.cleanDB();
+//        neo4jDB.storeParserResults();
 
-        // ------- read console arguments -------
-        Parameters params = parseParameters(args);
 
-        // ------- configure work ---------------
-        java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
-        java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
-        Navigator.webClient.setJavaScriptTimeout(Navigator.timeOut);
+        AuthorService authorService = new AuthorService();
+        authorService.openConnection();
 
-        // ------- initialize parser ------------
-        Keyword key = new Keyword();
-        key.setKeyword("социоинженерные атаки");
-        MyRinzParser parser = new MyRinzParser(key);
+        Author author = new Author("Suleimanov", "A", "A");
 
-        // ------- parser action ----------------
-        parser.search();
-
-        // ------- save data --------------------
-        // ------- clusterize -------------------
-    }
-/*
-    public static void main (String[] args) throws IOException {
-        Parameters params = parseParameters(args);
-
-        java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
-        java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
-
-        AuthorsDB.initAuthorsStorage();
-        AuthorsDB.initPublicationsStorage();
-
-        Navigator.webClient.setTimeout(Navigator.timeOut);
-
-//      RinzParser parser = new RinzParser(new Author("Терехов", "Андрей", "Николаевич"));
-      RinzParser parser = new RinzParser(new Keyword());
-//      RinzParser parser = new RinzParser(new Author("Галактионов", "Владимир", "Михайлович"));
-
-        if (params.deserializeMode) {
-             AuthorsDB.addToAuthorsStorage(Serializer.deserializeData());
-             LogStatistics.logAuthorsDB_auth();
-             logger.info("");
+        Author old = authorService.findAuthor(author.getId());
+        if (old==null) {
+            authorService.saveAuthor(author);
+            authorService.closeConnection();
         }
         else {
-            new RinzParser(params.startPoint).startResearch();
-            Serializer.serializeData();
+            System.out.println("TEST COMPLETED");
         }
-
-        Navigator.webClient.closeAllWindows();
-
-        Clusterer clusterizer = new Clusterer(Serializer.convertDbToGraph());
-
-        clusterizer.splitConnectedComponents();
-        clusterizer.executeClustering();
-
-        CitationGraphDB neo4jDB = new CitationGraphDB("bolt://localhost:7687", "neo4j", "v3r0n1k4");
-        neo4jDB.cleanDB();
-        neo4jDB.storeParserResults();
     }
-*/
 
-//    //TODO: Example of adding many-to-many connections into the database. Delete before merge into muster.
+    //TODO: Example of adding many-to-many connections into the database. Delete before merge into muster.
 //    public static void main(String[] args) {
 //        AuthorService authorService = new AuthorService();
 //        authorService.openConnection();

@@ -6,19 +6,27 @@ CREATE DATABASE postgres_sts
 
 CREATE SCHEMA IF NOT EXISTS science_theme_searcher;
 
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.ClusterToAuthor;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Clustertokeyword;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.KeywordToPublication;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.LinkToAuthor;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.AuthorToPublication;
 DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Author;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Publication;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Keyword;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Link;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Cluster;
 
 CREATE TABLE postgres_sts.science_theme_searcher.Author (
-                          Id SERIAL,
-                          Name VARCHAR(255) NOT NULL,
-    Patronymic VARCHAR(255) NOT NULL,
+                          Id integer,
+                          Name VARCHAR(255) NULL,
+    Patronymic VARCHAR(255) NULL,
     Surname VARCHAR(255) NOT NULL,
-    N VARCHAR(1) NOT NULL,
-    P VARCHAR(1) NOT NULL,
+    N VARCHAR(1) NULL,
+    P VARCHAR(1) NULL,
+    Revision integer DEFAULT 0,
     PRIMARY KEY (Id)
     );
-
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Publication;
 
 CREATE TABLE postgres_sts.science_theme_searcher.Publication (
                                Id SERIAL,
@@ -29,15 +37,11 @@ CREATE TABLE postgres_sts.science_theme_searcher.Publication (
     PRIMARY KEY (Id)
     );
 
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Keyword;
-
 CREATE TABLE postgres_sts.science_theme_searcher.Keyword (
                             Id SERIAL,
                             Keyword VARCHAR(255) NOT NULL,
     PRIMARY KEY (Id)
     );
-
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Link;
 
 CREATE TABLE postgres_sts.science_theme_searcher.Link (
                         Id SERIAL,
@@ -45,35 +49,25 @@ CREATE TABLE postgres_sts.science_theme_searcher.Link (
     PRIMARY KEY (Id)
     );
 
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Cluster;
-
 CREATE TABLE postgres_sts.science_theme_searcher.Cluster (
                            Id SERIAL,
                            PRIMARY KEY (Id)
     );
-
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.ClusterToAuthor;
 
 CREATE TABLE postgres_sts.science_theme_searcher.ClusterToAuthor (
                                    Id_Cluster INTEGER NOT NULL,
                                    Id_Author INTEGER NOT NULL
     );
 
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.AuthorToPublication;
-
 CREATE TABLE postgres_sts.science_theme_searcher.AuthorToPublication (
                                        Id_Author INTEGER NOT NULL,
                                        Id_Publication INTEGER NOT NULL
     );
 
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.LinkToAuthor;
-
 CREATE TABLE postgres_sts.science_theme_searcher.LinkToAuthor (
                                 Id_Link INTEGER NOT NULL,
                                 Id_Author INTEGER NOT NULL
     );
-
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.KeywordToPublication;
 
 CREATE TABLE postgres_sts.science_theme_searcher.KeywordToPublication (
                                         Id_Keyword INTEGER NOT NULL,
@@ -81,7 +75,7 @@ CREATE TABLE postgres_sts.science_theme_searcher.KeywordToPublication (
     );
 
 
-DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.Clustertokeyword;
+DROP TABLE IF EXISTS postgres_sts.science_theme_searcher.clustertokeyword;
 
 CREATE TABLE postgres_sts.science_theme_searcher.ClusterToKeyword (
                                      Id_Cluster INTEGER NOT NULL,

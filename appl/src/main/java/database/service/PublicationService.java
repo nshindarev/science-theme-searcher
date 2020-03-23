@@ -1,8 +1,7 @@
-package service;
+package database.service;
 
-import dao.PublicationDao;
-import model.Publication;
-import util.HibernateSessionFactoryUtil;
+import database.dao.PublicationDao;
+import database.model.Publication;
 
 import java.util.List;
 

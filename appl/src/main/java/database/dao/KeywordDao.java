@@ -1,6 +1,6 @@
-package dao;
+package database.dao;
 
-import model.Keyword;
+import database.model.Keyword;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateSessionFactoryUtil;

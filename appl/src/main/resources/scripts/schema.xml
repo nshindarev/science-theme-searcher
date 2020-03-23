@@ -50,11 +50,11 @@
 <row name="Surname" null="0" autoincrement="0">
 <datatype>VARCHAR(255)</datatype>
 </row>
-<row name="AbbreviationN" null="0" autoincrement="0">
-<datatype>VARCHAR(7)</datatype>
+<row name="N" null="0" autoincrement="0">
+<datatype>VARCHAR(1)</datatype>
 </row>
-<row name="AbbreviationS" null="0" autoincrement="0">
-<datatype>VARCHAR(7)</datatype>
+<row name="P" null="0" autoincrement="0">
+<datatype>VARCHAR(1)</datatype>
 </row>
 <key type="PRIMARY" name="">
 <part>Id</part>

@@ -1,40 +1,41 @@
-package dao;
+package database.dao;
 
-import model.Author;
+import database.model.Link;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
-public class AuthorDao {
+public class LinkDao {
     Session session;
-    public Author findById(int id) {
-        Author author = session.get(Author.class, id);
-        return author;
+
+    public Link findById(int id) {
+        Link link = session.get(Link.class, id);
+        return link;
     }
 
-    public void save(Author author) {
+    public void save(Link link) {
         Transaction tx1 = session.beginTransaction();
-        session.save(author);
+        session.save(link);
         tx1.commit();
     }
 
-    public void update(Author author) {
+    public void update(Link link) {
         Transaction tx1 = session.beginTransaction();
-        session.update(author);
+        session.update(link);
         tx1.commit();
     }
 
-    public void delete(Author author) {
+    public void delete(Link link) {
         Transaction tx1 = session.beginTransaction();
-        session.delete(author);
+        session.delete(link);
         tx1.commit();
     }
 
-    public List<Author> findAll() {
-        List<Author> authors = (List<Author>)  session.createQuery("From science_theme_searcher.author").list();
-        return authors;
+    public List<Link> findAll() {
+        List<Link> links = (List<Link>)  session.createQuery("From science_theme_searcher.link").list();
+        return links;
     }
 
     public void openConnection() {

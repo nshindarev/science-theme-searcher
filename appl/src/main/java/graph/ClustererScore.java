@@ -1,6 +1,5 @@
 package graph;
 
-import com.apporiented.algorithm.clustering.Cluster;
 import datamapper.ResearchStarters.Author;
 import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
 import org.jgrapht.graph.AsSubgraph;
@@ -33,9 +32,6 @@ public class ClustererScore {
         this.clusters = clusters;
 
         this.splittedComponent.addAll(AuthorsDB.authorsInCluster.get(i));
-        logger.info(new Double(this.m()).toString());
-        logger.info("========== QSCORE ===========");
-        logger.info("score =  " +  QScore());
 
     }
 

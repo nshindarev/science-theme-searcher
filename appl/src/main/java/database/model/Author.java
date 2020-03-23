@@ -1,24 +1,31 @@
-package model;
+package database.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import parser.MyRinzParser;
-import scala.Char;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity(name = "author")
 @Table(name = "author", schema = "science_theme_searcher")
 public class Author {
-    private static final Logger logger = LoggerFactory.getLogger(Author.class);
+
+    public Author() {}
+
+    public Author (String surname, String n, String p) {
+        this.surname = surname;
+        this.n = n;
+        this.p = p;
+        this.revision = 0;
+        this.id = hashCode();
+    }
 
     @Id
     @Getter
     @Setter
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Getter
@@ -45,6 +52,11 @@ public class Author {
     @Setter
     @Column(name = "p")
     private String p;
+
+    @Getter
+    @Setter
+    @Column(name = "revision")
+    private Integer revision;
 
     @Getter
     @Setter
@@ -78,42 +90,8 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "id_link"))
     private Set<Link> links = new HashSet<>();
 
-
-    public Author (){
-
-    }
-    public Author (String surname, String n, String p) {
-        this.surname = surname;
-        this.n = n;
-        this.p = p;
-        this.id = hashCode();
-    }
-
     public void addLink(Link link) {
         this.links.add(link);
-    }
-
-    public static Author convertStringToAuthor (String auth) {
-
-        ArrayList<String> surname_n_p = new ArrayList<>(Arrays.asList(auth.split(" ")));
-
-        if (surname_n_p.get(0).isEmpty())
-            surname_n_p.remove(0);
-
-        try{
-            char n = surname_n_p.get(1).charAt(0);
-            char p;
-
-            if (surname_n_p.get(1).length()>=3) {
-                p = surname_n_p.get(1).charAt(2)!='.'?surname_n_p.get(1).charAt(2):' ';
-            }
-            else p = ' ';
-
-            return new Author(surname_n_p.get(0), String.valueOf(n), String.valueOf(p));
-        }
-        catch (IndexOutOfBoundsException ex){
-            LoggerFactory.getLogger(datamapper.ResearchStarters.Author.class).warn("author "+ surname_n_p.get(0)+" has only surname and cannot be analyzed");        }
-        return null;
     }
 
     @Override
@@ -140,9 +118,8 @@ public class Author {
     public String toString() {
         return "Author {" +
                 "id: " + id +
+                ", name: '" + name + '\'' +
                 ", surname: '" + surname + '\'' +
-                ", n: '" + n + '\'' +
-                ", p: '" + p + '\'' +
                 '}';
     }
 }
