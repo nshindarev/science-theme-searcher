@@ -1,8 +1,8 @@
 package storage;
 
-import service.AuthorService;
-import service.ClusterService;
-import service.KeywordService;
+import database.service.AuthorService;
+import database.service.ClusterService;
+import database.service.KeywordService;
 
 public class DbManager {
 

@@ -1,7 +1,7 @@
-package service;
+package database.service;
 
-import dao.ClusterDao;
-import model.Cluster;
+import database.dao.ClusterDao;
+import database.model.Cluster;
 
 import java.util.List;
 

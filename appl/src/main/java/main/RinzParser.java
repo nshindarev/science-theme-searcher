@@ -1,7 +1,6 @@
 package main;
 
 import auth.ElibAuthorize;
-import com.apporiented.algorithm.clustering.Cluster;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.html.*;
 import datamapper.ResearchStarters.Author;
@@ -11,7 +10,7 @@ import datamapper.ResearchPoint;
 import graph.Clusterizer;
 import io.FileWriterWrap;
 import io.LogStatistics;
-import model.Keyword;
+import database.model.Keyword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import storage.AuthorsDB;
@@ -19,7 +18,6 @@ import util.Navigator;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class RinzParser {
     private static final Logger logger  = LoggerFactory.getLogger(RinzParser.class);

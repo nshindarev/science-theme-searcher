@@ -1,41 +1,41 @@
-package dao;
+package database.dao;
 
-import model.Cluster;
+import database.model.Link;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
-public class ClusterDao {
+public class LinkDao {
     Session session;
-    
-    public Cluster findById(int id) {
-        Cluster cluster = session.get(Cluster.class, id);
-        return cluster;
+
+    public Link findById(int id) {
+        Link link = session.get(Link.class, id);
+        return link;
     }
 
-    public void save(Cluster cluster) {
+    public void save(Link link) {
         Transaction tx1 = session.beginTransaction();
-        session.save(cluster);
+        session.save(link);
         tx1.commit();
     }
 
-    public void update(Cluster cluster) {
+    public void update(Link link) {
         Transaction tx1 = session.beginTransaction();
-        session.update(cluster);
+        session.update(link);
         tx1.commit();
     }
 
-    public void delete(Cluster cluster) {
+    public void delete(Link link) {
         Transaction tx1 = session.beginTransaction();
-        session.delete(cluster);
+        session.delete(link);
         tx1.commit();
     }
 
-    public List<Cluster> findAll() {
-        List<Cluster> clusters = (List<Cluster>)  session.createQuery("From science_theme_searcher.cluster").list();
-        return clusters;
+    public List<Link> findAll() {
+        List<Link> links = (List<Link>)  session.createQuery("From science_theme_searcher.link").list();
+        return links;
     }
 
     public void openConnection() {

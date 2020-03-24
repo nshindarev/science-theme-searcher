@@ -1,40 +1,41 @@
-package dao;
+package database.dao;
 
-import model.Author;
+import database.model.Keyword;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
-public class AuthorDao {
+public class KeywordDao {
     Session session;
-    public Author findById(int id) {
-        Author author = session.get(Author.class, id);
-        return author;
+
+    public Keyword findById(int id) {
+        Keyword keyword = session.get(Keyword.class, id);
+        return keyword;
     }
 
-    public void save(Author author) {
+    public void save(Keyword keyword) {
         Transaction tx1 = session.beginTransaction();
-        session.save(author);
+        session.save(keyword);
         tx1.commit();
     }
 
-    public void update(Author author) {
+    public void update(Keyword keyword) {
         Transaction tx1 = session.beginTransaction();
-        session.update(author);
+        session.update(keyword);
         tx1.commit();
     }
 
-    public void delete(Author author) {
+    public void delete(Keyword keyword) {
         Transaction tx1 = session.beginTransaction();
-        session.delete(author);
+        session.delete(keyword);
         tx1.commit();
     }
 
-    public List<Author> findAll() {
-        List<Author> authors = (List<Author>)  session.createQuery("From science_theme_searcher.author").list();
-        return authors;
+    public List<Keyword> findAll() {
+        List<Keyword> keywords = (List<Keyword>)  session.createQuery("From science_theme_searcher.keyword").list();
+        return keywords;
     }
 
     public void openConnection() {

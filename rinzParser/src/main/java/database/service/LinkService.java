@@ -1,7 +1,7 @@
-package service;
+package database.service;
 
-import dao.LinkDao;
-import model.Link;
+import database.dao.LinkDao;
+import database.model.Link;
 
 import java.util.List;
 

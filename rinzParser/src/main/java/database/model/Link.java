@@ -1,4 +1,4 @@
-package model;
+package database.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +34,7 @@ public class Link {
     public Link(String url){
         this.url = url;
     }
+
     public void addAuthor(Author author) {
         this.authors.add(author);
     }

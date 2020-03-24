@@ -1,7 +1,7 @@
 package db;
 
-import model.Author;
-import service.AuthorService;
+import database.model.Author;
+import database.service.AuthorService;
 
 import java.util.Collection;
 

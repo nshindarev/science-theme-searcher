@@ -2,13 +2,12 @@ package elibrary.parser;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.html.*;
-import elibrary.tools.LogParser;
 import elibrary.tools.Navigator;
 import elibrary.tools.Pages;
-import model.Author;
-import model.Keyword;
-import model.Link;
-import model.Publication;
+import database.model.Author;
+import database.model.Keyword;
+import database.model.Link;
+import database.model.Publication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

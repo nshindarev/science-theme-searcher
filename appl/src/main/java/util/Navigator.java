@@ -7,7 +7,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 import datamapper.ResearchStarters.Author;
 import datamapper.ResearchStarters.Theme;
 import io.FileWriterWrap;
-import model.Keyword;
+import database.model.Keyword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,24 +2,15 @@ package elibrary.tools;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
-import com.gargoylesoftware.htmlunit.javascript.host.event.KeyboardEvent;
-import com.oracle.tools.packager.Log;
-import model.Author;
-import model.Keyword;
-import model.Link;
+import database.model.Author;
+import database.model.Keyword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Navigator {

@@ -1,4 +1,3 @@
-import dao.AuthorDao;
 import org.junit.Test;
 
 

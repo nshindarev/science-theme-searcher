@@ -1,4 +1,4 @@
-package model;
+package database.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,9 +31,6 @@ public class Keyword {
             inverseJoinColumns = @JoinColumn(name = "id_cluster"))
     private Set<Cluster> clusters = new HashSet<>();
 
-    public Keyword (String key){
-        keyword = key;
-    }
     public void addCluster(Cluster cluster) {
         this.clusters.add(cluster);
     }
@@ -45,6 +42,10 @@ public class Keyword {
             joinColumns = @JoinColumn(name = "id_keyword"),
             inverseJoinColumns = @JoinColumn(name = "id_publication"))
     private Set<Publication> publications = new HashSet<>();
+
+    public Keyword (String key){
+        keyword = key;
+    }
 
     public void addPublication(Publication publication) {
         this.publications.add(publication);

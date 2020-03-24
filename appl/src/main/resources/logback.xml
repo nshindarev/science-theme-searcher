@@ -21,7 +21,7 @@
     <logger name="appl.src.main.java"                      level="debug"   additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.test"                      level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="appl.src.main.java.parser"               level="trace"   additivity="false"><appender-ref ref="STDOUT"/></logger>
-    <logger name="appl.src.model"                          level="trace"   additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="appl.src.database.model"                          level="trace"   additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="o.hibernate"                              level="error"   additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="o.h"                                      level="error"   additivity="false"><appender-ref ref="STDOUT"/></logger>
 

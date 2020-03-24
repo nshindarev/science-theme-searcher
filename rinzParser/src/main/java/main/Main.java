@@ -2,7 +2,7 @@ package main;
 
 import elibrary.auth.LogIntoElibrary;
 import elibrary.parser.Parser;
-import model.Keyword;
+import database.model.Keyword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -4,15 +4,13 @@ import auth.ElibAuthorize;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.html.*;
 
-import io.FileWriterWrap;
-import model.Author;
-import model.Keyword;
-import model.Publication;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
+import database.model.Author;
+import database.model.Keyword;
+import database.model.Publication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import service.AuthorService;
-import service.PublicationService;
+import database.service.AuthorService;
+import database.service.PublicationService;
 import util.Navigator;
 
 import java.io.IOException;

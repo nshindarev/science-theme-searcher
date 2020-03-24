@@ -43,6 +43,10 @@ public class Keyword {
             inverseJoinColumns = @JoinColumn(name = "id_publication"))
     private Set<Publication> publications = new HashSet<>();
 
+    public Keyword (String key){
+        keyword = key;
+    }
+
     public void addPublication(Publication publication) {
         this.publications.add(publication);
     }

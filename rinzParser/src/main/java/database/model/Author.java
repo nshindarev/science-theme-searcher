@@ -1,8 +1,7 @@
-package model;
+package database.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
@@ -11,12 +10,21 @@ import java.util.*;
 @Entity(name = "author")
 @Table(name = "author", schema = "science_theme_searcher")
 public class Author {
-    private static final Logger logger = LoggerFactory.getLogger(Author.class);
+
+    public Author() {}
+
+    public Author (String surname, String n, String p) {
+        this.surname = surname;
+        this.n = n;
+        this.p = p;
+        this.revision = 0;
+        this.id = hashCode();
+    }
 
     @Id
     @Getter
     @Setter
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Getter
@@ -43,6 +51,11 @@ public class Author {
     @Setter
     @Column(name = "p")
     private String p;
+
+    @Getter
+    @Setter
+    @Column(name = "revision")
+    private Integer revision;
 
     @Getter
     @Setter
@@ -75,17 +88,6 @@ public class Author {
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_link"))
     private Set<Link> links = new HashSet<>();
-
-
-    public Author (){
-
-    }
-    public Author (String surname, String n, String p) {
-        this.surname = surname;
-        this.n = n;
-        this.p = p;
-        this.id = hashCode();
-    }
 
     public void addLink(Link link) {
         this.links.add(link);
@@ -138,9 +140,8 @@ public class Author {
     public String toString() {
         return "Author {" +
                 "id: " + id +
+                ", name: '" + name + '\'' +
                 ", surname: '" + surname + '\'' +
-                ", n: '" + n + '\'' +
-                ", p: '" + p + '\'' +
                 '}';
     }
 }

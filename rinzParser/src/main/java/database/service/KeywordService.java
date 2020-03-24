@@ -1,7 +1,7 @@
-package service;
+package database.service;
 
-import dao.KeywordDao;
-import model.Keyword;
+import database.dao.KeywordDao;
+import database.model.Keyword;
 
 import java.util.List;
 
