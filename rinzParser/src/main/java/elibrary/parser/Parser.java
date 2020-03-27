@@ -1,7 +1,6 @@
 package elibrary.parser;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import com.gargoylesoftware.htmlunit.StorageHolder;
 import com.gargoylesoftware.htmlunit.html.*;
 import database.operations.StorageHandler;
 import elibrary.tools.Navigator;
@@ -35,18 +34,22 @@ public class Parser {
         Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage);
         StorageHandler.saveAuthors(keywordAuthors);
 
-        Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
-        authors.forEach(it -> {
-            Set<Author> coAuthors1 = getCoAuthors(it);
-            StorageHandler.saveAuthors(coAuthors1);
-            it.setRevision(1);
-        });
+        // 2-level limited search
+        for(int i=0; i<Navigator.searchLevel; i++){
+            Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
+            authors.forEach(it -> {
+                Set<Author> coAuthors = getCoAuthors(it);
+                StorageHandler.saveAuthors(coAuthors);
+                it.setRevision(1);
+            });
 
-        StorageHandler.updateRevision(authors);
+            StorageHandler.updateRevision(authors);
+        }
     }
 
     /**
-     *  method starts handling keyword search results:
+     *  collects publications for keyword:
+     *  collects publications for author:
      *  <a> {publicationName} <a/>
      *  <i> {author 1},{author 2}<i/>
      */
@@ -99,6 +102,7 @@ public class Parser {
         else return new HashSet<>();
     }
 
+    // collects coauthors
     private Set<Author> getCoAuthors (Link link){
         HtmlPage dataPage = Navigator.getAuthorsPage(link);
 

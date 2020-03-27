@@ -10,34 +10,28 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class StorageHandler  {
     private static final Logger logger = LoggerFactory.getLogger(StorageHandler.class);
-    // ============ UPDATE ===========
-//    public static void saveAuthors(Collection<Author> authors){
-//        try{
-//            AuthorService authorService = new AuthorService();
-//            authorService.openConnection();
-//
-//            authors.forEach(authorService::saveAuthor);
-//
-//            authorService.closeConnection();
-//        }
-//        catch (ConstraintViolationException ex){
-//            logger.error(ex.getMessage());
-//        }
-//    }
+    // ===================== UPDATE ===========================
     public static void saveAuthors(Collection<Author> authors){
-            AuthorService authorService = new AuthorService();
+        AuthorService authorService = new AuthorService();
 
+        // to check if DB already contains author
+        authorService.openConnection();
+        Set<Author> dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
+        authorService.closeConnection();
 
-            for (Author auth: authors){
+        for (Author auth: authors){
                 try{
-                    authorService.openConnection();
-                    authorService.saveAuthor(auth);
+                    if (!dbAuthorsSnapshot.contains(auth)){
+                        authorService.openConnection();
+                        authorService.saveAuthor(auth);
+                    }
                 }
                 catch (ConstraintViolationException ex){
                     logger.error(ex.getMessage());
@@ -45,8 +39,7 @@ public class StorageHandler  {
                 finally {
                     authorService.closeConnection();
                 }
-            }
-//            authorService.closeConnection();
+        }
     }
     public static void updateRevision (Collection<Author> authors){
         AuthorService authorService = new AuthorService();
