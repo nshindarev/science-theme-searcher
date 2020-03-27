@@ -1,3 +1,4 @@
+import database.model.Author;
 import org.junit.Test;
 
 

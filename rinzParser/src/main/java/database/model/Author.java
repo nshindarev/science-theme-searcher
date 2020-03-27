@@ -11,8 +11,9 @@ import java.util.*;
 @Table(name = "author", schema = "science_theme_searcher")
 public class Author {
 
-    public Author() {}
+    public Author (){
 
+    }
     public Author (String surname, String n, String p) {
         this.surname = surname;
         this.n = n;
@@ -24,7 +25,6 @@ public class Author {
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Getter
@@ -83,7 +83,8 @@ public class Author {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,
+                fetch = FetchType.EAGER)
     @JoinTable(name = "linktoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_link"))
@@ -136,11 +137,17 @@ public class Author {
         return result;
     }
 
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(surname, n, p);
+//    }
+
     @Override
     public String toString() {
         return "Author {" +
                 "id: " + id +
-                ", name: '" + name + '\'' +
+                ", n: '" + n + '\'' +
+                ", p: '" + p + '\'' +
                 ", surname: '" + surname + '\'' +
                 '}';
     }

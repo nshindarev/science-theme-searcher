@@ -1,5 +1,10 @@
 package main;
 
+import database.model.Author;
+import database.model.Cluster;
+import database.service.AuthorService;
+import database.service.ClusterService;
+import database.service.KeywordService;
 import elibrary.auth.LogIntoElibrary;
 import elibrary.parser.Parser;
 import database.model.Keyword;
@@ -27,4 +32,5 @@ public class Main {
 
         new Parser(new Keyword("социоинженерные атаки")).parse();
     }
+
 }

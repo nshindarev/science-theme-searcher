@@ -1,5 +1,7 @@
 package elibrary.auth;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
 import elibrary.tools.LogParser;
 import elibrary.tools.Navigator;
@@ -18,7 +20,14 @@ public class LogIntoElibrary {
 
     public static void auth (){
         try{
+
+            Navigator.webClient.getOptions().setCssEnabled(true);
+            Navigator.webClient.getOptions().setJavaScriptEnabled(true);
+            Navigator.webClient.getOptions().setThrowExceptionOnScriptError(true);
+            Navigator.webClient.waitForBackgroundJavaScript(25000);
+            Navigator.webClient.setJavaScriptTimeout(25000);
             Navigator.webClient.getCache().clear();
+
             HtmlPage startPage = Navigator.webClient.getPage(elib_start);
             logger.debug(startPage.asText());
 
@@ -41,9 +50,6 @@ public class LogIntoElibrary {
             Pages.authorSearchPage = Navigator.getAuthorsSearchPage(Pages.startPage);
 
             LogParser.logPage(Pages.authorSearchPage, "AUTHOR SEARCH");
-            logger.debug("");
-//            LogParser.logPage(Pages.startPage, "START PAGE");
-//            LogParser.logPage(Pages.authorSearchPage, "AUTHORS PAGE");
         }
         catch(Exception ex){
             ex.printStackTrace();

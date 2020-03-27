@@ -31,6 +31,7 @@ public class Link {
             inverseJoinColumns = @JoinColumn(name = "id_author"))
     private Set<Author> authors = new HashSet<>();
 
+    public Link() {}
     public Link(String url){
         this.url = url;
     }

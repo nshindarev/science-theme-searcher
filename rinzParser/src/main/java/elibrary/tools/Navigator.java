@@ -2,10 +2,12 @@ package elibrary.tools;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import com.gargoylesoftware.htmlunit.ScriptException;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
 import database.model.Author;
 import database.model.Keyword;
+import database.model.Link;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +20,7 @@ public class Navigator {
 
     public static final WebClient webClient = new WebClient(BrowserVersion.CHROME);
     public static final int timeOut = 10000;
-    public static int searchLimit = 30;
+    public static int searchLimit = 5;
 
 
     /**
@@ -48,6 +50,13 @@ public class Navigator {
         }
         return startPage;
     }
+
+    // ============== first level search ================================
+    /**
+     * after logging in -> goto keyword search
+     * @param key
+     * @return
+     */
     public static HtmlPage getKeywordSearchResultsPage (Keyword key){
         HtmlElement form = Pages.startPage.getHtmlElementById("win_search");
 
@@ -66,7 +75,6 @@ public class Navigator {
         }
     }
 
-
     /**
      * returns result search page for author's page
      * @param authorInfo
@@ -74,15 +82,7 @@ public class Navigator {
      */
     public static HtmlPage getAuthorSearchResultsPage(Author authorInfo){
         try {
-
-            WebClient wc = new WebClient(BrowserVersion.CHROME);
-            wc.getOptions().setCssEnabled(true);
-            wc.getOptions().setJavaScriptEnabled(true);
-            wc.getOptions().setThrowExceptionOnScriptError(true);
-            wc.waitForBackgroundJavaScript(25000);
-            wc.setJavaScriptTimeout(25000);
-            wc.getCache().clear();
-
+            WebClient wc = Navigator.webClient;
 
             HtmlPage authSearchPage = wc.getPage(Pages.authorSearchPage.getUrl());
             HtmlTextInput surnameInput = authSearchPage.getHtmlElementById("surname");
@@ -158,7 +158,45 @@ public class Navigator {
             logger.error(ex.getMessage());
             return Pages.authorSearchPage;
         }
+        catch (ScriptException ex){
+            logger.error(ex.getMessage());
+            return getAuthorSearchResultsPage(authorInfo);
+        }
     }
 
+    public static HtmlPage getAuthorsPage(Link link){
+        try {
+            return (HtmlPage) Navigator.webClient.getPage(link.getUrl());
+        }
+        catch (MalformedURLException ex){
+            logger.error(ex.getMessage());
+            return null;
+        }
+        catch (IOException _ex){
+            logger.error(_ex.getMessage());
+            return null;
+        }
+        catch (ScriptException ex){
+            logger.error(ex.getMessage());
+            return getAuthorsPage(link);
+        }
+    }
+
+
+    /**
+     * custom web client
+     * @return
+     */
+    public static WebClient getWebClient (){
+        WebClient wc = new WebClient(BrowserVersion.CHROME);
+        wc.getOptions().setCssEnabled(true);
+        wc.getOptions().setJavaScriptEnabled(true);
+        wc.getOptions().setThrowExceptionOnScriptError(true);
+        wc.waitForBackgroundJavaScript(25000);
+        wc.setJavaScriptTimeout(25000);
+        wc.getCache().clear();
+
+        return wc;
+    }
 
 }
