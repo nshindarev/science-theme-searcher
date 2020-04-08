@@ -94,6 +94,16 @@ public class Author {
         this.links.add(link);
     }
 
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "author_second",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<AuthorToAuthor> incomingAuthorToAuthors = new HashSet<>();
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "author_first",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<AuthorToAuthor> outgoingAuthorToAuthors = new HashSet<>();
+
     public static Author convertStringToAuthor (String auth) {
 
         ArrayList<String> surname_n_p = new ArrayList<>(Arrays.asList(auth.split(" ")));
