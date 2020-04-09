@@ -62,6 +62,7 @@ public class Publication {
         this.keywords.add(keyword);
     }
 
+    public Publication () {}
     public Publication (String name){
         this.name = name;
     }

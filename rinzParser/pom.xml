@@ -73,6 +73,15 @@
             <artifactId>jgrapht-io</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-ext</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.gephi/gephi-toolkit -->
+        <dependency>
+            <groupId>org.gephi</groupId>
+            <artifactId>gephi-toolkit</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
         </dependency>

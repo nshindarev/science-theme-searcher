@@ -1,4 +1,4 @@
-package elibrary.tools;
+package elibrary.parser;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
@@ -8,6 +8,8 @@ import com.gargoylesoftware.htmlunit.html.*;
 import database.model.Author;
 import database.model.Keyword;
 import database.model.Link;
+import elibrary.auth.LogIntoElibrary;
+import elibrary.tools.Pages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,10 +20,11 @@ import java.util.List;
 public class Navigator {
     private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 
-    public static final WebClient webClient = new WebClient(BrowserVersion.CHROME);
+    public static  WebClient webClient = new WebClient(BrowserVersion.CHROME);
     public static final int timeOut = 10000;
     public static final int searchLimit = 20;
     public static final int searchLevel = 2;
+    public static  int clusterNumber = 5;
 
     /**
      * after logging in -> goto authors search page
@@ -38,8 +41,8 @@ public class Navigator {
 //            ex.printStackTrace();
 //        }
 
-        HtmlAnchor anchor = startPage.getAnchorByHref("/authors.asp");
         try{
+            HtmlAnchor anchor = startPage.getAnchorByHref("/authors.asp");
             return (HtmlPage) anchor.openLinkInNewWindow();
         }
         catch (MalformedURLException ex){
@@ -47,6 +50,16 @@ public class Navigator {
         }
         catch (NullPointerException ex){
             logger.error(ex.getMessage());
+        }
+        catch (ElementNotFoundException ex){
+            logger.error(ex.getMessage());
+
+
+//            LogIntoElibrary.login = "lex.suleimanov";
+//            LogIntoElibrary.password = "FtXTk4Vd";
+            LogIntoElibrary.auth();
+
+            return getAuthorsSearchPage(startPage);
         }
         return startPage;
     }

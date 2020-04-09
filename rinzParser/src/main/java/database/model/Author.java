@@ -59,7 +59,8 @@ public class Author {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,
+                fetch = FetchType.EAGER)
     @JoinTable(name = "authortopublication", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_publication"))
@@ -117,6 +118,19 @@ public class Author {
         return null;
     }
 
+    public Author join(Author author){
+        if (this.equals(author)){
+            author.getPublications()
+                    .stream()
+                    .filter(it -> !this.getPublications().contains(it))
+                    .forEach(this::addPublication);
+        }
+
+        if (author.revision == 1)
+            this.setRevision(1);
+
+        return this;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -142,13 +156,17 @@ public class Author {
 //        return Objects.hash(surname, n, p);
 //    }
 
+//    @Override
+//    public String toString() {
+//        return "Author {" +
+//                "id: " + id +
+//                ", n: '" + n + '\'' +
+//                ", p: '" + p + '\'' +
+//                ", surname: '" + surname + '\'' +
+//                '}';
+//    }
     @Override
     public String toString() {
-        return "Author {" +
-                "id: " + id +
-                ", n: '" + n + '\'' +
-                ", p: '" + p + '\'' +
-                ", surname: '" + surname + '\'' +
-                '}';
+        return surname + " "+n + ". " + p + ".";
     }
 }

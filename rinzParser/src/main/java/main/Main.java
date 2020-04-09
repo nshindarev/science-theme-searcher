@@ -2,12 +2,16 @@ package main;
 
 import database.model.Author;
 import database.model.Cluster;
+import database.operations.StorageHandler;
 import database.service.AuthorService;
 import database.service.ClusterService;
 import database.service.KeywordService;
 import elibrary.auth.LogIntoElibrary;
 import elibrary.parser.Parser;
 import database.model.Keyword;
+import graph.Clusterer;
+import graph.ui.GraphVisualizer;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,14 +27,29 @@ public class Main {
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
 
         /**
-         *  method output:
-         *  Pages.startPage
-         *  Pages.authorSearchPage
+         *  parser
          */
-        LogIntoElibrary.auth();
+       // LogIntoElibrary.auth();
+       // new Parser(new Keyword("социоинженерные атаки")).parse();
 
 
-        new Parser(new Keyword("социоинженерные атаки")).parse();
+        /**
+         *  get graph from DB
+         */
+        DefaultDirectedGraph authorsGraph = StorageHandler.getAuthorsGraph();
+
+        /**
+         *  Cluster graph
+         */
+      //  Clusterer cluster = new Clusterer(authorsGraph);
+      //  cluster.executeClustering();
+
+        /**
+         *  UI
+         */
+//        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
+        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) authorsGraph);
+        visualizer.visualize();
     }
 
 }

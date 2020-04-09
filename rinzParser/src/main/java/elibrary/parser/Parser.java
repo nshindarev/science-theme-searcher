@@ -3,7 +3,7 @@ package elibrary.parser;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.html.*;
 import database.operations.StorageHandler;
-import elibrary.tools.Navigator;
+import elibrary.auth.LogIntoElibrary;
 import elibrary.tools.Pages;
 import database.model.Author;
 import database.model.Keyword;
@@ -12,7 +12,6 @@ import database.model.Publication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Parser {
@@ -54,47 +53,69 @@ public class Parser {
      *  <i> {author 1},{author 2}<i/>
      */
     private Set<Author> getKeywordResults (HtmlPage page) throws ElementNotFoundException{
+        try{
+            Set<Author> authorSet = new HashSet<>();
+            final HtmlTable rezultsTable = page.getHtmlElementById("restab");
 
-        Set<Author> authorSet = new HashSet<>();
-        final HtmlTable rezultsTable = page.getHtmlElementById("restab");
-
-        for (final HtmlTableRow row : rezultsTable.getRows()) {
-            if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
-                if(authorSet.size()<= Navigator.searchLimit){
-                    HtmlElement publName = row.getElementsByTagName("a").get(0);
-                    HtmlElement authNames = row.getElementsByTagName("i").get(0);
+            for (final HtmlTableRow row : rezultsTable.getRows()) {
+                if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
+                    if(authorSet.size()<= Navigator.searchLimit){
+                        HtmlElement publName = row.getElementsByTagName("a").get(0);
+                        HtmlElement authNames = row.getElementsByTagName("i").get(0);
 
 
-                    List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
-                    Publication publ = new Publication(publName.asText());
-                    List<Author> authors = new LinkedList<>();
+                        List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
+                        Publication publ = new Publication(publName.asText());
+                        List<Author> authors = new LinkedList<>();
 
-                    // --- convert string into business object
-                    // --- get link for authors pages
-                    for (String auth : authInPubl) {
-                        Author authBO = Author.convertStringToAuthor(auth);
-                        authBO.addPublication(publ);
+                        // --- convert string into business object
+                        // --- get link for authors pages
+                        for (String auth : authInPubl) {
+                            Author authBO = Author.convertStringToAuthor(auth);
+                            authBO.addPublication(publ);
 
-                        if (!authorSet.contains(authBO) && authorSet.size() <= Navigator.searchLimit) {
+                            if (!authorSet.contains(authBO) && authorSet.size() <= Navigator.searchLimit) {
+                                //get page
+                                HtmlPage authSearchPage = Navigator.getAuthorSearchResultsPage(authBO);
 
-                            //get page
-                            HtmlPage authSearchPage = Navigator.getAuthorSearchResultsPage(authBO);
+                                //set link
+                                authBO = Parser.setLinkToAuthor(authBO, authSearchPage);
+                                authors.add(authBO);
+                                authorSet.add(authBO);
+                            }
+                            else if (authorSet.contains(authBO)){
 
-                            //set link
-                            authBO = Parser.setLinkToAuthor(authBO, authSearchPage);
-                            authors.add(authBO);
-                            authorSet.add(authBO);
+                                // get data from set
+                                ArrayList<Author> authorList = new ArrayList(authorSet);
+                                int authBoSavedIndex = authorList.indexOf(authBO);
+                                Author authBoSaved = authorList.get(authBoSavedIndex);
+
+                                // join publications
+                                authBO.join(authBoSaved);
+
+                                // update author
+                                authorSet.remove(authBO);
+                                authorSet.add(authBO);
+                            }
                         }
                     }
                 }
             }
+            return authorSet;
         }
-        return authorSet;
+        catch (Exception ex){
+            logger.error(ex.getMessage());
+//
+//            LogIntoElibrary.login = "Olga Suleymanova";
+//            LogIntoElibrary.password = "123yes456";
+//            LogIntoElibrary.auth();
+
+            return getKeywordResults (page);
+        }
     }
 
     // take 1st link from authors links
     private Set<Author> getCoAuthors (Author author){
-        Set<Author> res;
 
         if (author.getLinks().iterator().hasNext()){
             return getCoAuthors(author.getLinks().iterator().next());
@@ -129,6 +150,10 @@ public class Parser {
             }
         }
         catch(ElementNotFoundException ex){
+            logger.error("Found author without page " + author.getSurname());
+        }
+        catch (IndexOutOfBoundsException ex){
+            logger.error(ex.getMessage());
             logger.warn("Found author without page " + author.getSurname());
         }
 
