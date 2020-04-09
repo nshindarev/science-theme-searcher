@@ -1,9 +1,11 @@
 package main;
 
 import database.model.Author;
+import database.model.AuthorToAuthor;
 import database.model.Cluster;
 import database.operations.StorageHandler;
 import database.service.AuthorService;
+import database.service.AuthorToAuthorService;
 import database.service.ClusterService;
 import database.service.KeywordService;
 import elibrary.auth.LogIntoElibrary;
@@ -50,6 +52,18 @@ public class Main {
 //        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
         GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) authorsGraph);
         visualizer.visualize();
+
+
+        Author test1 = new Author("Test1", "1", "1");
+        Author test2 = new Author("Test2", "2", "2");
+        AuthorService authorService = new AuthorService();
+        authorService.openConnection();
+        authorService.closeConnection();
+        AuthorToAuthorService authorToAuthorService = new AuthorToAuthorService();
+        AuthorToAuthor authorToAuthor = new AuthorToAuthor(test1,test2);
+        authorToAuthorService.openConnection();
+        authorToAuthorService.saveAuthorToAuthor(authorToAuthor);
+        authorToAuthorService.closeConnection();
     }
 
 }
