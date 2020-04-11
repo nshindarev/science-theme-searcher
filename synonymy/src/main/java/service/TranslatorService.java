@@ -1,6 +1,6 @@
 package service;
 
-public interface Translator {
+public interface TranslatorService {
     String translateToLatinString(String inputString);
 
     boolean checkRussian(String inputString);

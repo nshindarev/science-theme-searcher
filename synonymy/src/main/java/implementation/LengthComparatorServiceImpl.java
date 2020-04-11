@@ -2,15 +2,16 @@ package implementation;
 
 import database.model.Author;
 import database.model.AuthorToAuthor;
-import service.LengthComparator;
+import service.LengthComparatorService;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-public class LengthComparatorImpl implements LengthComparator {
+public class LengthComparatorServiceImpl implements LengthComparatorService {
 
     @Override
-    public boolean checkPatronymic (Author firstAuthor, Author secondAuthor) {
+    public boolean samePatronymics (Author firstAuthor, Author secondAuthor) {
         return firstAuthor.getN().equals(secondAuthor.getN())&&firstAuthor.getP().equals(secondAuthor.getP());
     }
 
@@ -35,9 +36,10 @@ public class LengthComparatorImpl implements LengthComparator {
 
     @Override
     public long checkConnections(Author firstAuthor, Author secondAuthor) {
-        Stream<Author> firstConnections = firstAuthor.getIncomingAuthorToAuthors().stream().map(AuthorToAuthor::getAuthor_first);
-        Stream<Author> secondConnections = secondAuthor.getIncomingAuthorToAuthors().stream().map(AuthorToAuthor::getAuthor_first);
-        return firstConnections.filter(author1 -> secondConnections.anyMatch(author2 -> author1.getId()==author2.getId())).count();
+        Set<Author> firstConnections = firstAuthor.getIncomingAuthorToAuthors().stream().map(AuthorToAuthor::getAuthor_first).collect(Collectors.toSet());
+        Set<Author>  secondConnections = secondAuthor.getIncomingAuthorToAuthors().stream().map(AuthorToAuthor::getAuthor_first).collect(Collectors.toSet());
+        firstConnections.retainAll(secondConnections);
+        return firstConnections.size();
     }
 
     private static int costOfSubstitution(char a, char b) {

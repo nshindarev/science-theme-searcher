@@ -15,8 +15,9 @@
     </appender>
 
     <logger name="synonymy"              level="DEBUG"    additivity="false"><appender-ref ref="STDOUT"/></logger>
-    <logger name="synonymy.src.main.java.implementation.TranslatorImpl"         level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
-    <logger name="synonymy.src.main.java.implementation.LengthComparatorImpl"   level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="synonymy.src.main.java.implementation.TranslatorServiceImpl" level="info" additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="synonymy.src.main.java.implementation.LengthComparatorServiceImpl" level="info" additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="synonymy.src.main.java.implementation.SynonymyServiceImpl"         level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
 
 
     <!-- root -->
