@@ -31,19 +31,21 @@ public class Parser {
 
         // keyword search + fill links to authors
         Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage);
-        StorageHandler.saveAuthors(keywordAuthors);
+//        StorageHandler.saveAuthors(keywordAuthors);
 
         // 2-level limited search
         for(int i=0; i<Navigator.searchLevel; i++){
             Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
             authors.forEach(it -> {
                 Set<Author> coAuthors = getCoAuthors(it);
-                StorageHandler.saveAuthors(coAuthors);
+//                StorageHandler.saveAuthors(coAuthors);
                 it.setRevision(1);
             });
 
             StorageHandler.updateRevision(authors);
         }
+
+        StorageHandler.saveCoAuthors();
     }
 
     /**
@@ -68,11 +70,13 @@ public class Parser {
                         Publication publ = new Publication(publName.asText());
                         List<Author> authors = new LinkedList<>();
 
-                        // --- convert string into business object
-                        // --- get link for authors pages
                         for (String auth : authInPubl) {
                             Author authBO = Author.convertStringToAuthor(auth);
+
+
                             authBO.addPublication(publ);
+                            publ.addAuthor(authBO);
+
 
                             if (!authorSet.contains(authBO) && authorSet.size() <= Navigator.searchLimit) {
                                 //get page
@@ -98,6 +102,8 @@ public class Parser {
                                 authorSet.add(authBO);
                             }
                         }
+
+                        StorageHandler.savePublication(publ);
                     }
                 }
             }

@@ -130,10 +130,16 @@ public class Author {
 
     public Author join(Author author){
         if (this.equals(author)){
-            author.getPublications()
-                    .stream()
-                    .filter(it -> !this.getPublications().contains(it))
-                    .forEach(this::addPublication);
+            for(Publication p1: author.getPublications()){
+                if(!this.publications.stream().anyMatch(p -> p.equals(p1)))
+                    this.addPublication(p1);
+            }
+//            this.publications.addAll(author.getPublications());
+//            author.getPublications()
+//                    .stream()
+//                    .filter(it ->
+//                            !this.getPublications().contains(it))
+//                    .forEach(this::addPublication);
         }
 
         if (author.revision == 1)

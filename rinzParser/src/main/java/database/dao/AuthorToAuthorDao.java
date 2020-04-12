@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AuthorToAuthorDao {
     Session session;
-    public AuthorToAuthor findById(int id) {
+    public AuthorToAuthor findById(String id) {
         AuthorToAuthor authorToAuthor = session.get(AuthorToAuthor.class, id);
         return authorToAuthor;
     }

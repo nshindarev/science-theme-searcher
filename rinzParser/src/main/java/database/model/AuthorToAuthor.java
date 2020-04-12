@@ -16,7 +16,7 @@ public class AuthorToAuthor {
         this.author_first = author_first;
         this.author_second = author_second;
         this.weight = 1;
-        this.id = Integer.toString(author_first.getId())+Integer.toString(author_second.getId());
+        this.id = Integer.toString(author_first.getId() + author_second.getId());
     }
 
     @Id
@@ -51,4 +51,5 @@ public class AuthorToAuthor {
                 ", Weight: '" + weight +
                 '}';
     }
+
 }

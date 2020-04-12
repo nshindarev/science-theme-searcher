@@ -11,7 +11,7 @@ public class AuthorToAuthorService {
     public AuthorToAuthorService() {
     }
 
-    public AuthorToAuthor findAuthorToAuthor(int id) {
+    public AuthorToAuthor findAuthorToAuthor(String id) {
         return authorToAuthorDao.findById(id);
     }
 
@@ -27,6 +27,9 @@ public class AuthorToAuthorService {
         authorToAuthorDao.update(authorToAuthor);
     }
 
+    public List<AuthorToAuthor> findAll(){
+        return authorToAuthorDao.findAll();
+    }
     public void openConnection() {
         authorToAuthorDao.openConnection();
     }
