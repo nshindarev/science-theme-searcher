@@ -131,6 +131,14 @@ public class StorageHandler  {
         authorService.closeConnection();
         return res;
     }
+    public static List<AuthorToAuthor> getA2A(){
+        AuthorToAuthorService a2aServ = new AuthorToAuthorService();
+        a2aServ.openConnection();
+        List<AuthorToAuthor> a2a = a2aServ.findAllAuthorToAuthor();
+        a2aServ.closeConnection();
+
+        return a2a;
+    }
     public static DefaultDirectedGraph getAuthorsGraph (){
         DefaultDirectedGraph<Author, DefaultEdge> graph =
                 new DefaultDirectedGraph<>(DefaultEdge.class);

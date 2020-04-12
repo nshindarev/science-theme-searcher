@@ -6,6 +6,7 @@ import database.model.AuthorToAuthor;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class AuthorToAuthorService {
     private AuthorToAuthorDao authorToAuthorDao = new AuthorToAuthorDao();
@@ -28,6 +29,8 @@ public class AuthorToAuthorService {
     public void updateAuthorToAuthor(AuthorToAuthor authorToAuthor) {
         authorToAuthorDao.update(authorToAuthor);
     }
+
+    public List<AuthorToAuthor> findAllAuthorToAuthor (){ return authorToAuthorDao.findAll();}
 
     public void openConnection() {
         authorToAuthorDao.openConnection();

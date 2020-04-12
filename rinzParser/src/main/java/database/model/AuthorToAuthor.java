@@ -54,14 +54,14 @@ public class AuthorToAuthor {
 
         //if (id != that.id) return false;
 
-        if (!Objects.equals(author_first, that.author_first) &&     !Objects.equals(author_first, that.author_second)) return false;
+        if (!Objects.equals(author_first, that.author_first) &&  !Objects.equals(author_first, that.author_second)) return false;
         if (!Objects.equals(author_second, that.author_second) && !Objects.equals(author_second, that.author_first)) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
-        return author_first.hashCode() + author_second.hashCode();
+        return id.hashCode();
     }
 
     @Override
