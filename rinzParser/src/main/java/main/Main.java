@@ -31,8 +31,8 @@ public class Main {
         /**
          *  parser
          */
-       // LogIntoElibrary.auth();
-       // new Parser(new Keyword("социоинженерные атаки")).parse();
+        LogIntoElibrary.auth();
+        new Parser(new Keyword("социоинженерные атаки")).parse();
 
 
         /**
@@ -54,16 +54,16 @@ public class Main {
         visualizer.visualize();
 
 
-        Author test1 = new Author("Test1", "1", "1");
-        Author test2 = new Author("Test2", "2", "2");
-        AuthorService authorService = new AuthorService();
-        authorService.openConnection();
-        authorService.closeConnection();
-        AuthorToAuthorService authorToAuthorService = new AuthorToAuthorService();
-        AuthorToAuthor authorToAuthor = new AuthorToAuthor(test1,test2);
-        authorToAuthorService.openConnection();
-        authorToAuthorService.saveAuthorToAuthor(authorToAuthor);
-        authorToAuthorService.closeConnection();
+//        Author test1 = new Author("Test1", "1", "1");
+//        Author test2 = new Author("Test2", "2", "2");
+//        AuthorService authorService = new AuthorService();
+//        authorService.openConnection();
+//        authorService.closeConnection();
+//        AuthorToAuthorService authorToAuthorService = new AuthorToAuthorService();
+//        AuthorToAuthor authorToAuthor = new AuthorToAuthor(test1,test2);
+//        authorToAuthorService.openConnection();
+//        authorToAuthorService.saveAuthorToAuthor(authorToAuthor);
+//        authorToAuthorService.closeConnection();
     }
 
 }

@@ -1,9 +1,11 @@
 package database.service;
 
 import database.dao.AuthorToAuthorDao;
+import database.model.Author;
 import database.model.AuthorToAuthor;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AuthorToAuthorService {
     private AuthorToAuthorDao authorToAuthorDao = new AuthorToAuthorDao();
@@ -34,4 +36,5 @@ public class AuthorToAuthorService {
     public void closeConnection() {
         authorToAuthorDao.closeConnection();
     }
+
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "authortoauthor")
 @Table(name = "authortoauthor", schema = "science_theme_searcher")
@@ -41,6 +42,26 @@ public class AuthorToAuthor {
 
     public void incrementWeight() {
         this.weight++;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AuthorToAuthor that = (AuthorToAuthor) o;
+
+        //if (id != that.id) return false;
+
+        if (!Objects.equals(author_first, that.author_first) &&     !Objects.equals(author_first, that.author_second)) return false;
+        if (!Objects.equals(author_second, that.author_second) && !Objects.equals(author_second, that.author_first)) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return author_first.hashCode() + author_second.hashCode();
     }
 
     @Override

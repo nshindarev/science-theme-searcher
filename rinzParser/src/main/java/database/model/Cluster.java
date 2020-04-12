@@ -37,6 +37,8 @@ public class Cluster {
             inverseJoinColumns = @JoinColumn(name = "id_keyword"))
     private Set<Keyword> keywords = new HashSet<>();
 
+    public Cluster() {}
+
     public void addKeyword(Keyword keyword) {
         this.keywords.add(keyword);
     }

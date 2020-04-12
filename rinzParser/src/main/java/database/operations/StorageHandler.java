@@ -1,7 +1,11 @@
 package database.operations;
 
 import database.model.Author;
+import database.model.AuthorToAuthor;
+import database.model.Publication;
 import database.service.AuthorService;
+import database.service.AuthorToAuthorService;
+import database.service.PublicationService;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -62,6 +66,49 @@ public class StorageHandler  {
                 }
         }
     }
+    public static void saveCoAuthors(){
+
+        /**
+         *  Publications connection
+         */
+        // publications db
+        PublicationService pbService = new PublicationService();
+        pbService.openConnection();
+
+        // fill in list with repeated a2a
+        List<AuthorToAuthor> a2aList = new LinkedList<>();
+        Collection<Publication> allPublications = pbService.findAllPublications();
+
+        allPublications.forEach(publication -> {
+            publication.getAuthors().forEach(a1 ->
+                    publication.getAuthors().stream().filter(a2 -> !a2.equals(a1)).forEach(a2 ->
+                            a2aList.add(new AuthorToAuthor(a1,a2))
+                    ));
+        });
+
+        // count a2a
+        HashMap<AuthorToAuthor, Integer> weightCounter = new HashMap<>();
+        for (AuthorToAuthor edge: a2aList){
+            if (weightCounter.containsKey(edge)) weightCounter.put(edge, weightCounter.get(edge)+1);
+            else weightCounter.put(edge, 1);
+        }
+
+        pbService.closeConnection();
+
+        /**
+         *  A2A db connection
+         */
+        AuthorToAuthorService a2aServ = new AuthorToAuthorService();
+        a2aServ.openConnection();
+
+        weightCounter.forEach((k,v) ->{
+            k.setWeight(v/2);
+            a2aServ.saveAuthorToAuthor(k);
+        });
+
+        a2aServ.closeConnection();
+    }
+
     public static void updateRevision (Collection<Author> authors){
         AuthorService authorService = new AuthorService();
         authorService.openConnection();

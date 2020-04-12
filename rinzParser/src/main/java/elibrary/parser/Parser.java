@@ -44,6 +44,8 @@ public class Parser {
 
             StorageHandler.updateRevision(authors);
         }
+
+        StorageHandler.saveCoAuthors();
     }
 
     /**
@@ -150,10 +152,10 @@ public class Parser {
             }
         }
         catch(ElementNotFoundException ex){
-            logger.error("Found author without page " + author.getSurname());
+            logger.warn("Found author without page " + author.getSurname());
         }
         catch (IndexOutOfBoundsException ex){
-            logger.error(ex.getMessage());
+            logger.warn(ex.getMessage());
             logger.warn("Found author without page " + author.getSurname());
         }
 

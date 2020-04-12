@@ -34,7 +34,7 @@ public class PublicationDao {
     }
 
     public List<Publication> findAll() {
-        List<Publication> publications = (List<Publication>) session.createQuery("From science_theme_searcher.publication").list();
+        List<Publication> publications = (List<Publication>) session.createQuery("From database.model.Publication").list();
         return publications;
     }
 
