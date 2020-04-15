@@ -31,8 +31,8 @@ public class Main {
         /**
          *  parser
          */
-        LogIntoElibrary.auth();
-        new Parser(new Keyword("социоинженерные атаки")).parse();
+//        LogIntoElibrary.auth();
+//        new Parser(new Keyword("социоинженерные атаки")).parse();
 
 
         /**
@@ -43,15 +43,15 @@ public class Main {
         /**
          *  Cluster graph
          */
-      //  Clusterer cluster = new Clusterer(authorsGraph);
-      //  cluster.executeClustering();
+        Clusterer cluster = new Clusterer(authorsGraph);
+        cluster.executeClustering();
 
         /**
          *  UI
          */
 //        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
-        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) authorsGraph);
-        visualizer.visualize();
+//        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) authorsGraph);
+//        visualizer.visualize();
 
 
 //        Author test1 = new Author("Test1", "1", "1");

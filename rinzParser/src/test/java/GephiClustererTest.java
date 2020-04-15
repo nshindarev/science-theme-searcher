@@ -9,6 +9,5 @@ public class GephiClustererTest {
     @Test
     public void testCreatingGraph(){
         GephiClusterer gc = new GephiClusterer();
-
     }
 }
