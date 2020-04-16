@@ -16,6 +16,8 @@ import org.gephi.io.importer.api.Container;
 import org.gephi.io.importer.api.EdgeDirectionDefault;
 import org.gephi.io.importer.api.ImportController;
 import org.gephi.io.processor.plugin.DefaultProcessor;
+import org.gephi.layout.plugin.force.StepDisplacement;
+import org.gephi.layout.plugin.force.yifanHu.YifanHuLayout;
 import org.gephi.layout.plugin.forceAtlas.ForceAtlasLayout;
 import org.gephi.project.api.ProjectController;
 import org.gephi.project.api.Workspace;
@@ -42,7 +44,6 @@ public class GephiClusterer {
     public void action(){
         getGraph();
         clusterAndVisualizeGraph();
-//        getClusters();
     }
 
 
@@ -101,7 +102,7 @@ public class GephiClusterer {
         //Export full graph
         ExportController ec = Lookup.getDefault().lookup(ExportController.class);
         try {
-            this.clusteredGraphFile = new File("src/main/resources/graph/clustered_graph.gexf");
+            this.clusteredGraphFile = new File("rinzParser/src/main/resources/graph/clustered_graph.gexf");
             ec.exportFile(this.clusteredGraphFile);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -175,8 +176,8 @@ public class GephiClusterer {
         Column centralityColumn = graphModel.getNodeTable().getColumn(GraphDistance.BETWEENNESS);
         Function centralityRanking = appearanceModel.getNodeFunction(graph, centralityColumn, RankingNodeSizeTransformer.class);
         RankingNodeSizeTransformer centralityTransformer = (RankingNodeSizeTransformer) centralityRanking.getTransformer();
-        centralityTransformer.setMinSize(3);
-        centralityTransformer.setMaxSize(8);
+        centralityTransformer.setMinSize(2);
+        centralityTransformer.setMaxSize(6);
         appearanceController.transform(centralityRanking);
 
         //Rank label size - set a multiplier size
@@ -186,12 +187,12 @@ public class GephiClusterer {
         labelSizeTransformer.setMaxSize(3);
         appearanceController.transform(centralityRanking2);
 
-//        YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
-        ForceAtlasLayout layout = new ForceAtlasLayout(null);
+        YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
+//        ForceAtlasLayout layout = new ForceAtlasLayout(null);
         layout.setGraphModel(graphModel);
         layout.initAlgo();
         layout.resetPropertiesValues();
-//        layout.setOptimalDistance(200f);
+        layout.setOptimalDistance(200f);
 
 
 
@@ -204,7 +205,7 @@ public class GephiClusterer {
         //Export
         ExportController ec = Lookup.getDefault().lookup(ExportController.class);
         try {
-            ec.exportFile(new File("src/main/resources/graph/clustered_graph.pdf"));
+            ec.exportFile(new File("rinzParser/src/main/resources/graph/clustered_graph.pdf"));
         } catch (IOException ex) {
             ex.printStackTrace();
             return;
