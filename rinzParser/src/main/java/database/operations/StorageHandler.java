@@ -2,10 +2,13 @@ package database.operations;
 
 import database.model.Author;
 import database.model.AuthorToAuthor;
+import database.model.Cluster;
 import database.model.Publication;
 import database.service.AuthorService;
 import database.service.AuthorToAuthorService;
+import database.service.ClusterService;
 import database.service.PublicationService;
+import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -109,6 +112,25 @@ public class StorageHandler  {
         a2aServ.closeConnection();
     }
 
+    /**
+     * in current realisation only 1 cluster per author possible
+     * @param dataGraph
+     */
+    public static void saveClusters(Map<Cluster, Set<String>> dataGraph){
+        ClusterService clusterService = new ClusterService();
+
+        dataGraph.forEach((cluster,listAuthorIds) -> {
+                    listAuthorIds.forEach(id -> {
+                                getAuthors(listAuthorIds).forEach(cluster::addAuthor);
+                            });
+            clusterService.openConnection();
+            clusterService.saveCluster(cluster);
+            clusterService.closeConnection();
+        });
+
+
+    }
+
     public static void updateRevision (Collection<Author> authors){
         AuthorService authorService = new AuthorService();
         authorService.openConnection();
@@ -117,7 +139,6 @@ public class StorageHandler  {
 
         authorService.closeConnection();
     }
-
     //   ==================== READ =======================
     public static Collection<Author> getAuthorsWithoutRevision(){
         AuthorService authorService = new AuthorService();
@@ -160,5 +181,17 @@ public class StorageHandler  {
 
        authorService.closeConnection();
        return graph;
+    }
+    public static Set<Author> getAuthors(Collection<String> ids){
+        AuthorService as = new AuthorService();
+        as.openConnection();
+        Set<Author> res = new HashSet<>();
+
+        ids.forEach(id ->{
+            res.add(as.findAuthor(Integer.parseInt(id)));
+        });
+
+        as.closeConnection();
+        return res;
     }
 }

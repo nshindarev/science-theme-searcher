@@ -12,6 +12,7 @@ import elibrary.auth.LogIntoElibrary;
 import elibrary.parser.Parser;
 import database.model.Keyword;
 import graph.Clusterer;
+import graph.gephi.GephiClusterer;
 import graph.ui.GraphVisualizer;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.slf4j.Logger;
@@ -34,7 +35,6 @@ public class Main {
 //        LogIntoElibrary.auth();
 //        new Parser(new Keyword("социоинженерные атаки")).parse();
 
-
         /**
          *  get graph from DB
          */
@@ -43,8 +43,8 @@ public class Main {
         /**
          *  Cluster graph
          */
-        Clusterer cluster = new Clusterer(authorsGraph);
-        cluster.executeClustering();
+//        Clusterer cluster = new Clusterer(authorsGraph);
+//        cluster.executeClustering();
 
         /**
          *  UI
@@ -52,6 +52,19 @@ public class Main {
 //        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
 //        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) authorsGraph);
 //        visualizer.visualize();
+
+        /**
+         * Gephi clustering
+         */
+
+        GephiClusterer gc = new GephiClusterer();
+        gc.action();
+
+
+        /**
+         *  save clusters into DB
+         */
+        StorageHandler.saveClusters(gc.getClusters());
 
 
 //        Author test1 = new Author("Test1", "1", "1");

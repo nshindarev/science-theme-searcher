@@ -1,9 +1,9 @@
 package graph.gephi;
 
-import com.itextpdf.text.PageSize;
+
 import database.model.AuthorToAuthor;
+import database.model.Cluster;
 import database.operations.StorageHandler;
-import org.apache.commons.lang3.ObjectUtils;
 import org.gephi.appearance.api.*;
 import org.gephi.appearance.plugin.PartitionElementColorTransformer;
 import org.gephi.appearance.plugin.RankingLabelSizeTransformer;
@@ -12,16 +12,10 @@ import org.gephi.appearance.plugin.palette.Palette;
 import org.gephi.appearance.plugin.palette.PaletteManager;
 import org.gephi.graph.api.*;
 import org.gephi.io.exporter.api.ExportController;
-import org.gephi.io.exporter.preview.PDFExporter;
-import org.gephi.io.exporter.spi.CharacterExporter;
-import org.gephi.io.exporter.spi.Exporter;
-import org.gephi.io.exporter.spi.GraphExporter;
 import org.gephi.io.importer.api.Container;
 import org.gephi.io.importer.api.EdgeDirectionDefault;
 import org.gephi.io.importer.api.ImportController;
 import org.gephi.io.processor.plugin.DefaultProcessor;
-import org.gephi.layout.plugin.force.StepDisplacement;
-import org.gephi.layout.plugin.force.yifanHu.YifanHuLayout;
 import org.gephi.layout.plugin.forceAtlas.ForceAtlasLayout;
 import org.gephi.project.api.ProjectController;
 import org.gephi.project.api.Workspace;
@@ -30,30 +24,29 @@ import org.gephi.statistics.plugin.Modularity;
 import org.openide.util.Lookup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.util.locale.provider.LocaleServiceProviderPool;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GephiClusterer {
 
     private final Logger logger = LoggerFactory.getLogger(GephiClusterer.class);
 
     private List<AuthorToAuthor> a2a;
-    private GraphModel graphModel;
     private UndirectedGraph authorsNetwork;
     private File clusteredGraphFile;
 
     public GephiClusterer() {
         a2a = StorageHandler.getA2A();
-        executeClustering();
-        visualizeGraph();
+    }
+    public void action(){
+        getGraph();
+        clusterAndVisualizeGraph();
+//        getClusters();
     }
 
 
-    private void executeClustering() {
+    private void getGraph() {
         //Init a project - and therefore a workspace
         ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
         pc.newProject();
@@ -69,10 +62,10 @@ public class GephiClusterer {
         authorsNetwork = graphModel.getUndirectedGraph();
         a2a.forEach(connection -> {
 
-            Node a1 = graphModel.factory().newNode(connection.getAuthor_first().toString());
-            a1.setLabel(connection.getAuthor_first().toString());
-            Node a2 = graphModel.factory().newNode(connection.getAuthor_second().toString());
-            a2.setLabel(connection.getAuthor_second().toString());
+            Node a1 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_first().getId()));
+            a1.setLabel(String.valueOf(connection.getAuthor_first().getId()));
+            Node a2 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_second().getId()));
+            a2.setLabel(String.valueOf(connection.getAuthor_second().getId()));
             /**
              * add a1
              */
@@ -119,9 +112,9 @@ public class GephiClusterer {
     /**
      *  uploads gexf file from memory
      *  saves visualized partition in pdf file
-     *  CANNOT BE USED WITHOUT executeCluste
+     *  CANNOT BE USED WITHOUT executeClustering
      */
-    public void visualizeGraph(){
+    public void clusterAndVisualizeGraph(){
         //Init a project - and therefore a workspace
         ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
         pc.newProject();
@@ -157,6 +150,12 @@ public class GephiClusterer {
         logger.info("MODULARITY SCORE");
         logger.info(String.valueOf(modularity.getModularity()));
 
+        /**
+         *  set field value to export clusters into DB
+         */
+        authorsNetwork = graphModel.getUndirectedGraph();
+
+
         //Partition with 'modularity_class', just created by Modularity algorithm
         Column modColumn = graphModel.getNodeTable().getColumn(Modularity.MODULARITY_CLASS);
         Function func2 = appearanceModel.getNodeFunction(graph, modColumn, PartitionElementColorTransformer.class);
@@ -187,12 +186,15 @@ public class GephiClusterer {
         labelSizeTransformer.setMaxSize(3);
         appearanceController.transform(centralityRanking2);
 
-        YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
-//        ForceAtlasLayout layout = new ForceAtlasLayout(null);
+//        YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
+        ForceAtlasLayout layout = new ForceAtlasLayout(null);
         layout.setGraphModel(graphModel);
         layout.initAlgo();
         layout.resetPropertiesValues();
-        layout.setOptimalDistance(200f);
+//        layout.setOptimalDistance(200f);
+
+
+
 
         for (int i = 0; i < 100 && layout.canAlgo(); i++) {
             layout.goAlgo();
@@ -207,5 +209,24 @@ public class GephiClusterer {
             ex.printStackTrace();
             return;
         }
+
+    }
+
+    public Map<Cluster, Set<String>> getClusters(){
+
+        Map<Cluster, Set<String>> mapAuthorIds = new HashMap<>();
+        authorsNetwork.getNodes().forEach(node ->{
+            int clusterId = (Integer) node.getAttribute("modularity_class");
+
+            Cluster cl = new Cluster(clusterId);
+
+            if (mapAuthorIds.containsKey(cl)){
+                mapAuthorIds.get(cl).add(String.valueOf(node.getId()));
+            }
+            else mapAuthorIds.put(cl, new HashSet<>());
+
+        });
+
+        return mapAuthorIds;
     }
 }

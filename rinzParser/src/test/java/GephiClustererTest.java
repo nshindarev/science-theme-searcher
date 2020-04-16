@@ -1,3 +1,4 @@
+import database.operations.StorageHandler;
 import graph.gephi.GephiClusterer;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -9,5 +10,9 @@ public class GephiClustererTest {
     @Test
     public void testCreatingGraph(){
         GephiClusterer gc = new GephiClusterer();
+        gc.action();
+
+        StorageHandler.saveClusters(gc.getClusters());
+
     }
 }
