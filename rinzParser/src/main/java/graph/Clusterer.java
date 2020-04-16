@@ -4,7 +4,6 @@ import com.apporiented.algorithm.clustering.AverageLinkageStrategy;
 import com.apporiented.algorithm.clustering.Cluster;
 import com.apporiented.algorithm.clustering.ClusteringAlgorithm;
 import com.apporiented.algorithm.clustering.DefaultClusteringAlgorithm;
-import com.sun.istack.internal.NotNull;
 import database.model.Author;
 import elibrary.parser.Navigator;
 import org.jgrapht.alg.connectivity.GabowStrongConnectivityInspector;
@@ -14,10 +13,8 @@ import org.jgrapht.graph.AsSubgraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
@@ -67,7 +64,7 @@ public class Clusterer {
     public AbstractGraph getGraph(){
         return this.graph;
     }
-    public List<Cluster> getClusters (@NotNull Cluster root){
+    public List<Cluster> getClusters (Cluster root){
 
         List<Cluster>  visited = new LinkedList<>();
         LinkedBlockingQueue<Cluster> clusterQueue = new LinkedBlockingQueue<>();

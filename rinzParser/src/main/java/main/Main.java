@@ -32,8 +32,8 @@ public class Main {
         /**
          *  parser
          */
-//        LogIntoElibrary.auth();
-//        new Parser(new Keyword("социоинженерные атаки")).parse();
+        LogIntoElibrary.auth();
+        new Parser(new Keyword("социоинженерные атаки")).parse();
 
         /**
          *  get graph from DB

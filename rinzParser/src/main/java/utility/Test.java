@@ -4,18 +4,16 @@ import database.model.Author;
 import database.model.AuthorToAuthor;
 import implementation.SynonymyServiceImpl;
 import implementation.TranslatorServiceImpl;
-import org.apache.log4j.BasicConfigurator;
 import service.SynonymyService;
 import service.TranslatorService;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Main {
+public class Test {
 
     //Example of work
     public static void main(String[] args) {
-        BasicConfigurator.configure();
         SynonymyService synonymyService = new SynonymyServiceImpl();
         TranslatorService translatorService = new TranslatorServiceImpl();
 

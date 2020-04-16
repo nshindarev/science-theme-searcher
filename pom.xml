@@ -24,9 +24,7 @@
 
 
     <modules>
-        <module>appl</module>
         <module>rinzParser</module>
-        <module>synonymy</module>
     </modules>
 
     <build>
@@ -176,22 +174,6 @@
                 <version>0.9.2</version>
             </dependency>
 
-
-
-            <!-- https://mvnrepository.com/artifact/org.ccil.cowan.tagsoup/tagsoup -->
-            <!--<dependency>-->
-                <!--<groupId>org.ccil.cowan.tagsoup</groupId>-->
-                <!--<artifactId>tagsoup</artifactId>-->
-                <!--<version>1.2</version>-->
-            <!--</dependency>-->
-
-            <!-- jericho - парсер HTML страниц для google scholar-->
-            <!-- https://mvnrepository.com/artifact/net.htmlparser.jericho/jericho-html -->
-            <!--<dependency>-->
-                <!--<groupId>net.htmlparser.jericho</groupId>-->
-                <!--<artifactId>jericho-html</artifactId>-->
-                <!--<version>${jericho.version}</version>-->
-            <!--</dependency>-->
 
             <!-- Тестирование -->
             <dependency>
