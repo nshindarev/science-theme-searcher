@@ -26,6 +26,7 @@
     <modules>
         <module>appl</module>
         <module>rinzParser</module>
+        <module>synonymy</module>
     </modules>
 
     <build>
@@ -85,11 +86,6 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
 
             <!--for RINZ parser-->
             <dependency>
@@ -132,11 +128,6 @@
                 <version>1.4.4</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/jung/jung -->
-            <dependency>
-                <groupId>jung</groupId>
-                <artifactId>jung</artifactId>
-                <version>1.7.6</version>
-            </dependency>
             <dependency>
                 <groupId>jung</groupId>
                 <artifactId>jung</artifactId>

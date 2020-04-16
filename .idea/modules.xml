@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/appl/appl.iml" filepath="$PROJECT_DIR$/appl/appl.iml" />
       <module fileurl="file://$PROJECT_DIR$/parser.scopus.client.iml" filepath="$PROJECT_DIR$/parser.scopus.client.iml" />
       <module fileurl="file://$PROJECT_DIR$/rinzParser/rinzParser.iml" filepath="$PROJECT_DIR$/rinzParser/rinzParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/synonymy/synonymy.iml" filepath="$PROJECT_DIR$/synonymy/synonymy.iml" />
     </modules>
   </component>
 </project>

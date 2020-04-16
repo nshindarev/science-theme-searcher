@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- Log SCMessage format -->
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>%green(%date{ISO8601}) [%32thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>500</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="STDOUT" />
+    </appender>
+
+    <logger name="synonymy"              level="DEBUG"    additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="synonymy.src.main.java.implementation.TranslatorServiceImpl" level="info" additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="synonymy.src.main.java.implementation.LengthComparatorServiceImpl" level="info" additivity="false"><appender-ref ref="STDOUT"/></logger>
+    <logger name="synonymy.src.main.java.implementation.SynonymyServiceImpl"         level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
+
+
+    <!-- root -->
+    <root level="TRACE">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
