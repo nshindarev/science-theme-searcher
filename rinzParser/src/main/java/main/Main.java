@@ -32,13 +32,13 @@ public class Main {
         /**
          *  parser
          */
-//        LogIntoElibrary.auth();
-//        new Parser(new Keyword("социоинженерные атаки")).parse();
+        LogIntoElibrary.auth();
+        new Parser(new Keyword("социоинженерные атаки")).parse();
 
         /**
          *  get graph from DB
          */
-        DefaultDirectedGraph authorsGraph = StorageHandler.getAuthorsGraph();
+//        DefaultDirectedGraph authorsGraph = StorageHandler.getAuthorsGraph();
 
         /**
          *  Cluster graph
@@ -62,11 +62,11 @@ public class Main {
 
 
         /**
-         *  save clusters into DB
+         *  save clusters into DB and get top results
          */
+        StorageHandler.saveClusters(gc.getClusters());
         StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
 
-//        StorageHandler.saveClusters(gc.getClusters());
 
 
 

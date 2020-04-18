@@ -30,19 +30,30 @@ public class Parser {
             Pages.keywordSearchPage = Navigator.getKeywordSearchResultsPage(keyword);
 
         // keyword search + fill links to authors
-        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage);
-        StorageHandler.saveAuthors(keywordAuthors);
+        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Navigator.searchLimit1);
+        if (keywordAuthors.size()>0)
+            StorageHandler.saveAuthors(keywordAuthors);
 
+
+        parseResume();
+    }
+    public void parseResume(){
         // 2-level limited search
         for(int i=0; i<Navigator.searchLevel; i++){
-            Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
-            authors.forEach(it -> {
-                Set<Author> coAuthors = getCoAuthors(it);
-                StorageHandler.saveAuthors(coAuthors);
-                it.setRevision(1);
-            });
+            try {
+                Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
+                authors.forEach(it -> {
+                    Set<Author> coAuthors = getCoAuthors(it);
+                    StorageHandler.saveAuthors(coAuthors);
+                    it.setRevision(1);
+                });
 
-            StorageHandler.updateRevision(authors);
+                StorageHandler.updateRevision(authors);
+            }
+            catch (ElementNotFoundException ex){
+                LogIntoElibrary.auth();
+                parseResume();
+            }
         }
 
         StorageHandler.saveCoAuthors();
@@ -54,14 +65,14 @@ public class Parser {
      *  <a> {publicationName} <a/>
      *  <i> {author 1},{author 2}<i/>
      */
-    private Set<Author> getKeywordResults (HtmlPage page) throws ElementNotFoundException{
+    private Set<Author> getKeywordResults (HtmlPage page, int searchLimit) throws ElementNotFoundException{
         try{
             Set<Author> authorSet = new HashSet<>();
             final HtmlTable rezultsTable = page.getHtmlElementById("restab");
 
             for (final HtmlTableRow row : rezultsTable.getRows()) {
                 if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
-                    if(authorSet.size()<= Navigator.searchLimit){
+                    if(authorSet.size()<= searchLimit){
                         HtmlElement publName = row.getElementsByTagName("a").get(0);
                         HtmlElement authNames = row.getElementsByTagName("i").get(0);
 
@@ -73,51 +84,53 @@ public class Parser {
                         // --- convert string into business object
                         // --- get link for authors pages
                         for (String auth : authInPubl) {
-                            Author authBO = Author.convertStringToAuthor(auth);
-                            authBO.addPublication(publ);
+                            try {
+                                Author authBO = Author.convertStringToAuthor(auth);
+                                authBO.addPublication(publ);
 
-                            if (!authorSet.contains(authBO) && authorSet.size() <= Navigator.searchLimit) {
-                                //get page
-                                HtmlPage authSearchPage = Navigator.getAuthorSearchResultsPage(authBO);
+                                if (!authorSet.contains(authBO) && authorSet.size() <= searchLimit) {
+                                    //get page
+                                    HtmlPage authSearchPage = Navigator.getAuthorSearchResultsPage(authBO);
 
-                                //set link
-                                authBO = Parser.setLinkToAuthor(authBO, authSearchPage);
-                                authors.add(authBO);
-                                authorSet.add(authBO);
+                                    //set link
+                                    authBO = Parser.setLinkToAuthor(authBO, authSearchPage);
+                                    authors.add(authBO);
+                                    authorSet.add(authBO);
+                                }
+                                else if (authorSet.contains(authBO)){
+
+                                    // get data from set
+                                    ArrayList<Author> authorList = new ArrayList(authorSet);
+                                    int authBoSavedIndex = authorList.indexOf(authBO);
+                                    Author authBoSaved = authorList.get(authBoSavedIndex);
+
+                                    // join publications
+                                    authBO.join(authBoSaved);
+
+                                    // update author
+                                    authorSet.remove(authBO);
+                                    authorSet.add(authBO);
+                                }
                             }
-                            else if (authorSet.contains(authBO)){
-
-                                // get data from set
-                                ArrayList<Author> authorList = new ArrayList(authorSet);
-                                int authBoSavedIndex = authorList.indexOf(authBO);
-                                Author authBoSaved = authorList.get(authBoSavedIndex);
-
-                                // join publications
-                                authBO.join(authBoSaved);
-
-                                // update author
-                                authorSet.remove(authBO);
-                                authorSet.add(authBO);
+                            catch (NullPointerException ex){
+                                logger.warn(auth.toString() + "is not an author");
+                                logger.warn(ex.getMessage());
                             }
+
                         }
                     }
                 }
             }
             return authorSet;
         }
-        catch (Exception ex){
-            logger.error(ex.getMessage());
-//
-//            LogIntoElibrary.login = "Olga Suleymanova";
-//            LogIntoElibrary.password = "123yes456";
-//            LogIntoElibrary.auth();
-
-            return getKeywordResults (page);
+        catch (NullPointerException ex){
+            return new HashSet<>();
         }
+
     }
 
     // take 1st link from authors links
-    private Set<Author> getCoAuthors (Author author){
+    private Set<Author> getCoAuthors (Author author) throws ElementNotFoundException{
 
         if (author.getLinks().iterator().hasNext()){
             return getCoAuthors(author.getLinks().iterator().next());
@@ -126,10 +139,10 @@ public class Parser {
     }
 
     // collects coauthors
-    private Set<Author> getCoAuthors (Link link){
+    private Set<Author> getCoAuthors (Link link) throws ElementNotFoundException{
         HtmlPage dataPage = Navigator.getAuthorsPage(link);
 
-        return getKeywordResults(dataPage);
+        return getKeywordResults(dataPage, Navigator.searchLimit2);
     }
     /**
      * fills in link to page with authors publications
