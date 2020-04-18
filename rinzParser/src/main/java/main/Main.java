@@ -32,8 +32,8 @@ public class Main {
         /**
          *  parser
          */
-        LogIntoElibrary.auth();
-        new Parser(new Keyword("социоинженерные атаки")).parse();
+//        LogIntoElibrary.auth();
+//        new Parser(new Keyword("социоинженерные атаки")).parse();
 
         /**
          *  get graph from DB
@@ -64,7 +64,10 @@ public class Main {
         /**
          *  save clusters into DB
          */
-        StorageHandler.saveClusters(gc.getClusters());
+        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
+
+//        StorageHandler.saveClusters(gc.getClusters());
+
 
 
 //        Author test1 = new Author("Test1", "1", "1");

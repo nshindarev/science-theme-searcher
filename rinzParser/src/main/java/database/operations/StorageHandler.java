@@ -1,5 +1,6 @@
 package database.operations;
 
+import com.apporiented.algorithm.clustering.visualization.ClusterComponent;
 import database.model.Author;
 import database.model.AuthorToAuthor;
 import database.model.Cluster;
@@ -105,6 +106,7 @@ public class StorageHandler  {
         a2aServ.openConnection();
 
         weightCounter.forEach((k,v) ->{
+
             k.setWeight(v/2);
             a2aServ.saveAuthorToAuthor(k);
         });
@@ -130,7 +132,6 @@ public class StorageHandler  {
 
 
     }
-
     public static void updateRevision (Collection<Author> authors){
         AuthorService authorService = new AuthorService();
         authorService.openConnection();
@@ -193,5 +194,28 @@ public class StorageHandler  {
 
         as.closeConnection();
         return res;
+    }
+
+    public static Map<Cluster, List<Author>> getTopAuthors (Map<Cluster, List<String>> clusters, int minClusterSize, int topVerticesSize){
+
+        Map<Cluster, List<Author>> res = clusters.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().size() >= minClusterSize)
+                .collect(Collectors.toMap(x -> (Cluster)x.getKey(), x -> (List<Author>)getAuthorsById(x.getValue()).subList(0,topVerticesSize)));
+
+        return res;
+    }
+
+    public static List<Author> getAuthorsById(List<String> ids){
+        AuthorService as = new AuthorService();
+        as.openConnection();
+
+        List<Author> authors = new LinkedList<>();
+        ids.forEach(id -> {
+            authors.add(as.findAuthor(Integer.parseInt(id)));
+        });
+
+        as.closeConnection();
+        return authors;
     }
 }
