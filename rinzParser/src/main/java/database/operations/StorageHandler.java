@@ -8,17 +8,13 @@ import database.service.AuthorService;
 import database.service.AuthorToAuthorService;
 import database.service.ClusterService;
 import database.service.PublicationService;
-import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.util.*;
 import java.util.stream.Collectors;
 

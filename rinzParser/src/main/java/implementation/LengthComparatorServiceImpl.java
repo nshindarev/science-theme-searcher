@@ -12,7 +12,15 @@ public class LengthComparatorServiceImpl implements LengthComparatorService {
 
     @Override
     public boolean samePatronymics (Author firstAuthor, Author secondAuthor) {
-        return firstAuthor.getN().equals(secondAuthor.getN())&&firstAuthor.getP().equals(secondAuthor.getP());
+        if (firstAuthor.getN()!=null && secondAuthor.getN()!= null) {
+            if (firstAuthor.getP() != null && secondAuthor.getP() != null) {
+               return firstAuthor.getN().equals(secondAuthor.getN())&&firstAuthor.getP().equals(secondAuthor.getP());
+            } else {
+                return  firstAuthor.getN().equals(secondAuthor.getN());
+            }
+        } else {
+            return false;
+        }
     }
 
     //Levenshtein distance algorithm
