@@ -33,48 +33,55 @@ public class Parser {
         if (keyword != null && Pages.startPage != null)
             Pages.keywordSearchPage = Navigator.getKeywordSearchResultsPage(keyword);
 
+        // names of all publications associated with current keyword
+        Navigator.allKeywordPublicationIds = getAllPublicationIds(Pages.keywordSearchPage, 1);
+        Navigator.allKeywordPublicationIds.forEach(it -> logger.info(it.toString()));
 
+        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Navigator.searchLimit);
 
-        // keyword search + fill links to authors
+        // 2-level limited search
+        for(int i=0; i<Navigator.searchLevel; i++){
+            Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
+            authors.forEach(it -> {
+                Set<Author> coAuthors = getCoAuthors(it);
+                StorageHandler.saveAuthors(coAuthors);
+                it.setRevision(1);
+            });
 
-        Set<Author> allKeywordAuthors = new HashSet<>();
-        try {
-            int i = 1;
-            while (true){
-                allKeywordAuthors
-                        .addAll(getKeywordResults(getKeywordNextResults(Pages.keywordSearchPage, i), Integer.MAX_VALUE));
-                allKeywordAuthors.forEach(it -> logger.info(it.toString()));
-                i++;
-            }
-
-        }
-        catch (IOException ex){
-            logger.error(ex.getMessage());
-        }
-        catch (RuntimeException ex){
-            logger.error(ex.getMessage());
+            StorageHandler.updateRevision(authors);
         }
 
-        logger.info("");
+        StorageHandler.saveCoAuthors();
 
-
-//        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Integer.MAX_VALUE);
+        //TODO: updateKeyword foreach publication in DB
+//        // keyword search + fill links to authors
 //
-//        StorageHandler.saveAuthors(keywordAuthors);
+//        Set<Author> allKeywordAuthors = new HashSet<>();
+//        try {
+//            int i = 1;
+//            while (true){
+//                allKeywordAuthors
+//                        .addAll(getKeywordResults(getKeywordNextResults(Pages.keywordSearchPage, i), Integer.MAX_VALUE));
+//                allKeywordAuthors.forEach(it -> logger.info(it.toString()));
+//                i++;
+//            }
 //
-//        // 2-level limited search
-//        for(int i=0; i<Navigator.searchLevel; i++){
-//            Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
-//            authors.forEach(it -> {
-//                Set<Author> coAuthors = getCoAuthors(it);
-//                StorageHandler.saveAuthors(coAuthors);
-//                it.setRevision(1);
-//            });
-//
-//            StorageHandler.updateRevision(authors);
+//        }
+//        catch (IOException ex){
+//            logger.error(ex.getMessage());
+//        }
+//        catch (RuntimeException ex){
+//            logger.error(ex.getMessage());
 //        }
 //
-//        StorageHandler.saveCoAuthors();
+//        logger.info("");
+
+
+//        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Navigator.searchLimit);
+
+        //        StorageHandler.saveAuthors(keywordAuthors);
+//
+//
     }
 
     /**
@@ -90,9 +97,19 @@ public class Parser {
             final HtmlTable rezultsTable = page.getHtmlElementById("restab");
 
             for (final HtmlTableRow row : rezultsTable.getRows()) {
+
+                // parse publication citations metric
+                int citations = 0;
                 if (row.getCells().size()>=3){
-                    logger.debug(row.getCells().get(2).asText());
+                    try {
+                        if (!row.getCells().get(2).asText().equals("Цит."))
+                            citations = Integer.parseInt(row.getCells().get(2).asText());
+                    }
+                    catch (NumberFormatException ex){
+                        logger.warn(ex.getMessage());
+                    }
                 }
+
                 if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
                     if(authorSet.size()<= searchLimit){
                         HtmlElement publName = row.getElementsByTagName("a").get(0);
@@ -101,6 +118,7 @@ public class Parser {
 
                         List<String> authInPubl = Arrays.asList(authNames.asText().split(","));
                         Publication publ = new Publication(publName.asText());
+                        publ.setMetric(citations);
                         List<Author> authors = new LinkedList<>();
 
                         // --- convert string into business object
@@ -191,4 +209,27 @@ public class Parser {
         logger.trace("LINK TO "+author.toString()+" ==> " + author.getLinks().toString());
         return author;
     }
-}
+
+    private Set<Publication> getAllPublicationIds (HtmlPage page, int currentPageNumber) {
+        Set<Publication> res = new HashSet<>();
+        final HtmlTable rezultsTable = page.getHtmlElementById("restab");
+
+        for (final HtmlTableRow row : rezultsTable.getRows()) {
+            if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
+                res.add(new Publication(row.getElementsByTagName("a").get(0).asText()));
+            }
+        }
+        try{
+            currentPageNumber ++;
+            HtmlPage nextPage = Navigator.webClient.getPage("https://elibrary.ru/query_results.asp?pagenum="+currentPageNumber);
+            res.addAll(getAllPublicationIds(nextPage, currentPageNumber));
+        }
+        catch (Exception ex){
+            logger.warn("reached last page during keyword search");
+            logger.warn("keyword search made in " + --currentPageNumber + " pages");
+            return res;
+        }
+        return res;
+    }
+
+    }

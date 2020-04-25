@@ -8,6 +8,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 import database.model.Author;
 import database.model.Keyword;
 import database.model.Link;
+import database.model.Publication;
 import elibrary.auth.LogIntoElibrary;
 import elibrary.tools.Pages;
 import org.slf4j.Logger;
@@ -15,16 +16,20 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Navigator {
     private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 
     public static  WebClient webClient = new WebClient(BrowserVersion.CHROME);
     public static final int timeOut = 10000;
-    public static final int searchLimit = 13;
+    public static final int searchLimit = 5;
     public static final int searchLevel = 2;
     public static  int clusterNumber = 5;
+
+    public static Set<Publication> allKeywordPublicationIds = new HashSet<>();
 
     /**
      * after logging in -> goto authors search page
@@ -88,7 +93,7 @@ public class Navigator {
         }
     }
 
-    public static HtmlPage getKeywordNextResults (HtmlPage page, int i) throws IOException, MalformedURLException{
+    public static HtmlPage getKeywordNextResults (int i) throws IOException, MalformedURLException{
         return Navigator.webClient.getPage("https://elibrary.ru/query_results.asp?pagenum="+i);
     }
 
