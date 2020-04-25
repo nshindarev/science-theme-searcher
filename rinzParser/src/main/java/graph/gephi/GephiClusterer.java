@@ -23,6 +23,7 @@ import org.gephi.project.api.ProjectController;
 import org.gephi.project.api.Workspace;
 import org.gephi.statistics.plugin.GraphDistance;
 import org.gephi.statistics.plugin.Modularity;
+import org.neo4j.cypher.internal.frontend.v2_3.ast.functions.Str;
 import org.openide.util.Lookup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +94,10 @@ public class GephiClusterer {
             /**
              * add edge
              */
+
             Edge e = graphModel.factory().newEdge(a1, a2, connection.getWeight(), false);
+            e.setWeight(connection.getWeight());
+
             authorsNetwork.addEdge(e);
         });
 
@@ -132,7 +136,7 @@ public class GephiClusterer {
         try {
             File file = clusteredGraphFile;
             container = importController.importFile(file);
-            container.getLoader().setEdgeDefault(EdgeDirectionDefault.DIRECTED);   //Force DIRECTED
+            container.getLoader().setEdgeDefault(EdgeDirectionDefault.UNDIRECTED);   //Force DIRECTED
         } catch (Exception ex) {
             ex.printStackTrace();
             return;
@@ -227,7 +231,26 @@ public class GephiClusterer {
             else mapAuthorIds.put(cl, new HashSet<>());
 
         });
-
         return mapAuthorIds;
     }
+
+    public Map<Cluster, List<String>> sortRecommendations(){
+
+        Map<Cluster, List<String>> res = new HashMap();
+        getClusters().forEach((cl, setAuthors) ->{
+                    List<String> sortedAuthors = new LinkedList<>(setAuthors);
+                    sortedAuthors.sort((o1, o2) -> {
+                       double centrality1 = (Double)authorsNetwork.getNode(o1).getAttribute("betweenesscentrality");
+                       double centrality2 = (Double)authorsNetwork.getNode(o2).getAttribute("betweenesscentrality");
+
+                       return Double.compare(centrality1, centrality2);
+                    });
+                    res.put(cl, sortedAuthors);
+        });
+
+        return res;
+    }
+
+
+
 }

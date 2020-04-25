@@ -40,6 +40,11 @@ public class Publication {
 
     @Getter
     @Setter
+    @Column(name = "metric")
+    private Integer metric;
+
+    @Getter
+    @Setter
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "authortopublication", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_publication"),

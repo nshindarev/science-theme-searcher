@@ -1,5 +1,6 @@
 package database.operations;
 
+import com.apporiented.algorithm.clustering.visualization.ClusterComponent;
 import database.model.Author;
 import database.model.AuthorToAuthor;
 import database.model.Cluster;
@@ -8,13 +9,17 @@ import database.service.AuthorService;
 import database.service.AuthorToAuthorService;
 import database.service.ClusterService;
 import database.service.PublicationService;
+import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -101,6 +106,7 @@ public class StorageHandler  {
         a2aServ.openConnection();
 
         weightCounter.forEach((k,v) ->{
+
             k.setWeight(v/2);
             a2aServ.saveAuthorToAuthor(k);
         });
@@ -189,5 +195,28 @@ public class StorageHandler  {
 
         as.closeConnection();
         return res;
+    }
+
+    public static Map<Cluster, List<Author>> getTopAuthors (Map<Cluster, List<String>> clusters, int minClusterSize, int topVerticesSize){
+
+        Map<Cluster, List<Author>> res = clusters.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().size() >= minClusterSize)
+                .collect(Collectors.toMap(x -> (Cluster)x.getKey(), x -> (List<Author>)getAuthorsById(x.getValue()).subList(0,topVerticesSize)));
+
+        return res;
+    }
+
+    public static List<Author> getAuthorsById(List<String> ids){
+        AuthorService as = new AuthorService();
+        as.openConnection();
+
+        List<Author> authors = new LinkedList<>();
+        ids.forEach(id -> {
+            authors.add(as.findAuthor(Integer.parseInt(id)));
+        });
+
+        as.closeConnection();
+        return authors;
     }
 }
