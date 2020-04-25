@@ -40,6 +40,11 @@ public class Publication {
 
     @Getter
     @Setter
+    @Column(name = "metric")
+    private Integer metric;
+
+    @Getter
+    @Setter
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "authortopublication", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_publication"),
@@ -66,6 +71,11 @@ public class Publication {
     public Publication (String name){
         this.name = name;
     }
+    public Publication (String name, Integer metric){
+        this.name = name;
+        this.metric = metric;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
