@@ -36,6 +36,7 @@ CREATE TABLE postgres_sts.science_theme_searcher.Publication (
     Annotation VARCHAR(1000) NULL,
     DescriptionEng VARCHAR(1000) NULL,
     DescriptionRus VARCHAR(1000) NULL,
+    Metric INTEGER NULL,
     PRIMARY KEY (Id)
     );
 
