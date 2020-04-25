@@ -191,12 +191,12 @@ public class GephiClusterer {
         labelSizeTransformer.setMaxSize(3);
         appearanceController.transform(centralityRanking2);
 
-        YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
-//        ForceAtlasLayout layout = new ForceAtlasLayout(null);
+//        YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
+        ForceAtlasLayout layout = new ForceAtlasLayout(null);
         layout.setGraphModel(graphModel);
         layout.initAlgo();
         layout.resetPropertiesValues();
-        layout.setOptimalDistance(200f);
+//        layout.setOptimalDistance(200f);
 
 
 

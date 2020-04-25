@@ -22,7 +22,7 @@ public class Navigator {
 
     public static  WebClient webClient = new WebClient(BrowserVersion.CHROME);
     public static final int timeOut = 10000;
-    public static final int searchLimit = 10;
+    public static final int searchLimit = 13;
     public static final int searchLevel = 2;
     public static  int clusterNumber = 5;
 
@@ -86,6 +86,10 @@ public class Navigator {
             logger.error(ex.getMessage());
             return Pages.startPage;
         }
+    }
+
+    public static HtmlPage getKeywordNextResults (HtmlPage page, int i) throws IOException, MalformedURLException{
+        return Navigator.webClient.getPage("https://elibrary.ru/query_results.asp?pagenum="+i);
     }
 
     /**

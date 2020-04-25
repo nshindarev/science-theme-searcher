@@ -12,7 +12,11 @@ import database.model.Publication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.*;
+
+import static elibrary.parser.Navigator.getKeywordNextResults;
 
 public class Parser {
     private static final Logger logger = LoggerFactory.getLogger(Parser.class);
@@ -29,23 +33,48 @@ public class Parser {
         if (keyword != null && Pages.startPage != null)
             Pages.keywordSearchPage = Navigator.getKeywordSearchResultsPage(keyword);
 
+
+
         // keyword search + fill links to authors
-        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage);
-        StorageHandler.saveAuthors(keywordAuthors);
 
-        // 2-level limited search
-        for(int i=0; i<Navigator.searchLevel; i++){
-            Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
-            authors.forEach(it -> {
-                Set<Author> coAuthors = getCoAuthors(it);
-                StorageHandler.saveAuthors(coAuthors);
-                it.setRevision(1);
-            });
+        Set<Author> allKeywordAuthors = new HashSet<>();
+        try {
+            int i = 1;
+            while (true){
+                allKeywordAuthors
+                        .addAll(getKeywordResults(getKeywordNextResults(Pages.keywordSearchPage, i), Integer.MAX_VALUE));
+                allKeywordAuthors.forEach(it -> logger.info(it.toString()));
+                i++;
+            }
 
-            StorageHandler.updateRevision(authors);
+        }
+        catch (IOException ex){
+            logger.error(ex.getMessage());
+        }
+        catch (RuntimeException ex){
+            logger.error(ex.getMessage());
         }
 
-        StorageHandler.saveCoAuthors();
+        logger.info("");
+
+
+//        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Integer.MAX_VALUE);
+//
+//        StorageHandler.saveAuthors(keywordAuthors);
+//
+//        // 2-level limited search
+//        for(int i=0; i<Navigator.searchLevel; i++){
+//            Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
+//            authors.forEach(it -> {
+//                Set<Author> coAuthors = getCoAuthors(it);
+//                StorageHandler.saveAuthors(coAuthors);
+//                it.setRevision(1);
+//            });
+//
+//            StorageHandler.updateRevision(authors);
+//        }
+//
+//        StorageHandler.saveCoAuthors();
     }
 
     /**
@@ -54,14 +83,15 @@ public class Parser {
      *  <a> {publicationName} <a/>
      *  <i> {author 1},{author 2}<i/>
      */
-    private Set<Author> getKeywordResults (HtmlPage page) throws ElementNotFoundException{
+    private Set<Author> getKeywordResults (HtmlPage page, int searchLimit) throws ElementNotFoundException{
+
         try{
             Set<Author> authorSet = new HashSet<>();
             final HtmlTable rezultsTable = page.getHtmlElementById("restab");
 
             for (final HtmlTableRow row : rezultsTable.getRows()) {
                 if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
-                    if(authorSet.size()<= Navigator.searchLimit){
+                    if(authorSet.size()<= searchLimit){
                         HtmlElement publName = row.getElementsByTagName("a").get(0);
                         HtmlElement authNames = row.getElementsByTagName("i").get(0);
 
@@ -76,7 +106,7 @@ public class Parser {
                             Author authBO = Author.convertStringToAuthor(auth);
                             authBO.addPublication(publ);
 
-                            if (!authorSet.contains(authBO) && authorSet.size() <= Navigator.searchLimit) {
+                            if (!authorSet.contains(authBO) && authorSet.size() <= searchLimit) {
                                 //get page
                                 HtmlPage authSearchPage = Navigator.getAuthorSearchResultsPage(authBO);
 
@@ -107,12 +137,8 @@ public class Parser {
         }
         catch (Exception ex){
             logger.error(ex.getMessage());
-//
-//            LogIntoElibrary.login = "Olga Suleymanova";
-//            LogIntoElibrary.password = "123yes456";
-//            LogIntoElibrary.auth();
-
-            return getKeywordResults (page);
+//            return getKeywordResults (page, searchLimit);
+            return new HashSet<>();
         }
     }
 
@@ -129,7 +155,7 @@ public class Parser {
     private Set<Author> getCoAuthors (Link link){
         HtmlPage dataPage = Navigator.getAuthorsPage(link);
 
-        return getKeywordResults(dataPage);
+        return getKeywordResults(dataPage, Navigator.searchLimit);
     }
     /**
      * fills in link to page with authors publications
