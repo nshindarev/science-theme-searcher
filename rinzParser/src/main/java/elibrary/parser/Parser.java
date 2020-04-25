@@ -90,6 +90,9 @@ public class Parser {
             final HtmlTable rezultsTable = page.getHtmlElementById("restab");
 
             for (final HtmlTableRow row : rezultsTable.getRows()) {
+                if (row.getCells().size()>=3){
+                    logger.debug(row.getCells().get(2).asText());
+                }
                 if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
                     if(authorSet.size()<= searchLimit){
                         HtmlElement publName = row.getElementsByTagName("a").get(0);
