@@ -33,7 +33,6 @@ public class AuthorDao {
     }
 
     public List<Author> findAll() {
-//        List<Author> authors = (List<Author>)  session.createQuery("FROM science_theme_searcher.author").list();
         List<Author> authors = (List<Author>)  session.createQuery("FROM database.model.Author").list();
         return authors;
     }

@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity(name = "keyword")
 @Table(name = "keyword", schema = "science_theme_searcher")
 public class Keyword {
+    public Keyword() {}
 
     @Id
     @Getter

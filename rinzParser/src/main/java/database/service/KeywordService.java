@@ -31,6 +31,10 @@ public class KeywordService {
         return keywordDao.findAll();
     }
 
+    public Keyword findByKeyword(String keyword) {
+        return keywordDao.findByKeyword(keyword);
+    }
+
     public void openConnection() {
         keywordDao.openConnection();
     }

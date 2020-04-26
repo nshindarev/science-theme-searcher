@@ -34,8 +34,12 @@ public class KeywordDao {
     }
 
     public List<Keyword> findAll() {
-        List<Keyword> keywords = (List<Keyword>)  session.createQuery("From science_theme_searcher.keyword").list();
+        List<Keyword> keywords = (List<Keyword>)  session.createQuery("From database.model.Keyword").list();
         return keywords;
+    }
+
+    public Keyword findByKeyword(String keyword) {
+        return (Keyword) session.createQuery("From database.model.Keyword w where w.keyword = '"+keyword+"'").list().get(0);
     }
 
     public void openConnection() {
