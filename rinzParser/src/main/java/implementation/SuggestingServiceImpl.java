@@ -45,7 +45,7 @@ public class SuggestingServiceImpl implements SuggestingService {
                     "\tscience_theme_searcher.keywordtopublication kp,\n" +
                     "\tscience_theme_searcher.authortopublication ap,\n" +
                     "\tscience_theme_searcher.clustertoauthor ca\n" +
-                    "where k.keyword = 'социоинженерные атаки'\n" +
+                    "where k.keyword = '"+keyword+"'\n" +
                     "and k.id = kp.id_keyword\n" +
                     "and kp.id_publication = p.id\n" +
                     "and p.id = ap.id_publication\n" +
