@@ -67,7 +67,8 @@ public class Publication {
         this.keywords.add(keyword);
     }
 
-    public Publication () {}
+    public Publication () {
+    }
     public Publication (String name){
         this.name = name;
     }
@@ -87,11 +88,16 @@ public class Publication {
         return true;
     }
 
+//    @Override
+//    public int hashCode() {
+//        int result = id;
+//        result = 31 * result + (name != null ? name.hashCode() : 0);
+//        return result;
+//    }
+
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+    public int hashCode(){
+        return name.hashCode();
     }
 
     @Override

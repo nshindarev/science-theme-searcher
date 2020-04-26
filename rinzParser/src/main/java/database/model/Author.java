@@ -12,7 +12,6 @@ import java.util.*;
 public class Author {
 
     public Author (){
-
     }
     public Author (String surname, String n, String p) {
         this.surname = surname;

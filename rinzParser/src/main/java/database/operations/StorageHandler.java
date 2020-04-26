@@ -9,6 +9,7 @@ import database.service.AuthorService;
 import database.service.AuthorToAuthorService;
 import database.service.ClusterService;
 import database.service.PublicationService;
+import elibrary.parser.Navigator;
 import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
@@ -20,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.PersistenceException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -106,9 +108,13 @@ public class StorageHandler  {
         a2aServ.openConnection();
 
         weightCounter.forEach((k,v) ->{
-
             k.setWeight(v/2);
-            a2aServ.saveAuthorToAuthor(k);
+            try{
+                a2aServ.saveAuthorToAuthor(k);
+            }
+            catch (PersistenceException ex){
+                logger.warn(ex.getMessage());
+            }
         });
 
         a2aServ.closeConnection();
@@ -132,6 +138,38 @@ public class StorageHandler  {
 
 
     }
+    // ===================== UPDATE ===========================
+    public static void updateKeyword(Set<Publication> publications){
+        PublicationService ps = new PublicationService();
+        ps.openConnection();
+
+        List<Publication> publicationsSnapshot = ps.findAllPublications();
+
+        Map<Integer, Publication> idsPublMap = new HashMap<>();
+        publicationsSnapshot.forEach(it -> idsPublMap.put(it.hashCode(), it));
+
+        publications.forEach(publ -> {
+            try{
+                if (idsPublMap.containsKey(publ.hashCode())){
+                    Publication toUpdatePubl = idsPublMap.get(publ.hashCode());
+                    toUpdatePubl.addKeyword(Navigator.keyword);
+
+                    ps.updatePublication(toUpdatePubl);
+                }
+
+                logger.info("PUBLICATION = "+ publ.getName());
+            }
+            catch (NullPointerException ex){
+                logger.warn(ex.getMessage());
+            }
+//                if (publicationsSnapshot.contains(publ)){
+//                    publicationsSnapshot.get(publicationsSnapshot.indexOf(publ)).addKeyword(Navigator.keyword);
+//                }
+        });
+
+        ps.closeConnection();
+    }
+
     public static void updateRevision (Collection<Author> authors){
         AuthorService authorService = new AuthorService();
         authorService.openConnection();

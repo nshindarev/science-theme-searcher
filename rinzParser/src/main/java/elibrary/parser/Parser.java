@@ -30,14 +30,16 @@ public class Parser {
      *  starts searching co-authors according to keyword inserted
      */
     public void parse(){
+
         if (keyword != null && Pages.startPage != null)
             Pages.keywordSearchPage = Navigator.getKeywordSearchResultsPage(keyword);
+
+        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Navigator.searchLimit);
+        StorageHandler.saveAuthors(keywordAuthors);
 
         // names of all publications associated with current keyword
         Navigator.allKeywordPublicationIds = getAllPublicationIds(Pages.keywordSearchPage, 1);
         Navigator.allKeywordPublicationIds.forEach(it -> logger.info(it.toString()));
-
-        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Navigator.searchLimit);
 
         // 2-level limited search
         for(int i=0; i<Navigator.searchLevel; i++){
@@ -51,10 +53,8 @@ public class Parser {
             StorageHandler.updateRevision(authors);
         }
 
+        StorageHandler.updateKeyword(Navigator.allKeywordPublicationIds);
         StorageHandler.saveCoAuthors();
-
-        //TODO: updateKeyword foreach publication in DB
-//        // keyword search + fill links to authors
 //
 //        Set<Author> allKeywordAuthors = new HashSet<>();
 //        try {
@@ -231,5 +231,6 @@ public class Parser {
         }
         return res;
     }
+
 
     }

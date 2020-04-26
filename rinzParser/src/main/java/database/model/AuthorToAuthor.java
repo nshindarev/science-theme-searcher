@@ -21,6 +21,7 @@ public class AuthorToAuthor {
     }
 
     @Id
+    @Getter
     private String id;
 
     @Getter
