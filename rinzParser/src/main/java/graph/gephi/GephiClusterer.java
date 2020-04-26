@@ -218,7 +218,6 @@ public class GephiClusterer {
     }
 
     public Map<Cluster, Set<String>> getClusters(){
-
         Map<Cluster, Set<String>> mapAuthorIds = new HashMap<>();
         authorsNetwork.getNodes().forEach(node ->{
             int clusterId = (Integer) node.getAttribute("modularity_class");
@@ -227,10 +226,16 @@ public class GephiClusterer {
 
             if (mapAuthorIds.containsKey(cl)){
                 mapAuthorIds.get(cl).add(String.valueOf(node.getId()));
+
             }
-            else mapAuthorIds.put(cl, new HashSet<>());
+            else{
+                mapAuthorIds.put(cl, new HashSet<String>(){{
+                            add(String.valueOf(node.getId()));
+                        }});
+            }
 
         });
+
         return mapAuthorIds;
     }
 

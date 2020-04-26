@@ -119,7 +119,30 @@ public class StorageHandler  {
 
         a2aServ.closeConnection();
     }
+    public static void saveCoAuthors(Set<Author> authorsConnected){
+        AuthorToAuthorService a2aServ = new AuthorToAuthorService();
 
+        a2aServ.openConnection();
+        List<AuthorToAuthor> dbSnapshot = a2aServ.findAllAuthorToAuthor();
+        a2aServ.closeConnection();
+
+        authorsConnected.forEach(a1 ->
+                authorsConnected.stream().filter(a2 -> !a2.equals(a1)).forEach(a2 ->{
+                    AuthorToAuthor a2a = new AuthorToAuthor(a1,a2);
+                    a2aServ.openConnection();
+                    if (dbSnapshot.contains(a2a)){
+                        AuthorToAuthor a2aDB = dbSnapshot.get(dbSnapshot.indexOf(a2a));
+                        a2aDB.incrementWeight();
+
+                        a2aServ.updateAuthorToAuthor(a2aDB);
+                    }
+                    else a2aServ.saveAuthorToAuthor(a2a);
+                    a2aServ.closeConnection();
+                }
+                ));
+
+        a2aServ.closeConnection();
+    }
     /**
      * in current realisation only 1 cluster per author possible
      * @param dataGraph

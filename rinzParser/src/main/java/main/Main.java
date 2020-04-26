@@ -32,10 +32,10 @@ public class Main {
         /**
          *  parser
          */
-//        LogIntoElibrary.auth();
+        LogIntoElibrary.auth();
 
 
-//        new Parser(new Keyword("социоинженерные атаки")).parse();
+        new Parser(new Keyword("социоинженерные атаки")).parse();
 
         /**
          *  get graph from DB
@@ -59,16 +59,16 @@ public class Main {
          * Gephi clustering
          */
 
-        GephiClusterer gc = new GephiClusterer();
-        gc.action();
+//        GephiClusterer gc = new GephiClusterer();
+//        gc.action();
 
 
         /**
          *  save clusters into DB
          */
-        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-
-        StorageHandler.saveClusters(gc.getClusters());
+//        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
+//
+//        StorageHandler.saveClusters(gc.getClusters());
 
 
 

@@ -35,6 +35,7 @@ public class Parser {
             Pages.keywordSearchPage = Navigator.getKeywordSearchResultsPage(keyword);
 
         Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Navigator.searchLimit);
+        StorageHandler.saveCoAuthors(keywordAuthors);
         StorageHandler.saveAuthors(keywordAuthors);
 
         // names of all publications associated with current keyword
@@ -48,13 +49,14 @@ public class Parser {
                 Set<Author> coAuthors = getCoAuthors(it);
                 StorageHandler.saveAuthors(coAuthors);
                 it.setRevision(1);
-            });
 
+                StorageHandler.saveCoAuthors(coAuthors);
+            });
             StorageHandler.updateRevision(authors);
         }
 
         StorageHandler.updateKeyword(Navigator.allKeywordPublicationIds);
-        StorageHandler.saveCoAuthors();
+//        StorageHandler.saveCoAuthors();
 //
 //        Set<Author> allKeywordAuthors = new HashSet<>();
 //        try {
