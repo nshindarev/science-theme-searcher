@@ -34,9 +34,11 @@ public class Parser {
         if (keyword != null && Pages.startPage != null)
             Pages.keywordSearchPage = Navigator.getKeywordSearchResultsPage(keyword);
 
+        // 1st level of search - only if we have no publ. with current key in DB
+        // else start from 2nd level
         Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Navigator.searchLimit);
-        StorageHandler.saveCoAuthors(keywordAuthors);
         StorageHandler.saveAuthors(keywordAuthors);
+        StorageHandler.saveCoAuthors(keywordAuthors);
 
         // names of all publications associated with current keyword
         Navigator.allKeywordPublicationIds = getAllPublicationIds(Pages.keywordSearchPage, 1);
@@ -56,34 +58,8 @@ public class Parser {
         }
 
         StorageHandler.updateKeyword(Navigator.allKeywordPublicationIds);
-//        StorageHandler.saveCoAuthors();
-//
-//        Set<Author> allKeywordAuthors = new HashSet<>();
-//        try {
-//            int i = 1;
-//            while (true){
-//                allKeywordAuthors
-//                        .addAll(getKeywordResults(getKeywordNextResults(Pages.keywordSearchPage, i), Integer.MAX_VALUE));
-//                allKeywordAuthors.forEach(it -> logger.info(it.toString()));
-//                i++;
-//            }
-//
-//        }
-//        catch (IOException ex){
-//            logger.error(ex.getMessage());
-//        }
-//        catch (RuntimeException ex){
-//            logger.error(ex.getMessage());
-//        }
-//
-//        logger.info("");
+//        StorageHandler.updateRevision();
 
-
-//        Set<Author> keywordAuthors = getKeywordResults(Pages.keywordSearchPage, Navigator.searchLimit);
-
-        //        StorageHandler.saveAuthors(keywordAuthors);
-//
-//
     }
 
     /**
