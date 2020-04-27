@@ -22,6 +22,25 @@ public class LogIntoElibrary {
 
     private static final String elib_start  = "https://www.elibrary.ru";
 
+    public static void withoutAuth (){
+        try{
+            Navigator.webClient = new WebClient(BrowserVersion.CHROME);
+            Navigator.webClient.getOptions().setCssEnabled(true);
+            Navigator.webClient.getOptions().setJavaScriptEnabled(true);
+            Navigator.webClient.getOptions().setThrowExceptionOnScriptError(true);
+            Navigator.webClient.waitForBackgroundJavaScript(25000);
+            Navigator.webClient.setJavaScriptTimeout(25000);
+            Navigator.webClient.getCache().clear();
+
+            HtmlPage startPage = Navigator.webClient.getPage(elib_start);
+            Pages.startPage = startPage;
+
+            logger.debug(startPage.asText());
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
     public static void auth (){
         try{
             Navigator.webClient = new WebClient(BrowserVersion.CHROME);

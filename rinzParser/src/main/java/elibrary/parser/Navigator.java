@@ -26,7 +26,7 @@ public class Navigator {
     public static  WebClient webClient = new WebClient(BrowserVersion.CHROME);
     public static final Keyword keyword = new Keyword("социоинженерные атаки");
     public static final int timeOut = 10000;
-    public static final int searchLimit = 3;
+    public static final int searchLimit = 20;
     public static final int searchLevel = 1;
     public static  int clusterNumber = 5;
 
@@ -63,7 +63,7 @@ public class Navigator {
 
 //            LogIntoElibrary.login = "lex.suleimanov";
 //            LogIntoElibrary.password = "FtXTk4Vd";
-            LogIntoElibrary.auth();
+//            LogIntoElibrary.auth();
 
             return getAuthorsSearchPage(startPage);
         }
@@ -188,6 +188,24 @@ public class Navigator {
     }
 
     public static HtmlPage getAuthorsPage(Link link){
+        try {
+            return (HtmlPage) Navigator.webClient.getPage(link.getUrl());
+        }
+        catch (MalformedURLException ex){
+            logger.error(ex.getMessage());
+            return null;
+        }
+        catch (IOException _ex){
+            logger.error(_ex.getMessage());
+            return null;
+        }
+        catch (ScriptException ex){
+            logger.error(ex.getMessage());
+            return getAuthorsPage(link);
+        }
+    }
+
+    public static HtmlPage getPublicationPage(Link link){
         try {
             return (HtmlPage) Navigator.webClient.getPage(link.getUrl());
         }
