@@ -21,21 +21,21 @@ public class SynonymyServiceImpl implements SynonymyService {
             if (lengthComparatorService.getLength(translatorService.translateToLatinString(firstAuthor.getSurname()),
                     translatorService.translateToLatinString(secondAuthor.getSurname())) < 3) {
                 if (lengthComparatorService.checkConnections(firstAuthor, secondAuthor) > 0) {
-                    logger.debug("Authors probably are the same person");
+                    logger.debug("Authors: {}, {} probably are the same person", firstAuthor.getSurname(),secondAuthor.getSurname());
                     return true;
                 }
                 else {
-                    logger.debug("Authors don't have similar co-authors");
+//                    logger.debug("Authors don't have similar co-authors");
                     return false;
                 }
             }
             else {
-                logger.debug("Authors have different surnames");
+//                logger.debug("Authors have different surnames");
                 return false;
             }
         }
         else {
-            logger.debug("Authors have different patronymics");
+//            logger.debug("Authors have different patronymics");
             return false;
         }
     }
