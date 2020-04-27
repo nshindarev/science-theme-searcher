@@ -25,13 +25,9 @@ public class Test {
         authorService.openConnection();
 
         Author author1 = new Author("Shindarev", "N", "A");
-        Author author2 = new Author("Slezkin", "N", "E");
-        Author author3 = new Author(translatorService.translateToLatinString("Suleimanov"),
-                translatorService.translateToLatinString("A"),
-                translatorService.translateToLatinString("A"));
-        Author author4 = new Author(translatorService.translateToLatinString("Сулейманов"),
-                translatorService.translateToLatinString("А"),
-                translatorService.translateToLatinString("А"));
+        Author author2 = new Author("Шиндарев", "Н", "А");
+        Author author3 = new Author("Suleimanov","A","A");
+        Author author4 = new Author("Сулейманов","А","А");
 
         Publication publication1 = new Publication("Test1");
         Publication publication2 = new Publication("Test2");
@@ -45,16 +41,13 @@ public class Test {
         AuthorToAuthor authorToAuthor1 = new AuthorToAuthor(author1,author3);
         Set<AuthorToAuthor> set1 = new HashSet<>();
         set1.add(authorToAuthor1);
-        AuthorToAuthor authorToAuthor2 = new AuthorToAuthor(author1,author4);
+        AuthorToAuthor authorToAuthor2 = new AuthorToAuthor(author2,author4);
         Set<AuthorToAuthor> set2 = new HashSet<>();
         set2.add(authorToAuthor2);
 
         author3.setIncomingAuthorToAuthors(set1);
         author4.setIncomingAuthorToAuthors(set2);
 
-        if (synonymyService.checkAuthorsEquality(author2, author3)) {
-            synonymyService.authorsJoin(authorService, author2, author3);
-        }
         if (synonymyService.checkAuthorsEquality(author3, author4)) {
             synonymyService.authorsJoin(authorService, author3, author4);
         }
