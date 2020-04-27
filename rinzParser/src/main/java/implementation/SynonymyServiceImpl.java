@@ -8,15 +8,17 @@ import service.LengthComparatorService;
 import service.SynonymyService;
 import service.TranslatorService;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class SynonymyServiceImpl implements SynonymyService {
     private static final Logger logger = LoggerFactory.getLogger(SynonymyServiceImpl.class);
+    static HashSet<Author> deleted = new HashSet<>();
+    TranslatorService translatorService = new TranslatorServiceImpl();
+    LengthComparatorService lengthComparatorService = new LengthComparatorServiceImpl();
 
     @Override
     public boolean checkAuthorsEquality(Author firstAuthor, Author secondAuthor) {
-        TranslatorService translatorService = new TranslatorServiceImpl();
-        LengthComparatorService lengthComparatorService = new LengthComparatorServiceImpl();
         if (lengthComparatorService.samePatronymics(firstAuthor, secondAuthor)) {
             if (lengthComparatorService.getLength(translatorService.translateToLatinString(firstAuthor.getSurname()),
                     translatorService.translateToLatinString(secondAuthor.getSurname())) < 3) {
@@ -48,7 +50,13 @@ public class SynonymyServiceImpl implements SynonymyService {
         author1.getLinks().addAll(author2.getLinks());
         author1.getPublications().addAll(author2.getPublications());
         authorService.updateAuthor(author1);
-        authorService.deleteAuthor(author2);
+        deleted.add(author2);
+    }
+
+    private void deleteAuthors(AuthorService authorService) {
+        for (Author author:deleted) {
+            authorService.deleteAuthor(author);
+        }
     }
 
     @Override
@@ -56,15 +64,18 @@ public class SynonymyServiceImpl implements SynonymyService {
         AuthorService authorService = new AuthorService();
         authorService.openConnection();
         List<Author> authors = authorService.findAllAuthors();
-
+        logger.debug("Start searching similarities");
         for (Author author1: authors) {
-            for (Author author2: authors) {
-                if (author1.getId()!=author2.getId()) {
-                    if (checkAuthorsEquality(author1,author2)) {
+            for (Author author2 : authors) {
+                if (author1.getId() != author2.getId() && !deleted.contains(author1)) {
+                    if (checkAuthorsEquality(author1, author2)) {
                         authorsJoin(authorService, author1, author2);
                     }
                 }
             }
         }
+        logger.debug("Finished searching similarities, similarities found: {}",deleted.size());
+        deleteAuthors(authorService);
+        authorService.closeConnection();
     }
 }

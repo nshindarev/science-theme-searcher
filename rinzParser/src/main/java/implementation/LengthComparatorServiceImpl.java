@@ -14,8 +14,8 @@ public class LengthComparatorServiceImpl implements LengthComparatorService {
 
     @Override
     public boolean samePatronymics (Author firstAuthor, Author secondAuthor) {
-        if (firstAuthor.getN()!=null && secondAuthor.getN()!= null) {
-            if (firstAuthor.getP() != null && secondAuthor.getP() != null) {
+        if (firstAuthor.getN()!=null && !firstAuthor.getN().equals(" ")&& secondAuthor.getN()!= null && !secondAuthor.getN().equals(" ")) {
+            if (firstAuthor.getP() != null && !firstAuthor.getP().equals(" ") && secondAuthor.getP() != null && !secondAuthor.getP().equals(" ")) {
                return translatorService.translateToLatinString(firstAuthor.getN())
                        .equals(translatorService.translateToLatinString(secondAuthor.getN()))
                        && translatorService.translateToLatinString(firstAuthor.getP())

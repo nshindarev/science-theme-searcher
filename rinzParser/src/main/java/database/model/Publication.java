@@ -45,7 +45,7 @@ public class Publication {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(name = "authortopublication", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_publication"),
             inverseJoinColumns = @JoinColumn(name = "id_author"))

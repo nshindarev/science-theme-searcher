@@ -41,8 +41,8 @@ public class Main {
         /**
          *  map synonymous accounts
          */
-//        SynonymyService synonymyService = new SynonymyServiceImpl();
-//        synonymyService.authorsSearchForSynonyms();
+        SynonymyService synonymyService = new SynonymyServiceImpl();
+        synonymyService.authorsSearchForSynonyms();
 
         /**
          *  get graph from DB
@@ -77,12 +77,12 @@ public class Main {
 
 //        StorageHandler.saveClusters(gc.getClusters());
 
-        SuggestingService suggestingService = new SuggestingServiceImpl();
-        List<String> resultSet = suggestingService.executeSuggestionQuery(requestKeyword);
-        Iterator<String> iterator = resultSet.iterator();
-        while (iterator.hasNext()){
-            System.out.println(iterator.next());
-        }
+//        SuggestingService suggestingService = new SuggestingServiceImpl();
+//        List<String> resultSet = suggestingService.executeSuggestionQuery(requestKeyword);
+//        Iterator<String> iterator = resultSet.iterator();
+//        while (iterator.hasNext()){
+//            System.out.println(iterator.next());
+//        }
 
 //        Author test1 = new Author("Test1", "1", "1");
 //        Author test2 = new Author("Test2", "2", "2");

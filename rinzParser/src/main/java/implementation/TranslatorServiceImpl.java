@@ -16,11 +16,11 @@ public class TranslatorServiceImpl implements TranslatorService {
     @Override
     public String translateToLatinString(String inputString) {
         if (checkRussian(inputString)) {
-            logger.info("Russian text was found, transliterating...");
+            //logger.info("Russian text was found, transliterating...");
             return russianToLatinTrans.transliterate(inputString);
         }
         else {
-            logger.info("Russian text was NOT found.");
+            //logger.info("Russian text was NOT found.");
             return inputString;
         }
     }

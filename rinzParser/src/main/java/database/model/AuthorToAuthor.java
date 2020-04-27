@@ -25,14 +25,14 @@ public class AuthorToAuthor {
 
     @Getter
     @Setter
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
-    @JoinColumn (name="Id_First", referencedColumnName = "id")
+    @ManyToOne (optional=false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn (name="Id_First", referencedColumnName = "id", nullable = true)
     private Author author_first;
 
     @Getter
     @Setter
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
-    @JoinColumn (name="Id_Second", referencedColumnName = "id")
+    @ManyToOne (optional=false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn (name="Id_Second", referencedColumnName = "id", nullable = true)
     private Author author_second;
 
     @Getter
