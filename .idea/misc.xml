@@ -9,6 +9,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/appl/pom.xml" />
+        <option value="$PROJECT_DIR$/rinzParser/pom.xml" />
         <option value="$PROJECT_DIR$/synonymy/pom.xml" />
       </set>
     </option>

@@ -12,6 +12,7 @@ import java.util.*;
 public class Author {
 
     public Author (){
+
     }
     public Author (String surname, String n, String p) {
         this.surname = surname;
@@ -58,7 +59,7 @@ public class Author {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = CascadeType.ALL,
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
                 fetch = FetchType.EAGER)
     @JoinTable(name = "authortopublication", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
@@ -71,7 +72,7 @@ public class Author {
 
     @Getter
     @Setter
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "clustertoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_cluster"))
@@ -83,7 +84,7 @@ public class Author {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = CascadeType.ALL,
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
                 fetch = FetchType.EAGER)
     @JoinTable(name = "linktoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
@@ -96,12 +97,12 @@ public class Author {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "author_second",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author_second",cascade =  CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthorToAuthor> incomingAuthorToAuthors = new HashSet<>();
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "author_first",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author_first",cascade =  CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthorToAuthor> outgoingAuthorToAuthors = new HashSet<>();
 
     public static Author convertStringToAuthor (String auth) {

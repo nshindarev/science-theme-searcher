@@ -86,8 +86,8 @@ CREATE TABLE postgres_sts.science_theme_searcher.ClusterToKeyword (
 
 CREATE TABLE postgres_sts.science_theme_searcher.AuthorToAuthor (
                                      Id VARCHAR(255) NOT NULL,
-                                     Id_First INTEGER NOT NULL,
-                                     Id_Second INTEGER NOT NULL,
+                                     Id_First INTEGER NULL,
+                                     Id_Second INTEGER NULL,
                                      Weight INTEGER NOT NULL,
     PRIMARY KEY (Id)
     );

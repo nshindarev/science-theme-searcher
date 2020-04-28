@@ -31,8 +31,6 @@ public class AuthorService {
         return authorDao.findAll();
     }
 
-
-
     public void openConnection() {
         authorDao.openConnection();
     }

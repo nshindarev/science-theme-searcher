@@ -19,7 +19,7 @@ public class Cluster {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(name = "clustertoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_cluster"),
             inverseJoinColumns = @JoinColumn(name = "id_author"))

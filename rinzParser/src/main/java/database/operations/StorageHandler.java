@@ -110,6 +110,7 @@ public class StorageHandler  {
         a2aServ.openConnection();
 
         weightCounter.forEach((k,v) ->{
+
             k.setWeight(v/2);
             try{
                 a2aServ.saveAuthorToAuthor(k);

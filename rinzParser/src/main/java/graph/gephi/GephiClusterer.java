@@ -235,7 +235,6 @@ public class GephiClusterer {
             }
 
         });
-
         return mapAuthorIds;
     }
 
