@@ -10,6 +10,7 @@ import database.service.AuthorToAuthorService;
 import database.service.ClusterService;
 import database.service.PublicationService;
 import elibrary.parser.Navigator;
+import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.exception.ConstraintViolationException;
@@ -142,6 +143,9 @@ public class StorageHandler  {
                         a2aServ.closeConnection();
                     }
                     catch (NonUniqueObjectException ex){
+                        logger.error(ex.getMessage());
+                    }
+                    catch (HibernateException ex){
                         logger.error(ex.getMessage());
                     }
                 }

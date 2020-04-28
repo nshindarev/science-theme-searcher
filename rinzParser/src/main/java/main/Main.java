@@ -33,10 +33,10 @@ public class Main {
          *  parser
          */
 //        LogIntoElibrary.auth();
-        LogIntoElibrary.withoutAuth();
+//        LogIntoElibrary.withoutAuth();
 //
 //
-        new Parser(new Keyword("социоинженерные атаки")).parse();
+//        new Parser(new Keyword("социоинженерные атаки")).parse();
 
         /**
          *  get graph from DB
