@@ -10,6 +10,7 @@ import database.service.AuthorToAuthorService;
 import database.service.ClusterService;
 import database.service.PublicationService;
 import elibrary.parser.Navigator;
+import org.hibernate.NonUniqueObjectException;
 import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
@@ -128,16 +129,21 @@ public class StorageHandler  {
 
         authorsConnected.forEach(a1 ->
                 authorsConnected.stream().filter(a2 -> !a2.equals(a1)).forEach(a2 ->{
-                    AuthorToAuthor a2a = new AuthorToAuthor(a1,a2);
-                    a2aServ.openConnection();
-                    if (dbSnapshot.contains(a2a)){
-                        AuthorToAuthor a2aDB = dbSnapshot.get(dbSnapshot.indexOf(a2a));
-                        a2aDB.incrementWeight();
+                    try{
+                        AuthorToAuthor a2a = new AuthorToAuthor(a1,a2);
+                        a2aServ.openConnection();
+                        if (dbSnapshot.contains(a2a)){
+                            AuthorToAuthor a2aDB = dbSnapshot.get(dbSnapshot.indexOf(a2a));
+                            a2aDB.incrementWeight();
 
-                        a2aServ.updateAuthorToAuthor(a2aDB);
+                            a2aServ.updateAuthorToAuthor(a2aDB);
+                        }
+                        else a2aServ.saveAuthorToAuthor(a2a);
+                        a2aServ.closeConnection();
                     }
-                    else a2aServ.saveAuthorToAuthor(a2a);
-                    a2aServ.closeConnection();
+                    catch (NonUniqueObjectException ex){
+                        logger.error(ex.getMessage());
+                    }
                 }
                 ));
 

@@ -15,7 +15,7 @@ public class Publication {
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Getter
@@ -71,10 +71,12 @@ public class Publication {
     }
     public Publication (String name){
         this.name = name;
+        this.id = hashCode();
     }
     public Publication (String name, Integer metric){
         this.name = name;
         this.metric = metric;
+        this.id = hashCode();
     }
 
     @Override

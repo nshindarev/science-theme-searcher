@@ -34,8 +34,8 @@ public class Main {
          */
 //        LogIntoElibrary.auth();
         LogIntoElibrary.withoutAuth();
-
-
+//
+//
         new Parser(new Keyword("социоинженерные атаки")).parse();
 
         /**
@@ -62,6 +62,7 @@ public class Main {
 
         GephiClusterer gc = new GephiClusterer();
         gc.action();
+        logger.info("FINISHED CLUSTERING");
 
 
         /**
@@ -69,7 +70,7 @@ public class Main {
          */
         StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
         StorageHandler.saveClusters(gc.getClusters());
-
+        logger.info("REACHED ENDPOINT");
 
 
 //        Author test1 = new Author("Test1", "1", "1");

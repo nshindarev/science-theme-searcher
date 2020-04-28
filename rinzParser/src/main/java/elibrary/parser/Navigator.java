@@ -26,8 +26,8 @@ public class Navigator {
     public static  WebClient webClient = new WebClient(BrowserVersion.CHROME);
     public static final Keyword keyword = new Keyword("социоинженерные атаки");
     public static final int timeOut = 10000;
-    public static final int searchLimit = 20;
-    public static final int searchLevel = 1;
+    public static final int searchLimit = 8;
+    public static final int searchLevel = 2;
     public static  int clusterNumber = 5;
 
     public static Set<Publication> allKeywordPublicationIds = new HashSet<>();
