@@ -73,6 +73,9 @@ public class StorageHandler  {
                 catch (Exception ex){
                     logger.error("No author in publication");
                 }
+                catch (Exception ex){
+                    logger.error(ex.getMessage());
+                }
                 finally {
                     dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
                     authorService.closeConnection();

@@ -3,6 +3,7 @@ package main;
 import database.model.Author;
 import database.model.AuthorToAuthor;
 import database.model.Cluster;
+import database.model.Keyword;
 import database.operations.StorageHandler;
 import database.service.AuthorService;
 import database.service.AuthorToAuthorService;

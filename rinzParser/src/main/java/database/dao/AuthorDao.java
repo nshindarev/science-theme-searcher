@@ -48,9 +48,15 @@ public class AuthorDao {
         }
         author.setIncomingAuthorToAuthors(null);
         author.setOutgoingAuthorToAuthors(null);
-        removeLinks(author);
-        session.delete(author);
+        author.setClusters(null);
+        author.setPublications(null);
+        author.setLinks(null);
         tx1.commit();
+        removeLinks(author);
+        removeClusters(author);
+        removePublications(author);
+        removeUrls(author);
+        removeAuthor(author);
     }
 
     private void removeLinks(Author author) {
@@ -63,6 +69,65 @@ public class AuthorDao {
             ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.authortoauthor\n" +
                     "\tWHERE id_first ="+author.getId()+"\n" +
                     "\tor id_second = "+author.getId());
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+    }
+
+    private void removeUrls(Author author) {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = "postgres";
+        String password = "postgres";
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.linktoauthor\n" +
+                    "\tWHERE id_author = "+author.getId());
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+    }
+
+    private void removePublications(Author author) {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = "postgres";
+        String password = "postgres";
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.authortopublication\n" +
+                    "\tWHERE id_author = "+author.getId());
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+    }
+    private void removeClusters(Author author) {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = "postgres";
+        String password = "postgres";
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.clustertoauthor\n" +
+                    "\tWHERE id_author = "+author.getId());
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+    }
+
+    private void removeAuthor(Author author) {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = "postgres";
+        String password = "postgres";
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.author\n" +
+                    "\tWHERE id = "+author.getId());
 
         } catch (Exception ex) {
             System.out.println(ex.getStackTrace());
