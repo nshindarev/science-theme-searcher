@@ -1,14 +1,8 @@
 package database.operations;
 
 import com.apporiented.algorithm.clustering.visualization.ClusterComponent;
-import database.model.Author;
-import database.model.AuthorToAuthor;
-import database.model.Cluster;
-import database.model.Publication;
-import database.service.AuthorService;
-import database.service.AuthorToAuthorService;
-import database.service.ClusterService;
-import database.service.PublicationService;
+import database.model.*;
+import database.service.*;
 import elibrary.parser.Navigator;
 import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueObjectException;
@@ -316,5 +310,17 @@ public class StorageHandler  {
 
         as.closeConnection();
         return authors;
+    }
+    public static boolean alreadyParsed (String key){
+        KeywordService ks = new KeywordService();
+        ks.openConnection();
+        List<Keyword> keys = ks.findAllKeywords();
+        ks.closeConnection();
+
+        for (Keyword dbKey: keys){
+            if (dbKey.getKeyword().equals(key)) return true;
+        }
+
+        return false;
     }
 }

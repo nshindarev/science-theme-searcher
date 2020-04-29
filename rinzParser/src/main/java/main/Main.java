@@ -36,15 +36,17 @@ public class Main {
 
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-        Navigator.keyword = new Keyword("выявление сообществ");
-        String requestKeyword = "выявление сообществ";
+        Navigator.keyword = new Keyword("случайные блуждания");
 
 
         /**
          *  parser
          */
-//        LogIntoElibrary.withoutAuth();
-//        new Parser(new Keyword(requestKeyword)).parse();
+
+        if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
+            LogIntoElibrary.withoutAuth();
+            new Parser(Navigator.keyword).parse();
+        }
 
         /**
          *  map synonymous accounts
