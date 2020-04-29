@@ -64,6 +64,9 @@ public class StorageHandler  {
                 catch (DataException ex){
                     logger.error(ex.getMessage());
                 }
+                catch (Exception ex){
+                    logger.error(ex.getMessage());
+                }
                 finally {
                     dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
                     authorService.closeConnection();

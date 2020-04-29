@@ -1,5 +1,6 @@
 package main;
 
+import database.model.Keyword;
 import database.operations.StorageHandler;
 import database.service.AuthorService;
 import database.service.AuthorToAuthorService;
@@ -30,13 +31,13 @@ public class Main {
 
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-        String requestKeyword = "социоинженерные атаки";
+        String requestKeyword = "базы данных";
 
         /**
          *  parser
          */
-//        LogIntoElibrary.auth();
-//        new Parser(new Keyword(requestKeyword)).parse();
+        LogIntoElibrary.auth();
+        new Parser(new Keyword(requestKeyword)).parse();
 
         /**
          *  map synonymous accounts
