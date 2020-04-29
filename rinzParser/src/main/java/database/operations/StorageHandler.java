@@ -1,14 +1,8 @@
 package database.operations;
 
 import com.apporiented.algorithm.clustering.visualization.ClusterComponent;
-import database.model.Author;
-import database.model.AuthorToAuthor;
-import database.model.Cluster;
-import database.model.Publication;
-import database.service.AuthorService;
-import database.service.AuthorToAuthorService;
-import database.service.ClusterService;
-import database.service.PublicationService;
+import database.model.*;
+import database.service.*;
 import elibrary.parser.Navigator;
 import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueObjectException;
@@ -36,30 +30,24 @@ public class StorageHandler  {
         AuthorService authorService = new AuthorService();
 
         // to check if DB already contains author
-        authorService.openConnection();
-        Set<Author> dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
-        authorService.closeConnection();
+//        authorService.openConnection();
+//        Set<Author> dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
+//        authorService.closeConnection();
 
         //need this to update authors
-        ArrayList<Author> authorList = new ArrayList(dbAuthorsSnapshot);
+//        ArrayList<Author> authorList = new ArrayList(dbAuthorsSnapshot);
 
         for (Author auth: authors){
                 try{
                     authorService.openConnection();
-
-                    if (!dbAuthorsSnapshot.contains(auth)){
+                    Author foundAuth = authorService.findAuthor(auth.getId());
+                    if (foundAuth == null){
                         authorService.saveAuthor(auth);
                     }
-                    else if (dbAuthorsSnapshot.contains(auth)){
-
-                        int authBoSavedIndex = authorList.indexOf(auth);
-                        Author authDBSaved = authorList.get(authBoSavedIndex);
-
-                        // join publications
-                        auth.join(authDBSaved);
-
-
-                        authorService.updateAuthor(auth);
+                    else {
+//                        auth.join(foundAuth);
+                        foundAuth.join(auth);
+                        authorService.updateAuthor(foundAuth);
                     }
                 }
                 catch (ConstraintViolationException ex){
@@ -74,7 +62,7 @@ public class StorageHandler  {
                     logger.error(ex.getMessage());
                 }
                 finally {
-                    dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
+//                    dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
                     authorService.closeConnection();
                 }
         }
@@ -163,8 +151,10 @@ public class StorageHandler  {
      * in current realisation only 1 cluster per author possible
      * @param dataGraph
      */
-    public static void saveClusters(Map<Cluster, Set<String>> dataGraph){
+    public static void _saveClusters(Map<Cluster, Set<String>> dataGraph){
+
         ClusterService clusterService = new ClusterService();
+        clusterService.clearClusters();
 
         dataGraph.forEach((cluster,listAuthorIds) -> {
                     listAuthorIds.forEach(id -> {
@@ -174,8 +164,28 @@ public class StorageHandler  {
             clusterService.saveCluster(cluster);
             clusterService.closeConnection();
         });
+    }
+    public static void saveClusters(Map<Cluster, Set<String>> dataGraph){
 
+        ClusterService clusterService = new ClusterService();
+        clusterService.clearClusters();
 
+        AuthorService as = new AuthorService();
+        as.openConnection();
+        List<Author> dbSnapshot = as.findAllAuthors();
+        as.closeConnection();
+
+        Map<Integer, Author> mapIds = new HashMap<>();
+        dbSnapshot.forEach(authDB -> mapIds.put(authDB.getId(), authDB));
+
+        dataGraph.forEach((cluster,listAuthorIds) -> {
+            listAuthorIds.forEach(id -> {
+                cluster.addAuthor(mapIds.get(Integer.parseInt(id)));
+            });
+            clusterService.openConnection();
+            clusterService.saveCluster(cluster);
+            clusterService.closeConnection();
+        });
     }
     // ===================== UPDATE ===========================
     public static void updateKeyword(Set<Publication> publications){
@@ -209,6 +219,12 @@ public class StorageHandler  {
         ps.closeConnection();
     }
 
+    public static void updateRevision (Author authors){
+        AuthorService authorService = new AuthorService();
+        authorService.openConnection();
+        authorService.updateAuthor(authors);
+        authorService.closeConnection();
+    }
     public static void updateRevision (Collection<Author> authors){
         AuthorService authorService = new AuthorService();
         authorService.openConnection();
@@ -294,5 +310,17 @@ public class StorageHandler  {
 
         as.closeConnection();
         return authors;
+    }
+    public static boolean alreadyParsed (String key){
+        KeywordService ks = new KeywordService();
+        ks.openConnection();
+        List<Keyword> keys = ks.findAllKeywords();
+        ks.closeConnection();
+
+        for (Keyword dbKey: keys){
+            if (dbKey.getKeyword().equals(key)) return true;
+        }
+
+        return false;
     }
 }

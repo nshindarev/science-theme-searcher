@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.*;
 
+import static database.operations.StorageHandler.updateRevision;
 import static elibrary.parser.Navigator.getKeywordNextResults;
 
 public class Parser {
@@ -31,6 +32,15 @@ public class Parser {
      *  starts searching co-authors according to keyword inserted
      */
     public void parse(){
+
+        /**
+         * finish research for all unfinished
+         */
+        Set<Author> oldAuthors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
+        oldAuthors.forEach(it -> {
+              it.setRevision(1);
+              updateRevision(it);
+        });
 
         if (keyword != null && Pages.startPage != null)
             Pages.keywordSearchPage = Navigator.getKeywordSearchResultsPage(keyword);
@@ -48,16 +58,22 @@ public class Parser {
 
         // 2-level limited search
         for(int i=0; i<Navigator.searchLevel; i++){
-            Set<Author> authors = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
-            authors.forEach(it -> it.setRevision(1));
-            authors.stream()
+            Set<Author> authorsWithoutRevision = new HashSet<>(StorageHandler.getAuthorsWithoutRevision());
+//            authors.forEach(it -> {
+//                it.setRevision(1);
+//                updateRevision(it);
+//            });
+            authorsWithoutRevision.stream()
                     .filter(it-> !it.getLinks().isEmpty())
                     .forEach(it -> {
+                        it.setRevision(1);
                         Set<Author> coAuthors = getCoAuthors(it);
                         StorageHandler.saveAuthors(coAuthors);
                         StorageHandler.saveCoAuthors(coAuthors);
+                        updateRevision(it);
+
                     });
-            StorageHandler.updateRevision(authors);
+//            updateRevision(authors);
         }
 
         StorageHandler.updateKeyword(Navigator.allKeywordPublicationIds);
@@ -302,7 +318,7 @@ public class Parser {
         try{
             currentPageNumber ++;
             HtmlPage nextPage = Navigator.webClient.getPage("https://elibrary.ru/query_results.asp?pagenum="+currentPageNumber);
-            if (res.size() < 100){
+            if (res.size() < 500){
                 res.addAll(getAllPublicationIds(nextPage, currentPageNumber));
             }
         }

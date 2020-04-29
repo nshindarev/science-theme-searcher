@@ -24,9 +24,9 @@ public class Navigator {
     private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 
     public static  WebClient webClient = new WebClient(BrowserVersion.CHROME);
-    public static  Keyword keyword = new Keyword("социоинженерные атаки");
+    public static  Keyword keyword = new Keyword("обработка изображений");
     public static final int timeOut = 10000;
-    public static final int searchLimit = 4;
+    public static final int searchLimit = 15;
     public static final int searchLevel = 1;
     public static  int clusterNumber = 5;
 

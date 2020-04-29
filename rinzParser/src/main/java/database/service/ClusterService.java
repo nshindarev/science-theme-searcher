@@ -31,6 +31,8 @@ public class ClusterService {
         return clusterDao.findAll();
     }
 
+    public void clearClusters(){ clusterDao.clearClusterData();}
+
     public void openConnection() {
         clusterDao.openConnection();
     }
