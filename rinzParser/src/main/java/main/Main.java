@@ -36,8 +36,8 @@ public class Main {
 
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-        Navigator.keyword = new Keyword("базы данных");
-        String requestKeyword = "базы данных";
+        Navigator.keyword = new Keyword("выявление сообществ");
+        String requestKeyword = "выявление сообществ";
 
 
         /**

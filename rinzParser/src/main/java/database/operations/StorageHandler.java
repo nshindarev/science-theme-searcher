@@ -36,30 +36,24 @@ public class StorageHandler  {
         AuthorService authorService = new AuthorService();
 
         // to check if DB already contains author
-        authorService.openConnection();
-        Set<Author> dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
-        authorService.closeConnection();
+//        authorService.openConnection();
+//        Set<Author> dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
+//        authorService.closeConnection();
 
         //need this to update authors
-        ArrayList<Author> authorList = new ArrayList(dbAuthorsSnapshot);
+//        ArrayList<Author> authorList = new ArrayList(dbAuthorsSnapshot);
 
         for (Author auth: authors){
                 try{
                     authorService.openConnection();
-
-                    if (!dbAuthorsSnapshot.contains(auth)){
+                    Author foundAuth = authorService.findAuthor(auth.getId());
+                    if (foundAuth == null){
                         authorService.saveAuthor(auth);
                     }
-                    else if (dbAuthorsSnapshot.contains(auth)){
-
-                        int authBoSavedIndex = authorList.indexOf(auth);
-                        Author authDBSaved = authorList.get(authBoSavedIndex);
-
-                        // join publications
-                        auth.join(authDBSaved);
-
-
-                        authorService.updateAuthor(auth);
+                    else {
+//                        auth.join(foundAuth);
+                        foundAuth.join(auth);
+                        authorService.updateAuthor(foundAuth);
                     }
                 }
                 catch (ConstraintViolationException ex){
@@ -73,11 +67,8 @@ public class StorageHandler  {
                 catch (Exception ex){
                     logger.error("No author in publication");
                 }
-                catch (Exception ex){
-                    logger.error(ex.getMessage());
-                }
                 finally {
-                    dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
+//                    dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
                     authorService.closeConnection();
                 }
         }
@@ -167,8 +158,10 @@ public class StorageHandler  {
      * @param dataGraph
      */
     public static void saveClusters(Map<Cluster, Set<String>> dataGraph){
-        ClusterService clusterService = new ClusterService();
 
+        ClusterService clusterService = new ClusterService();
+        clusterService.clearClusters();
+        
         dataGraph.forEach((cluster,listAuthorIds) -> {
                     listAuthorIds.forEach(id -> {
                                 getAuthors(listAuthorIds).forEach(cluster::addAuthor);
@@ -212,6 +205,12 @@ public class StorageHandler  {
         ps.closeConnection();
     }
 
+    public static void updateRevision (Author authors){
+        AuthorService authorService = new AuthorService();
+        authorService.openConnection();
+        authorService.updateAuthor(authors);
+        authorService.closeConnection();
+    }
     public static void updateRevision (Collection<Author> authors){
         AuthorService authorService = new AuthorService();
         authorService.openConnection();

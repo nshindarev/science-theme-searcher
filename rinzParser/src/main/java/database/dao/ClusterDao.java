@@ -5,6 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateSessionFactoryUtil;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 public class ClusterDao {
@@ -36,6 +40,38 @@ public class ClusterDao {
     public List<Cluster> findAll() {
         List<Cluster> clusters = (List<Cluster>)  session.createQuery("From science_theme_searcher.cluster").list();
         return clusters;
+    }
+
+    public void clearClusterData(){
+        removeClusterToAuthor();
+        removeClusters();
+    }
+    private void removeClusterToAuthor() {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = "postgres";
+        String password = "N1k1t0s1n4";
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.ClusterToAuthor\n");
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+    }
+
+    private void removeClusters() {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = "postgres";
+        String password = "N1k1t0s1n4";
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.Cluster\n");
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
     }
 
     public void openConnection() {
