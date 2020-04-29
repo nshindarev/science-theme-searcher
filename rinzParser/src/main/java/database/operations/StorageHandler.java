@@ -157,11 +157,11 @@ public class StorageHandler  {
      * in current realisation only 1 cluster per author possible
      * @param dataGraph
      */
-    public static void saveClusters(Map<Cluster, Set<String>> dataGraph){
+    public static void _saveClusters(Map<Cluster, Set<String>> dataGraph){
 
         ClusterService clusterService = new ClusterService();
         clusterService.clearClusters();
-        
+
         dataGraph.forEach((cluster,listAuthorIds) -> {
                     listAuthorIds.forEach(id -> {
                                 getAuthors(listAuthorIds).forEach(cluster::addAuthor);
@@ -170,8 +170,28 @@ public class StorageHandler  {
             clusterService.saveCluster(cluster);
             clusterService.closeConnection();
         });
+    }
+    public static void saveClusters(Map<Cluster, Set<String>> dataGraph){
 
+        ClusterService clusterService = new ClusterService();
+        clusterService.clearClusters();
 
+        AuthorService as = new AuthorService();
+        as.openConnection();
+        List<Author> dbSnapshot = as.findAllAuthors();
+        as.closeConnection();
+
+        Map<Integer, Author> mapIds = new HashMap<>();
+        dbSnapshot.forEach(authDB -> mapIds.put(authDB.getId(), authDB));
+
+        dataGraph.forEach((cluster,listAuthorIds) -> {
+            listAuthorIds.forEach(id -> {
+                cluster.addAuthor(mapIds.get(Integer.parseInt(id)));
+            });
+            clusterService.openConnection();
+            clusterService.saveCluster(cluster);
+            clusterService.closeConnection();
+        });
     }
     // ===================== UPDATE ===========================
     public static void updateKeyword(Set<Publication> publications){

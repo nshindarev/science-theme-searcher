@@ -43,8 +43,8 @@ public class Main {
         /**
          *  parser
          */
-        LogIntoElibrary.withoutAuth();
-        new Parser(new Keyword(requestKeyword)).parse();
+//        LogIntoElibrary.withoutAuth();
+//        new Parser(new Keyword(requestKeyword)).parse();
 
         /**
          *  map synonymous accounts
@@ -73,18 +73,18 @@ public class Main {
         /**
          * Gephi clustering
          */
-//
-//        GephiClusterer gc = new GephiClusterer();
-//        gc.action();
-//        logger.info("FINISHED CLUSTERING");
+
+        GephiClusterer gc = new GephiClusterer();
+        gc.action();
+        logger.info("FINISHED CLUSTERING");
 
 
         /**
          *  save clusters into DB
          */
 //        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-//        StorageHandler.saveClusters(gc.getClusters());
-//        logger.info("REACHED ENDPOINT");
+        StorageHandler.saveClusters(gc.getClusters());
+        logger.info("REACHED ENDPOINT");
 
         /**
          *  top authors
