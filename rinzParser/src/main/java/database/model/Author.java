@@ -59,7 +59,7 @@ public class Author {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+    @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.EAGER)
     @JoinTable(name = "authortopublication", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
@@ -72,7 +72,7 @@ public class Author {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "clustertoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_cluster"))
@@ -84,7 +84,7 @@ public class Author {
 
     @Getter
     @Setter
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+    @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.EAGER)
     @JoinTable(name = "linktoauthor", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_author"),

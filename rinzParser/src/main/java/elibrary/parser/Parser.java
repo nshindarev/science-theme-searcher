@@ -302,7 +302,9 @@ public class Parser {
         try{
             currentPageNumber ++;
             HtmlPage nextPage = Navigator.webClient.getPage("https://elibrary.ru/query_results.asp?pagenum="+currentPageNumber);
-            res.addAll(getAllPublicationIds(nextPage, currentPageNumber));
+            if (res.size() < 100){
+                res.addAll(getAllPublicationIds(nextPage, currentPageNumber));
+            }
         }
         catch (Exception ex){
             logger.warn("reached last page during keyword search");

@@ -64,9 +64,14 @@ public class StorageHandler  {
                 }
                 catch (ConstraintViolationException ex){
                     logger.error(ex.getMessage());
+                    ex.printStackTrace();
                 }
                 catch (DataException ex){
                     logger.error(ex.getMessage());
+                    ex.printStackTrace();
+                }
+                catch (Exception ex){
+                    logger.error("No author in publication");
                 }
                 finally {
                     dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());

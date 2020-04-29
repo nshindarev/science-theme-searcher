@@ -9,6 +9,7 @@ import database.service.AuthorToAuthorService;
 import database.service.ClusterService;
 import database.service.KeywordService;
 import elibrary.auth.LogIntoElibrary;
+import elibrary.parser.Navigator;
 import elibrary.parser.Parser;
 import database.model.Keyword;
 import graph.Clusterer;
@@ -34,19 +35,21 @@ public class Main {
 
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-        String requestKeyword = "социоинженерные атаки";
+        Navigator.keyword = new Keyword("базы данных");
+        String requestKeyword = "базы данных";
+
 
         /**
          *  parser
          */
-//        LogIntoElibrary.auth();
-//        new Parser(new Keyword(requestKeyword)).parse();
+        LogIntoElibrary.withoutAuth();
+        new Parser(new Keyword(requestKeyword)).parse();
 
         /**
          *  map synonymous accounts
          */
-        SynonymyService synonymyService = new SynonymyServiceImpl();
-        synonymyService.authorsSearchForSynonyms();
+//        SynonymyService synonymyService = new SynonymyServiceImpl();
+//        synonymyService.authorsSearchForSynonyms();
 
         /**
          *  get graph from DB
@@ -69,10 +72,10 @@ public class Main {
         /**
          * Gephi clustering
          */
-
-        GephiClusterer gc = new GephiClusterer();
-        gc.action();
-        logger.info("FINISHED CLUSTERING");
+//
+//        GephiClusterer gc = new GephiClusterer();
+//        gc.action();
+//        logger.info("FINISHED CLUSTERING");
 
 
         /**
