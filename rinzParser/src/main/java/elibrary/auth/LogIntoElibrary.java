@@ -14,12 +14,8 @@ import java.util.List;
 public class LogIntoElibrary {
 
     private static final Logger logger = LoggerFactory.getLogger(LogIntoElibrary.class);
-    public static  String login       = "EkaSok";
-    public static  String password    = "falcon63837";
-//        public static  String login    = "bulba_in_august";
-//    public static  String password = "ghjkl12345678";
-//put("", "");
-
+    public static  String login    = "lex.suleimanov";
+    public static  String password = "FtXTk4Vd";
     private static final String elib_start  = "https://www.elibrary.ru";
 
     public static void withoutAuth (){

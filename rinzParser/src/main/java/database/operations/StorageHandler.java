@@ -71,9 +71,6 @@ public class StorageHandler  {
                     ex.printStackTrace();
                 }
                 catch (Exception ex){
-                    logger.error("No author in publication");
-                }
-                catch (Exception ex){
                     logger.error(ex.getMessage());
                 }
                 finally {

@@ -62,7 +62,7 @@ public class AuthorDao {
     private void removeLinks(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
         String user = "postgres";
-        String password = "N1k1t0s1n4";
+        String password = "postgres";
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();

@@ -105,18 +105,3 @@ ALTER TABLE postgres_sts.science_theme_searcher.Clustertokeyword ADD FOREIGN KEY
 ALTER TABLE postgres_sts.science_theme_searcher.Clustertokeyword ADD FOREIGN KEY (Id_Keyword) REFERENCES postgres_sts.science_theme_searcher.Keyword (Id);
 ALTER TABLE postgres_sts.science_theme_searcher.AuthorToAuthor ADD FOREIGN KEY (Id_First) REFERENCES postgres_sts.science_theme_searcher.Author (Id);
 ALTER TABLE postgres_sts.science_theme_searcher.AuthorToAuthor ADD FOREIGN KEY (Id_Second) REFERENCES postgres_sts.science_theme_searcher.Author (Id);
-
-
--- DROP FUNCTION IF EXISTS a2aHandleConflicts;
---  CREATE FUNCTION a2aHandleConflicts() RETURNS trigger AS $emp_stamp$
---      BEGIN
---          IF NEW.id_first = OLD.id_second AND OLD.id_first = NEW.id_second THEN
---              NEW.weight = 1 + (NEW.weight + OLD.weight - 1);
---          END IF;
---  		DELETE FROM postgres_sts.science_theme_searcher.AuthorToAuthor WHERE id_first = OLD.id_first AND id_second = OLD.id_second;
---           RETURN NEW;
---      END;
---  $emp_stamp$ LANGUAGE plpgsql;
-
---  CREATE TRIGGER emp_stamp AFTER INSERT ON postgres_sts.science_theme_searcher.AuthorToAuthor
---      FOR EACH ROW EXECUTE PROCEDURE a2aHandleConflicts();

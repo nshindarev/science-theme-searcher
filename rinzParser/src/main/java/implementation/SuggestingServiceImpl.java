@@ -30,7 +30,7 @@ public class SuggestingServiceImpl implements SuggestingService {
     public List<String> executeSuggestionQuery(String keyword) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
         String user = "postgres";
-        String password = "N1k1t0s1n4";
+        String password = "postgres";
         List<String> result = new LinkedList<>();
         try {
             Connection con = DriverManager.getConnection(url, user, password);
