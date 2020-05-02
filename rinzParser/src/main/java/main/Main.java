@@ -12,7 +12,6 @@ import database.service.KeywordService;
 import elibrary.auth.LogIntoElibrary;
 import elibrary.parser.Navigator;
 import elibrary.parser.Parser;
-import database.model.Keyword;
 import graph.Clusterer;
 import graph.gephi.GephiClusterer;
 import graph.ui.GraphVisualizer;
@@ -43,10 +42,10 @@ public class Main {
          *  parser
          */
 
-        if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
-            LogIntoElibrary.withoutAuth();
-            new Parser(Navigator.keyword).parse();
-        }
+//        if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
+//            LogIntoElibrary.withoutAuth();
+//            new Parser(Navigator.keyword).parse();
+//        }
 
         /**
          *  map synonymous accounts
@@ -75,43 +74,34 @@ public class Main {
         /**
          * Gephi clustering
          */
-
-        GephiClusterer gc = new GephiClusterer();
-        gc.action();
-        logger.info("FINISHED CLUSTERING");
+//
+//        GephiClusterer gc = new GephiClusterer();
+//        gc.action();
+//        logger.info("FINISHED CLUSTERING");
 
 
         /**
          *  save clusters into DB
          */
 //        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-        StorageHandler.saveClusters(gc.getClusters());
-        logger.info("REACHED ENDPOINT");
+//        StorageHandler.saveClusters(gc.getClusters());
+//        logger.info("REACHED ENDPOINT");
 
         /**
          *  top authors
          */
 //        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-
 //        StorageHandler.saveClusters(gc.getClusters());
 
+        /**
+         *  get results
+         */
 //        SuggestingService suggestingService = new SuggestingServiceImpl();
 //        List<String> resultSet = suggestingService.executeSuggestionQuery(requestKeyword);
 //        Iterator<String> iterator = resultSet.iterator();
 //        while (iterator.hasNext()){
 //            System.out.println(iterator.next());
 //        }
-
-//        Author test1 = new Author("Test1", "1", "1");
-//        Author test2 = new Author("Test2", "2", "2");
-//        AuthorService authorService = new AuthorService();
-//        authorService.openConnection();
-//        authorService.closeConnection();
-//        AuthorToAuthorService authorToAuthorService = new AuthorToAuthorService();
-//        AuthorToAuthor authorToAuthor = new AuthorToAuthor(test1,test2);
-//        authorToAuthorService.openConnection();
-//        authorToAuthorService.saveAuthorToAuthor(authorToAuthor);
-//        authorToAuthorService.closeConnection();
     }
 
 }

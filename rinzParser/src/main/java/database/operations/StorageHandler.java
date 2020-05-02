@@ -59,7 +59,7 @@ public class StorageHandler  {
                     ex.printStackTrace();
                 }
                 catch (Exception ex){
-                    logger.error("No author in publication");
+                    logger.error(ex.getMessage());
                 }
                 finally {
 //                    dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
