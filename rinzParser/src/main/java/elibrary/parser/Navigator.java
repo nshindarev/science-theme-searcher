@@ -127,15 +127,7 @@ public class Navigator {
 
 
             // check if patronymic was inserted
-            if(authorInfo.getPatronymic()!=null){
-                surnameInput.setValueAttribute(authorInfo.getSurname()+" "+ authorInfo.getName()+" "+ authorInfo.getPatronymic());
-                surnameInput.setDefaultValue(authorInfo.getSurname()+" "+ authorInfo.getName()+" "+ authorInfo.getPatronymic());
-            }
-            else if (authorInfo.getName()!=null){
-                surnameInput.setValueAttribute(authorInfo.getSurname()+" "+ authorInfo.getName());
-                surnameInput.setDefaultValue(authorInfo.getSurname()+" "+ authorInfo.getName());
-            }
-            else if (Character.isLetter(authorInfo.getP().charAt(0))) {
+            if (Character.isLetter(authorInfo.getP().charAt(0))) {
                 surnameInput.setValueAttribute(authorInfo.getSurname()+" "+ authorInfo.getN() + ". "+ authorInfo.getP()+".");
                 surnameInput.setDefaultValue(authorInfo.getSurname()+" "+ authorInfo.getN() + ". "+ authorInfo.getP()+".");
             }

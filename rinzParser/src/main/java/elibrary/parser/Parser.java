@@ -112,7 +112,7 @@ public class Parser {
                 if (row.getElementsByTagName("a").size() > 0 && row.getElementsByTagName("i").size() > 0) {
                     if (authorSet.size() <= searchLimit) {
                         Publication publBO = new Publication(row.getElementsByTagName("a").get(0).asText());
-                        publBO.setDescriptioneng(row.getElementsByTagName("a").get(0).getAttribute("href"));
+                        publBO.setLink(row.getElementsByTagName("a").get(0).getAttribute("href"));
                         publBO.setMetric(citations);
                         logger.debug(row.getElementsByTagName("a").get(0).asText());
                         logger.debug(row.getElementsByTagName("a").get(0).getAttribute("href"));
