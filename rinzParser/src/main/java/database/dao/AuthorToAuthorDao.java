@@ -1,15 +1,10 @@
 package database.dao;
 
-import database.model.Author;
 import database.model.AuthorToAuthor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import util.HibernateSessionFactoryUtil;
+import utility.HibernateSessionFactoryUtil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.List;
 
 public class AuthorToAuthorDao {

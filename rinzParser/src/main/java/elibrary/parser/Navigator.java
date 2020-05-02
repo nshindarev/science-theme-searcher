@@ -60,11 +60,6 @@ public class Navigator {
         catch (ElementNotFoundException ex){
             logger.error(ex.getMessage());
 
-
-//            LogIntoElibrary.login = "lex.suleimanov";
-//            LogIntoElibrary.password = "FtXTk4Vd";
-//            LogIntoElibrary.auth();
-
             return getAuthorsSearchPage(startPage);
         }
         return startPage;
