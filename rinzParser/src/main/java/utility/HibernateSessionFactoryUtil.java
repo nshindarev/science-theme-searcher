@@ -1,4 +1,4 @@
-package util;
+package utility;
 
 import database.model.*;
 import org.hibernate.SessionFactory;

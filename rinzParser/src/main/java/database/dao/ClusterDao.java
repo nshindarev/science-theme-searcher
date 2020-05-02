@@ -1,9 +1,10 @@
 package database.dao;
 
 import database.model.Cluster;
+import main.Test;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import util.HibernateSessionFactoryUtil;
+import utility.HibernateSessionFactoryUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,7 +39,7 @@ public class ClusterDao {
     }
 
     public List<Cluster> findAll() {
-        List<Cluster> clusters = (List<Cluster>)  session.createQuery("From science_theme_searcher.cluster").list();
+        List<Cluster> clusters = (List<Cluster>)  session.createQuery("From database.model.Cluster").list();
         return clusters;
     }
 
@@ -48,8 +49,8 @@ public class ClusterDao {
     }
     private void removeClusterToAuthor() {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "N1k1t0s1n4";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -62,8 +63,8 @@ public class ClusterDao {
 
     private void removeClusters() {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "postgres";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();

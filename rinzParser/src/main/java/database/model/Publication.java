@@ -15,7 +15,6 @@ public class Publication {
     @Id
     @Getter
     @Setter
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Getter
@@ -30,13 +29,13 @@ public class Publication {
 
     @Getter
     @Setter
-    @Column(name = "descriptioneng")
-    private String descriptioneng;
+    @Column(name = "year")
+    private Integer year;
 
     @Getter
     @Setter
-    @Column(name = "descriptionrus")
-    private String descriptionrus;
+    @Column(name = "link")
+    private String link;
 
     @Getter
     @Setter
@@ -68,11 +67,14 @@ public class Publication {
     }
 
     public Publication () {
+
     }
+
     public Publication (String name){
         this.name = name;
         this.id = hashCode();
     }
+
     public Publication (String name, Integer metric){
         this.name = name;
         this.metric = metric;

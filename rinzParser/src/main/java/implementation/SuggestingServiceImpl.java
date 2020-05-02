@@ -4,6 +4,7 @@ import database.model.Keyword;
 import database.model.Publication;
 import database.service.KeywordService;
 import database.service.PublicationService;
+import main.Test;
 import service.SuggestingService;
 
 import java.sql.*;
@@ -29,8 +30,8 @@ public class SuggestingServiceImpl implements SuggestingService {
     @Override
     public List<String> executeSuggestionQuery(String keyword) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "postgres";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         List<String> result = new LinkedList<>();
         try {
             Connection con = DriverManager.getConnection(url, user, password);

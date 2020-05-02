@@ -1,21 +1,18 @@
 package database.dao;
 
 import database.model.Author;
-import database.model.AuthorToAuthor;
 import database.model.Cluster;
 import database.model.Publication;
+import main.Test;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import util.HibernateSessionFactoryUtil;
+import utility.HibernateSessionFactoryUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class AuthorDao {
     Session session;
@@ -61,8 +58,8 @@ public class AuthorDao {
 
     private void removeLinks(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "postgres";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -75,10 +72,11 @@ public class AuthorDao {
         }
     }
 
+
     private void removeUrls(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "postgres";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -92,8 +90,8 @@ public class AuthorDao {
 
     private void removePublications(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "postgres";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -106,8 +104,8 @@ public class AuthorDao {
     }
     private void removeClusters(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "postgres";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -121,8 +119,8 @@ public class AuthorDao {
 
     private void removeAuthor(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "postgres";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();

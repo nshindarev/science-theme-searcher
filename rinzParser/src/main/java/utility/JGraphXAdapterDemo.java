@@ -1,4 +1,4 @@
-package util;
+package utility;
 
 import com.mxgraph.layout.*;
 import com.mxgraph.swing.*;
