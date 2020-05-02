@@ -36,17 +36,18 @@ public class Main {
 
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-        Navigator.keyword = new Keyword("случайные блуждания");
+        System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+        Navigator.keyword = new Keyword("социоинженерные атаки");
 
 
         /**
          *  parser
          */
 
-        if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
+//        if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
             LogIntoElibrary.withoutAuth();
             new Parser(Navigator.keyword).parse();
-        }
+//        }
 
         /**
          *  map synonymous accounts
@@ -85,8 +86,8 @@ public class Main {
          *  save clusters into DB
          */
 //        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-        StorageHandler.saveClusters(gc.getClusters());
-        logger.info("REACHED ENDPOINT");
+//        StorageHandler.saveClusters(gc.getClusters());
+//        logger.info("REACHED ENDPOINT");
 
         /**
          *  top authors
@@ -96,7 +97,7 @@ public class Main {
 //        StorageHandler.saveClusters(gc.getClusters());
 
 //        SuggestingService suggestingService = new SuggestingServiceImpl();
-//        List<String> resultSet = suggestingService.executeSuggestionQuery(requestKeyword);
+//        List<String> resultSet = suggestingService.executeSuggestionQuery(Navigator.keyword.getKeyword());
 //        Iterator<String> iterator = resultSet.iterator();
 //        while (iterator.hasNext()){
 //            System.out.println(iterator.next());

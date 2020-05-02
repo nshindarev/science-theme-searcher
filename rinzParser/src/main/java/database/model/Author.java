@@ -139,6 +139,10 @@ public class Author {
         if (author.revision == 1)
             this.setRevision(1);
 
+        //TODO новое значение
+        if (!author.getName().equals(""))
+            this.setName(author.getName());
+
         return this;
     }
     @Override

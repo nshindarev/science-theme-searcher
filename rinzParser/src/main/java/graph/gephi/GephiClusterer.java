@@ -4,6 +4,7 @@ package graph.gephi;
 import database.model.AuthorToAuthor;
 import database.model.Cluster;
 import database.operations.StorageHandler;
+import graph.ui.PreviewSketch;
 import org.gephi.appearance.api.*;
 import org.gephi.appearance.plugin.PartitionElementColorTransformer;
 import org.gephi.appearance.plugin.RankingLabelSizeTransformer;
@@ -19,6 +20,8 @@ import org.gephi.io.processor.plugin.DefaultProcessor;
 import org.gephi.layout.plugin.force.StepDisplacement;
 import org.gephi.layout.plugin.force.yifanHu.YifanHuLayout;
 import org.gephi.layout.plugin.forceAtlas.ForceAtlasLayout;
+import org.gephi.preview.api.*;
+import org.gephi.preview.types.DependantOriginalColor;
 import org.gephi.project.api.ProjectController;
 import org.gephi.project.api.Workspace;
 import org.gephi.statistics.plugin.GraphDistance;
@@ -28,8 +31,13 @@ import org.openide.util.Lookup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class GephiClusterer {
 
@@ -45,6 +53,7 @@ public class GephiClusterer {
     public void action(){
         getGraph();
         clusterAndVisualizeGraph();
+//        visualize();
     }
 
 
@@ -64,10 +73,10 @@ public class GephiClusterer {
         authorsNetwork = graphModel.getUndirectedGraph();
         a2a.forEach(connection -> {
 
-            Node a1 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_first().getId()));
-            a1.setLabel(String.valueOf(connection.getAuthor_first().getId()));
-            Node a2 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_second().getId()));
-            a2.setLabel(String.valueOf(connection.getAuthor_second().getId()));
+            Node a1 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_first().getSurname()));
+            a1.setLabel(String.valueOf(connection.getAuthor_first().getSurname()));
+            Node a2 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_second().getSurname()));
+            a2.setLabel(String.valueOf(connection.getAuthor_second().getSurname()));
             /**
              * add a1
              */
@@ -76,7 +85,7 @@ public class GephiClusterer {
                 if (!authorsNetwork.contains(a1))
                     authorsNetwork.addNode(a1);
             } catch (IllegalArgumentException ex) {
-                logger.warn("node " + a1.getId() + " already exists");
+                logger.info("node " + a1.getId() + " already exists");
                 a1 = authorsNetwork.getNode(a1.getId());
             }
 
@@ -87,7 +96,7 @@ public class GephiClusterer {
                 if (!authorsNetwork.contains(a2))
                     authorsNetwork.addNode(a2);
             } catch (IllegalArgumentException ex) {
-                logger.warn("node " + a2.getId() + " already exists");
+                logger.info("node " + a2.getId() + " already exists");
                 a2 = authorsNetwork.getNode(a2.getId());
             }
 
@@ -180,8 +189,8 @@ public class GephiClusterer {
         Column centralityColumn = graphModel.getNodeTable().getColumn(GraphDistance.BETWEENNESS);
         Function centralityRanking = appearanceModel.getNodeFunction(graph, centralityColumn, RankingNodeSizeTransformer.class);
         RankingNodeSizeTransformer centralityTransformer = (RankingNodeSizeTransformer) centralityRanking.getTransformer();
-        centralityTransformer.setMinSize(2);
-        centralityTransformer.setMaxSize(6);
+        centralityTransformer.setMinSize(3);
+        centralityTransformer.setMaxSize(7);
         appearanceController.transform(centralityRanking);
 
         //Rank label size - set a multiplier size
@@ -199,12 +208,45 @@ public class GephiClusterer {
         layout.setOptimalDistance(200f);
 
 
-
-
-        for (int i = 0; i < 100 && layout.canAlgo(); i++) {
+        for (int i = 0; i < 50 && layout.canAlgo(); i++) {
             layout.goAlgo();
         }
         layout.endAlgo();
+
+
+        //Preview configuration
+        PreviewController previewController = Lookup.getDefault().lookup(PreviewController.class);
+        PreviewModel previewModel = previewController.getModel();
+        previewModel.getProperties().putValue(PreviewProperty.SHOW_NODE_LABELS, Boolean.TRUE);
+//        previewModel.getProperties().putValue(PreviewProperty.NODE_LABEL_COLOR, new DependantOriginalColor(Color.WHITE));
+        previewModel.getProperties().putValue(PreviewProperty.EDGE_CURVED, Boolean.FALSE);
+        previewModel.getProperties().putValue(PreviewProperty.EDGE_OPACITY, 100);
+//        previewModel.getProperties().putValue(PreviewProperty.BACKGROUND_COLOR, Color.BLACK);
+
+        //New Processing target, get the PApplet
+        G2DTarget target = (G2DTarget) previewController.getRenderTarget(RenderTarget.G2D_TARGET);
+        final PreviewSketch previewSketch = new PreviewSketch(target);
+        previewController.refreshPreview();
+
+        //Add the applet to a JFrame and display
+        JFrame frame = new JFrame("Test Preview");
+        frame.setLayout(new BorderLayout());
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(previewSketch, BorderLayout.CENTER);
+
+        frame.setSize(1024, 768);
+
+        //Wait for the frame to be visible before painting, or the result drawing will be strange
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                previewSketch.resetZoom();
+            }
+        });
+        frame.setVisible(true);
+
+
 
         //Export
         ExportController ec = Lookup.getDefault().lookup(ExportController.class);
@@ -237,7 +279,6 @@ public class GephiClusterer {
         });
         return mapAuthorIds;
     }
-
     public Map<Cluster, List<String>> sortRecommendations(){
 
         Map<Cluster, List<String>> res = new HashMap();
@@ -254,7 +295,4 @@ public class GephiClusterer {
 
         return res;
     }
-
-
-
 }
