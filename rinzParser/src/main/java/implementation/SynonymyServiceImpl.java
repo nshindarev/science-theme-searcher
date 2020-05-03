@@ -49,6 +49,7 @@ public class SynonymyServiceImpl implements SynonymyService {
         author1.getClusters().addAll(author2.getClusters());
         author1.getLinks().addAll(author2.getLinks());
         author1.getPublications().addAll(author2.getPublications());
+        author1.getAffiliations().addAll(author2.getAffiliations());
         authorService.updateAuthor(author1);
         deleted.add(author2);
     }
