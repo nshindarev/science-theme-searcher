@@ -48,11 +48,13 @@ public class AuthorDao {
         author.setClusters(null);
         author.setPublications(null);
         author.setLinks(null);
+        author.setAffiliations(null);
         tx1.commit();
         removeLinks(author);
         removeClusters(author);
         removePublications(author);
         removeUrls(author);
+        removeAffiliations(author);
         removeAuthor(author);
     }
 
@@ -102,6 +104,22 @@ public class AuthorDao {
             System.out.println(ex.getStackTrace());
         }
     }
+
+    private void removeAffiliations(Author author) {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.authortoaffiliation\n" +
+                    "\tWHERE id_author = "+author.getId());
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+    }
+
     private void removeClusters(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
         String user = Test.postgresLogin;
