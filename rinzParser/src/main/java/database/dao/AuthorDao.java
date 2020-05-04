@@ -1,21 +1,18 @@
 package database.dao;
 
 import database.model.Author;
-import database.model.AuthorToAuthor;
 import database.model.Cluster;
 import database.model.Publication;
+import main.Test;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import util.HibernateSessionFactoryUtil;
+import utility.HibernateSessionFactoryUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class AuthorDao {
     Session session;
@@ -51,18 +48,20 @@ public class AuthorDao {
         author.setClusters(null);
         author.setPublications(null);
         author.setLinks(null);
+        author.setAffiliations(null);
         tx1.commit();
         removeLinks(author);
         removeClusters(author);
         removePublications(author);
         removeUrls(author);
+        removeAffiliations(author);
         removeAuthor(author);
     }
 
     private void removeLinks(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "N1k1t0s1n4";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -78,8 +77,8 @@ public class AuthorDao {
 
     private void removeUrls(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "N1k1t0s1n4";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -93,8 +92,8 @@ public class AuthorDao {
 
     private void removePublications(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "N1k1t0s1n4";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -105,10 +104,26 @@ public class AuthorDao {
             System.out.println(ex.getStackTrace());
         }
     }
+
+    private void removeAffiliations(Author author) {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.authortoaffiliation\n" +
+                    "\tWHERE id_author = "+author.getId());
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+    }
+
     private void removeClusters(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "N1k1t0s1n4";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -122,8 +137,8 @@ public class AuthorDao {
 
     private void removeAuthor(Author author) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = "postgres";
-        String password = "N1k1t0s1n4";
+        String user = Test.postgresLogin;
+        String password = Test.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();

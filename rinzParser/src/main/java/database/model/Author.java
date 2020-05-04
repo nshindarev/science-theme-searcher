@@ -14,6 +14,7 @@ public class Author {
     public Author (){
 
     }
+
     public Author (String surname, String n, String p) {
         this.surname = surname;
         this.n = n;
@@ -26,16 +27,6 @@ public class Author {
     @Getter
     @Setter
     private int id;
-
-    @Getter
-    @Setter
-    @Column(name = "name")
-    private String name;
-
-    @Getter
-    @Setter
-    @Column(name = "patronymic")
-    private String patronymic;
 
     @Getter
     @Setter
@@ -56,6 +47,19 @@ public class Author {
     @Setter
     @Column(name = "revision")
     private Integer revision;
+
+    @Getter
+    @Setter
+    @ManyToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    @JoinTable(name = "authortoaffiliation", schema = "science_theme_searcher",
+            joinColumns = @JoinColumn(name = "id_author"),
+            inverseJoinColumns = @JoinColumn(name = "id_affiliation"))
+    private Set<Affiliation> affiliations = new HashSet<>();
+
+    public void addAffiliation(Affiliation affiliation) {
+        this.affiliations.add(affiliation);
+    }
 
     @Getter
     @Setter
@@ -134,14 +138,20 @@ public class Author {
                     .stream()
                     .filter(it -> !this.getPublications().contains(it))
                     .forEach(this::addPublication);
+
+            author.getAffiliations()
+                    .stream()
+                    .filter(it -> !this.getAffiliations().contains(it))
+                    .forEach(this::addAffiliation);
+
         }
 
         if (author.revision == 1)
             this.setRevision(1);
 
         //TODO новое значение
-        if (!author.getName().equals(""))
-            this.setName(author.getName());
+//        if (!author.getName().equals(""))
+//            this.setName(author.getName());
 
         return this;
     }
@@ -152,7 +162,7 @@ public class Author {
 
         Author that = (Author) o;
         if (id != that.id) return false;
-        if (!Objects.equals(name, that.name)) return false;
+        if (!Objects.equals(n, that.n)) return false;
         if (!Objects.equals(surname, that.surname)) return false;
         return true;
     }

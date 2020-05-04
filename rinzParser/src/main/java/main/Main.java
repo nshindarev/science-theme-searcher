@@ -12,7 +12,6 @@ import database.service.KeywordService;
 import elibrary.auth.LogIntoElibrary;
 import elibrary.parser.Navigator;
 import elibrary.parser.Parser;
-import database.model.Keyword;
 import graph.Clusterer;
 import graph.gephi.GephiClusterer;
 import graph.ui.GraphVisualizer;
@@ -37,16 +36,15 @@ public class Main {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
-        Navigator.keyword = new Keyword("социоинженерные атаки");
+        Navigator.keyword = new Keyword("jdbc");
 
 
         /**
          *  parser
          */
-
 //        if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
-            LogIntoElibrary.withoutAuth();
-            new Parser(Navigator.keyword).parse();
+//            LogIntoElibrary.withoutAuth();
+//            new Parser(Navigator.keyword).parse();
 //        }
 
         /**
@@ -76,7 +74,7 @@ public class Main {
         /**
          * Gephi clustering
          */
-
+//
         GephiClusterer gc = new GephiClusterer();
         gc.action();
         logger.info("FINISHED CLUSTERING");
@@ -85,34 +83,25 @@ public class Main {
         /**
          *  save clusters into DB
          */
-//        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-//        StorageHandler.saveClusters(gc.getClusters());
-//        logger.info("REACHED ENDPOINT");
+        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
+        StorageHandler.saveClusters(gc.getClusters());
+        logger.info("REACHED ENDPOINT");
 
         /**
          *  top authors
          */
 //        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-
 //        StorageHandler.saveClusters(gc.getClusters());
 
+        /**
+         *  get results
+         */
 //        SuggestingService suggestingService = new SuggestingServiceImpl();
 //        List<String> resultSet = suggestingService.executeSuggestionQuery(Navigator.keyword.getKeyword());
 //        Iterator<String> iterator = resultSet.iterator();
 //        while (iterator.hasNext()){
 //            System.out.println(iterator.next());
 //        }
-
-//        Author test1 = new Author("Test1", "1", "1");
-//        Author test2 = new Author("Test2", "2", "2");
-//        AuthorService authorService = new AuthorService();
-//        authorService.openConnection();
-//        authorService.closeConnection();
-//        AuthorToAuthorService authorToAuthorService = new AuthorToAuthorService();
-//        AuthorToAuthor authorToAuthor = new AuthorToAuthor(test1,test2);
-//        authorToAuthorService.openConnection();
-//        authorToAuthorService.saveAuthorToAuthor(authorToAuthor);
-//        authorToAuthorService.closeConnection();
     }
 
 }

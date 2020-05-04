@@ -59,7 +59,7 @@ public class StorageHandler  {
                     ex.printStackTrace();
                 }
                 catch (Exception ex){
-                    logger.error("No author in publication");
+                    logger.error(ex.getMessage());
                 }
                 finally {
 //                    dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
@@ -300,16 +300,22 @@ public class StorageHandler  {
     }
 
     public static List<Author> getAuthorsById(List<String> ids){
-        AuthorService as = new AuthorService();
-        as.openConnection();
+        try{
+            AuthorService as = new AuthorService();
+            as.openConnection();
 
-        List<Author> authors = new LinkedList<>();
-        ids.forEach(id -> {
-            authors.add(as.findAuthor(Integer.parseInt(id)));
-        });
+            List<Author> authors = new LinkedList<>();
+            ids.forEach(id -> {
+                authors.add(as.findAuthor(Integer.parseInt(id)));
+            });
 
-        as.closeConnection();
-        return authors;
+            as.closeConnection();
+            return authors;
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+        return new LinkedList<>();
     }
     public static boolean alreadyParsed (String key){
         KeywordService ks = new KeywordService();

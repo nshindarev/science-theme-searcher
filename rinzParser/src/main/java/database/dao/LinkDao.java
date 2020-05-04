@@ -3,7 +3,7 @@ package database.dao;
 import database.model.Link;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import util.HibernateSessionFactoryUtil;
+import utility.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class LinkDao {
     }
 
     public List<Link> findAll() {
-        List<Link> links = (List<Link>)  session.createQuery("From science_theme_searcher.link").list();
+        List<Link> links = (List<Link>)  session.createQuery("From database.model.Link").list();
         return links;
     }
 

@@ -1,4 +1,4 @@
-package utility;
+package main;
 
 import database.model.Author;
 import database.model.AuthorToAuthor;
@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Test {
+    public static String postgresLogin = "postgres";
+    public static String postgresPassword = "N1k1t0s1n4";
 
     //Example of work
     public static void main(String[] args) {

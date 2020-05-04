@@ -26,11 +26,9 @@ public class Navigator {
     public static  WebClient webClient = new WebClient(BrowserVersion.CHROME);
     public static  Keyword keyword = new Keyword("социоинженерные атаки");
     public static final int timeOut = 10000;
-    public static final int searchLimit = 30;
-    public static final int searchLevel = 0;
+    public static final int searchLimit = 20;
+    public static final int searchLevel = 1;
     public static  int clusterNumber = 5;
-
-    public static Set<Publication> allKeywordPublicationIds = new HashSet<>();
 
     /**
      * after logging in -> goto authors search page
@@ -59,11 +57,6 @@ public class Navigator {
         }
         catch (ElementNotFoundException ex){
             logger.error(ex.getMessage());
-
-
-//            LogIntoElibrary.login = "lex.suleimanov";
-//            LogIntoElibrary.password = "FtXTk4Vd";
-//            LogIntoElibrary.auth();
 
             return getAuthorsSearchPage(startPage);
         }
@@ -124,18 +117,8 @@ public class Navigator {
                 return Pages.authorSearchPage;
             }
 
-
-
             // check if patronymic was inserted
-            if(authorInfo.getPatronymic()!=null){
-                surnameInput.setValueAttribute(authorInfo.getSurname()+" "+ authorInfo.getName()+" "+ authorInfo.getPatronymic());
-                surnameInput.setDefaultValue(authorInfo.getSurname()+" "+ authorInfo.getName()+" "+ authorInfo.getPatronymic());
-            }
-            else if (authorInfo.getName()!=null){
-                surnameInput.setValueAttribute(authorInfo.getSurname()+" "+ authorInfo.getName());
-                surnameInput.setDefaultValue(authorInfo.getSurname()+" "+ authorInfo.getName());
-            }
-            else if (Character.isLetter(authorInfo.getP().charAt(0))) {
+            if (Character.isLetter(authorInfo.getP().charAt(0))) {
                 surnameInput.setValueAttribute(authorInfo.getSurname()+" "+ authorInfo.getN() + ". "+ authorInfo.getP()+".");
                 surnameInput.setDefaultValue(authorInfo.getSurname()+" "+ authorInfo.getN() + ". "+ authorInfo.getP()+".");
             }
@@ -203,6 +186,7 @@ public class Navigator {
             logger.error(ex.getMessage());
             return getAuthorsPage(link);
         }
+
     }
 
     public static HtmlPage getPublicationPage(Link link){

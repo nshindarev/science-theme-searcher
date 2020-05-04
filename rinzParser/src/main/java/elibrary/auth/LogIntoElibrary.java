@@ -28,8 +28,8 @@ public class LogIntoElibrary {
             Navigator.webClient.getOptions().setCssEnabled(true);
             Navigator.webClient.getOptions().setJavaScriptEnabled(true);
             Navigator.webClient.getOptions().setThrowExceptionOnScriptError(true);
-            Navigator.webClient.waitForBackgroundJavaScript(2000);
-            Navigator.webClient.setJavaScriptTimeout(2000);
+            Navigator.webClient.waitForBackgroundJavaScript(3000);
+            Navigator.webClient.setJavaScriptTimeout(3000);
             Navigator.webClient.getCache().clear();
 
             HtmlPage startPage = Navigator.webClient.getPage(elib_start);

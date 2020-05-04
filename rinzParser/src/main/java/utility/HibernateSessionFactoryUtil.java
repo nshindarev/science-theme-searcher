@@ -1,4 +1,4 @@
-package util;
+package utility;
 
 import database.model.*;
 import org.hibernate.SessionFactory;
@@ -20,6 +20,7 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(Link.class);
                 configuration.addAnnotatedClass(Keyword.class);
                 configuration.addAnnotatedClass(AuthorToAuthor.class);
+                configuration.addAnnotatedClass(Affiliation.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 
