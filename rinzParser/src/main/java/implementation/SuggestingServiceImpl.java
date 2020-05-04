@@ -1,15 +1,16 @@
 package implementation;
 
-import database.model.Keyword;
-import database.model.Publication;
+import database.model.*;
 import database.service.KeywordService;
 import database.service.PublicationService;
-import main.Test;
+import main.Parameters;
 import service.SuggestingService;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class SuggestingServiceImpl implements SuggestingService {
@@ -28,34 +29,31 @@ public class SuggestingServiceImpl implements SuggestingService {
     }
 
     @Override
-    public List<String> executeSuggestionQuery(String keyword) {
+    public List<String> executeSuggestionQueryByRating(String keyword, Cluster cluster) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = Test.postgresLogin;
-        String password = Test.postgresPassword;
+        String user = Parameters.postgresLogin;
+        String password = Parameters.postgresPassword;
         List<String> result = new LinkedList<>();
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select name \n" +
-                    "from (select distinct sel.name, sel.metric\n" +
-                    "from (select p.name, p.metric, c.id, rank() over (partition by c.id order by p.metric desc)\n" +
+            ResultSet rs = st.executeQuery("select ans.name from\n" +
+                    "(select distinct sel.name from \n" +
+                    "(select  *\n" +
                     "from science_theme_searcher.publication p,\n" +
-                    "\tscience_theme_searcher.author a,\n" +
-                    "\tscience_theme_searcher.cluster c,\n" +
-                    "\tscience_theme_searcher.keyword k,\n" +
-                    "\tscience_theme_searcher.keywordtopublication kp,\n" +
-                    "\tscience_theme_searcher.authortopublication ap,\n" +
-                    "\tscience_theme_searcher.clustertoauthor ca\n" +
-                    "where k.keyword = '"+keyword+"'\n" +
-                    "and k.id = kp.id_keyword\n" +
-                    "and kp.id_publication = p.id\n" +
-                    "and p.id = ap.id_publication\n" +
-                    "and ap.id_author = a.id\n" +
-                    "and a.id = ca.id_author\n" +
-                    "and ca.id_cluster = c.id\n" +
-                    "group by c.id, p.id) sel\n" +
-                    "where RANK <=3\n" +
-                    "order by metric desc) res");
+                    "\t\t\tscience_theme_searcher.keyword k,\n" +
+                    "\t\t\tscience_theme_searcher.keywordtopublication kp,\n" +
+                    "\t\t\tscience_theme_searcher.authortopublication ap,\n" +
+                    "\t\t\tscience_theme_searcher.clustertoauthor ca\n" +
+                    "\t\t\twhere k.keyword = '"+keyword+"'\n" +
+                    "\t\t\tand k.id = kp.id_keyword\n" +
+                    "\t\t\tand kp.id_publication = p.id\n" +
+                    "\t\t\tand p.id = ap.id_publication\n" +
+                    "\t\t\tand ap.id_author = ca.id_author\n" +
+                    "\t\t\tand ca.id_cluster = "+cluster.getId()+"\n" +
+                    "order by metric desc) sel\n" +
+                    " )ans\n" +
+                    " limit 3");
 
             while (rs.next()) {
                 result.add(rs.getString(1));
@@ -66,5 +64,63 @@ public class SuggestingServiceImpl implements SuggestingService {
             System.out.println(ex.getStackTrace());
         }
         return null;
+    }
+
+
+    @Override
+    public List<String> executeSuggestionQueryByYear(String keyword, Cluster cluster) {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = Parameters.postgresLogin;
+        String password = Parameters.postgresPassword;
+        List<String> result = new LinkedList<>();
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select ans.name from\n" +
+                    "(select distinct sel.name from \n" +
+                    "(select  *\n" +
+                    "from science_theme_searcher.publication p,\n" +
+                    "\t\t\tscience_theme_searcher.keyword k,\n" +
+                    "\t\t\tscience_theme_searcher.keywordtopublication kp,\n" +
+                    "\t\t\tscience_theme_searcher.authortopublication ap,\n" +
+                    "\t\t\tscience_theme_searcher.clustertoauthor ca\n" +
+                    "\t\t\twhere k.keyword = '"+keyword+"'\n" +
+                    "\t\t\tand k.id = kp.id_keyword\n" +
+                    "\t\t\tand kp.id_publication = p.id\n" +
+                    "\t\t\tand p.id = ap.id_publication\n" +
+                    "\t\t\tand ap.id_author = ca.id_author\n" +
+                    "\t\t\tand ca.id_cluster = "+cluster.getId()+"\n" +
+                    "order by year desc) sel\n" +
+                    " )ans\n" +
+                    " limit 3");
+
+            while (rs.next()) {
+                result.add(rs.getString(1));
+            }
+            return result;
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+        return null;
+    }
+
+    @Override
+    public String findClustersAffiliation(Cluster cluster) {
+        Set<Author> authorSet = cluster.getAuthors();
+        HashMap<String, Integer> affiliationsMap = new HashMap<>();
+        int max = 0;
+        String resultAffiliation = "";
+        for (Author author: authorSet) {
+            for (Affiliation affiliation: author.getAffiliations()) {
+                int nextCount = affiliationsMap.getOrDefault(affiliation.getName(), 0)+1;
+                if (max < nextCount) {
+                    max = nextCount;
+                    resultAffiliation = affiliation.getName();
+                }
+                affiliationsMap.put(affiliation.getName(), nextCount);
+            }
+        }
+        return resultAffiliation;
     }
 }
