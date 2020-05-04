@@ -14,9 +14,13 @@ import java.util.List;
 public class LogIntoElibrary {
 
     private static final Logger logger = LoggerFactory.getLogger(LogIntoElibrary.class);
-    public static  String login    = "lex.suleimanov";
-    public static  String password = "FtXTk4Vd";
-    private static final String elib_start  = "https://www.elibrary.ru";
+    public static  String login       = "EkaSok";
+    public static  String password    = "falcon63837";
+//        public static  String login    = "bulba_in_august";
+//    public static  String password = "ghjkl12345678";
+
+//    private static final String elib_start  = "https://www.elibrary.ru";
+    private static final String elib_start  = "https://elibrary.ru/defaultx.asp";
 
     public static void withoutAuth (){
         try{
@@ -24,8 +28,8 @@ public class LogIntoElibrary {
             Navigator.webClient.getOptions().setCssEnabled(true);
             Navigator.webClient.getOptions().setJavaScriptEnabled(true);
             Navigator.webClient.getOptions().setThrowExceptionOnScriptError(true);
-            Navigator.webClient.waitForBackgroundJavaScript(25000);
-            Navigator.webClient.setJavaScriptTimeout(25000);
+            Navigator.webClient.waitForBackgroundJavaScript(3000);
+            Navigator.webClient.setJavaScriptTimeout(3000);
             Navigator.webClient.getCache().clear();
 
             HtmlPage startPage = Navigator.webClient.getPage(elib_start);

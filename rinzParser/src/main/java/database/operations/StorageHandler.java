@@ -4,6 +4,7 @@ import com.apporiented.algorithm.clustering.visualization.ClusterComponent;
 import database.model.*;
 import database.service.*;
 import elibrary.parser.Navigator;
+import elibrary.parser.Parser;
 import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.collection.internal.PersistentSet;
@@ -289,6 +290,7 @@ public class StorageHandler  {
         return res;
     }
 
+
     public static Map<Cluster, List<Author>> getTopAuthors (Map<Cluster, List<String>> clusters, int minClusterSize, int topVerticesSize){
 
         Map<Cluster, List<Author>> res = clusters.entrySet()
@@ -300,16 +302,22 @@ public class StorageHandler  {
     }
 
     public static List<Author> getAuthorsById(List<String> ids){
-        AuthorService as = new AuthorService();
-        as.openConnection();
+        try{
+            AuthorService as = new AuthorService();
+            as.openConnection();
 
-        List<Author> authors = new LinkedList<>();
-        ids.forEach(id -> {
-            authors.add(as.findAuthor(Integer.parseInt(id)));
-        });
+            List<Author> authors = new LinkedList<>();
+            ids.forEach(id -> {
+                authors.add(as.findAuthor(Integer.parseInt(id)));
+            });
 
-        as.closeConnection();
-        return authors;
+            as.closeConnection();
+            return authors;
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+        return new LinkedList<>();
     }
     public static boolean alreadyParsed (String key){
         KeywordService ks = new KeywordService();

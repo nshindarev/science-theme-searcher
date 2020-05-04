@@ -24,13 +24,11 @@ public class Navigator {
     private static final Logger logger = LoggerFactory.getLogger(Navigator.class);
 
     public static  WebClient webClient = new WebClient(BrowserVersion.CHROME);
-    public static  Keyword keyword = new Keyword("обработка изображений");
+    public static  Keyword keyword = new Keyword("социоинженерные атаки");
     public static final int timeOut = 10000;
-    public static final int searchLimit = 15;
-    public static final int searchLevel = 1;
+    public static  int searchLimit = 20;
+    public static  int searchLevel = 1;
     public static  int clusterNumber = 5;
-
-    public static Set<Publication> allKeywordPublicationIds = new HashSet<>();
 
     /**
      * after logging in -> goto authors search page
@@ -119,8 +117,6 @@ public class Navigator {
                 return Pages.authorSearchPage;
             }
 
-
-
             // check if patronymic was inserted
             if (Character.isLetter(authorInfo.getP().charAt(0))) {
                 surnameInput.setValueAttribute(authorInfo.getSurname()+" "+ authorInfo.getN() + ". "+ authorInfo.getP()+".");
@@ -190,6 +186,7 @@ public class Navigator {
             logger.error(ex.getMessage());
             return getAuthorsPage(link);
         }
+
     }
 
     public static HtmlPage getPublicationPage(Link link){
@@ -220,8 +217,8 @@ public class Navigator {
         wc.getOptions().setCssEnabled(true);
         wc.getOptions().setJavaScriptEnabled(true);
         wc.getOptions().setThrowExceptionOnScriptError(true);
-        wc.waitForBackgroundJavaScript(25000);
-        wc.setJavaScriptTimeout(25000);
+        wc.waitForBackgroundJavaScript(1000);
+        wc.setJavaScriptTimeout(1000);
         wc.getCache().clear();
 
         return wc;

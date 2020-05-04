@@ -1,5 +1,7 @@
 package database.model;
 
+import elibrary.parser.Navigator;
+import elibrary.parser.Parser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -62,8 +64,14 @@ public class Publication {
             inverseJoinColumns = @JoinColumn(name = "id_keyword"))
     private Set<Keyword> keywords = new HashSet<>();
 
+
+    public void addKeyword(Keyword keyword, Set<Publication> allPublicationIds) {
+        if (allPublicationIds.stream().anyMatch(this::equals)){
+            this.keywords.add(keyword);
+        }
+    }
     public void addKeyword(Keyword keyword) {
-        this.keywords.add(keyword);
+            this.keywords.add(keyword);
     }
 
     public Publication () {
