@@ -33,149 +33,71 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main (String[] args){
-
-
-        java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
-        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-        System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
-        Navigator.keyword = new Keyword("jdbc");
-
-
-        /**
-         *  parser
-         */
-//        if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
-//            LogIntoElibrary.withoutAuth();
-//            new Parser(Navigator.keyword).parse();
-//        }
-
-        /**
-         *  map synonymous accounts
-         */
-//        SynonymyService synonymyService = new SynonymyServiceImpl();
-//        synonymyService.authorsSearchForSynonyms();
-
-        /**
-         *  get graph from DB
-         */
-        DefaultDirectedGraph authorsGraph = StorageHandler.getAuthorsGraph();
-
-        /**
-         *  Cluster graph
-         */
-        Clusterer cluster = new Clusterer(authorsGraph);
-        cluster.executeClustering();
-
-        /**
-         *  UI
-         */
-        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
-//        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) authorsGraph);
-//        visualizer.visualize();
-
-        /**
-         * Gephi clustering
-         */
-//
-        GephiClusterer gc = new GephiClusterer();
-        gc.action();
-        logger.info("FINISHED CLUSTERING");
-
-
-        /**
-         *  save clusters into DB
-         */
-        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-        StorageHandler.saveClusters(gc.getClusters());
-        logger.info("REACHED ENDPOINT");
-
-        /**
-         *  top authors
-         */
-//        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-//        StorageHandler.saveClusters(gc.getClusters());
-
-        /**
-         *  get results
-         */
-//        SuggestingService suggestingService = new SuggestingServiceImpl();
-//        List<String> resultSet = suggestingService.executeSuggestionQuery(Navigator.keyword.getKeyword());
-//        Iterator<String> iterator = resultSet.iterator();
-//        while (iterator.hasNext()){
-//            System.out.println(iterator.next());
-//        }
-
-    }
-
-    public static void _main (String[] args){
         /**
          *  disable logs
          */
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+        System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+//        Navigator.keyword = new Keyword("jdbc");
 
         Parameters params = parseParameters(args);
-        if (params.keyword != ""){
-
-            /**
-             *  parser
-             */
-            if (params.parser){
-                LogIntoElibrary.auth();
+        /**
+         *  parser
+         */
+        if (params.parser){
+            if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
+                LogIntoElibrary.withoutAuth();
                 new Parser(Navigator.keyword).parse();
             }
+        }
+
+        /**
+         *  map synonymous accounts
+         */
+        if (params.synonymy){
+            SynonymyService synonymyService = new SynonymyServiceImpl();
+            synonymyService.authorsSearchForSynonyms();
+        }
+
+        if (params.clustererOld){
+            /**
+             *  get graph from DB
+             */
+            DefaultDirectedGraph authorsGraph = StorageHandler.getAuthorsGraph();
 
             /**
-             *  map synonymous accounts
+             *  Cluster graph
              */
-            if (params.synonymy){
-                SynonymyService synonymyService = new SynonymyServiceImpl();
-                synonymyService.authorsSearchForSynonyms();
-            }
-
-            if (params.clustererOld){
-                /**
-                 *  get graph from DB
-                 */
-                DefaultDirectedGraph authorsGraph = StorageHandler.getAuthorsGraph();
-
-                /**
-                 *  Cluster graph
-                 */
-                Clusterer cluster = new Clusterer(authorsGraph);
-                cluster.executeClustering();
-
-                /**
-                 *  UI
-                 */
-                GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
-                visualizer.visualize();
-            }
+            Clusterer cluster = new Clusterer(authorsGraph);
+            cluster.executeClustering();
 
             /**
-             * Gephi clustering
+             *  UI
              */
-            if (params.clustererNew){
-                GephiClusterer gc = new GephiClusterer();
-                gc.action();
+            GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
+            visualizer.visualize();
+        }
 
-                //save clusters into DB
-                StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-                StorageHandler.saveClusters(gc.getClusters());
-                logger.info("REACHED ENDPOINT");
+        /**
+         * Gephi clustering
+         */
+        if (params.clustererNew) {
+            GephiClusterer gc = new GephiClusterer();
+            gc.action();
 
-            }
+            //save clusters into DB
+            StorageHandler.getTopAuthors(gc.sortRecommendations(), 7, 3);
+            StorageHandler.saveClusters(gc.getClusters());
+            logger.info("REACHED ENDPOINT");
 
 
             /**
              *  top authors
              */
-//        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
-
-//        StorageHandler.saveClusters(gc.getClusters());
+            StorageHandler.getTopAuthors(gc.sortRecommendations(), 7, 3);
+            StorageHandler.saveClusters(gc.getClusters());
         }
-
-
     }
     private static final String keyword =                "keyword";
     private static final String searchLimit =            "searchLimit";
@@ -206,34 +128,127 @@ public class Main {
 
         Parameters parameters = new Parameters();
         boolean params = true;
-        CommandLine cl;
+        CommandLine cl = null;
 
         try {
+            // проверяем наличие обязательных параметров
             cl = new DefaultParser().parse(options, args);
-
-            if (cl.hasOption(keyword)){
-                parameters.keyword = keyword;
-                parameters.searchLimit = cl.hasOption(searchLimit)?Integer.parseInt(searchLimit):Integer.MAX_VALUE;
-                parameters.searchLevel = cl.hasOption(searchLevel)?Integer.parseInt(searchLevel):Integer.MAX_VALUE;
-                parameters.parser = !cl.hasOption(parser) || Boolean.getBoolean(parser);
-                parameters.synonymy = !cl.hasOption(synonymy) || Boolean.getBoolean(synonymy);
-                parameters.clustererNew = !cl.hasOption(clustererNew) || Boolean.getBoolean(clustererNew);
-                parameters.clustererOld = !cl.hasOption(clustererOld) || Boolean.getBoolean(clustererOld);
-            }
-                if (cl == null){
-                    HelpFormatter helpFormatter = new HelpFormatter();
-                    helpFormatter.setWidth(132);
-                    helpFormatter.printHelp("arguments", options);
+            for (String key : new String[] {keyword}) {
+                if (!cl.hasOption(key)) {
+                    logger.error("Не задан параметр {}", key);
+                    params = false;
                 }
+            }
+
+            // парсим остальные параметры
+            if (params){
+                if (cl.hasOption(keyword)){
+                    parameters.keyword = keyword;
+                    parameters.searchLimit = cl.hasOption(searchLimit)?Integer.parseInt(cl.getOptionValue(searchLimit)):Integer.MAX_VALUE;
+                    parameters.searchLevel = cl.hasOption(searchLevel)?Integer.parseInt(cl.getOptionValue(searchLevel)):Integer.MAX_VALUE;
+                    parameters.parser = cl.hasOption(parser) && Boolean.parseBoolean(cl.getOptionValue(parser));
+                    parameters.synonymy = cl.hasOption(synonymy) && Boolean.parseBoolean(cl.getOptionValue(synonymy));
+                    parameters.clustererNew = cl.hasOption(clustererNew) && Boolean.parseBoolean(cl.getOptionValue(clustererNew));
+                    parameters.clustererOld = cl.hasOption(clustererOld) && Boolean.parseBoolean(cl.getOptionValue(clustererOld));
+                }
+            }
+
+            if (cl == null){
+                HelpFormatter helpFormatter = new HelpFormatter();
+                helpFormatter.setWidth(132);
+                helpFormatter.printHelp("arguments", options);
+            }
         }
         catch (ParseException ex){
             logger.error("Couldn't parse line: {}", ex.getLocalizedMessage());
             params = false;
         }
 
+        if (cl == null || cl.hasOption("h") || cl.hasOption("help") || !params) {
+            HelpFormatter helpFormatter = new HelpFormatter();
+            helpFormatter.setWidth(132);
+            helpFormatter.printHelp(" аргументы для запуска утилиты", options);
+            return null;
+        }
+
         if(params) return parameters;
         else return null;
     }
 
+    @Deprecated
+    public static void _main (String[] args){
+
+
+        java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
+        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+        System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+        Navigator.keyword = new Keyword("jdbc");
+
+
+        /**
+         *  parser
+         */
+//        if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
+//            LogIntoElibrary.withoutAuth();
+//            new Parser(Navigator.keyword).parse();
+//        }
+
+        /**
+         *  map synonymous accounts
+         */
+//        SynonymyService synonymyService = new SynonymyServiceImpl();
+//        synonymyService.authorsSearchForSynonyms();
+
+        /**
+         *  get graph from DB
+         */
+//        DefaultDirectedGraph authorsGraph = StorageHandler.getAuthorsGraph();
+
+        /**
+         *  Cluster graph
+         */
+//        Clusterer cluster = new Clusterer(authorsGraph);
+//        cluster.executeClustering();
+
+        /**
+         *  UI
+         */
+//        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
+//        GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) authorsGraph);
+//        visualizer.visualize();
+
+        /**
+         * Gephi clustering
+         */
+//
+//        GephiClusterer gc = new GephiClusterer();
+//        gc.action();
+//        logger.info("FINISHED CLUSTERING");
+
+
+        /**
+         *  save clusters into DB
+         */
+//        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
+//        StorageHandler.saveClusters(gc.getClusters());
+//        logger.info("REACHED ENDPOINT");
+
+        /**
+         *  top authors
+         */
+//        StorageHandler.getTopAuthors(gc.sortRecommendations(),7, 3);
+//        StorageHandler.saveClusters(gc.getClusters());
+
+        /**
+         *  get results
+         */
+//        SuggestingService suggestingService = new SuggestingServiceImpl();
+//        List<String> resultSet = suggestingService.executeSuggestionQuery(Navigator.keyword.getKeyword());
+//        Iterator<String> iterator = resultSet.iterator();
+//        while (iterator.hasNext()){
+//            System.out.println(iterator.next());
+//        }
+
+    }
 
 }
