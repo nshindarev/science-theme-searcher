@@ -73,9 +73,10 @@ public class GephiClusterer {
         authorsNetwork = graphModel.getUndirectedGraph();
         a2a.forEach(connection -> {
 
-            Node a1 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_first().getSurname()));
+
+            Node a1 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_first().getId()));
             a1.setLabel(String.valueOf(connection.getAuthor_first().getSurname()));
-            Node a2 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_second().getSurname()));
+            Node a2 = graphModel.factory().newNode(String.valueOf(connection.getAuthor_second().getId()));
             a2.setLabel(String.valueOf(connection.getAuthor_second().getSurname()));
             /**
              * add a1
