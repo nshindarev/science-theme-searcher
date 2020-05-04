@@ -138,10 +138,20 @@ public class Author {
                     .stream()
                     .filter(it -> !this.getPublications().contains(it))
                     .forEach(this::addPublication);
+
+            author.getAffiliations()
+                    .stream()
+                    .filter(it -> !this.getAffiliations().contains(it))
+                    .forEach(this::addAffiliation);
+
         }
 
         if (author.revision == 1)
             this.setRevision(1);
+
+        //TODO новое значение
+//        if (!author.getName().equals(""))
+//            this.setName(author.getName());
 
         return this;
     }
