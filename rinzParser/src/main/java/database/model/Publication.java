@@ -65,10 +65,13 @@ public class Publication {
     private Set<Keyword> keywords = new HashSet<>();
 
 
-    public void addKeyword(Keyword keyword) {
-        if (Parser.allKeywordPublicationIds.stream().anyMatch(this::equals)){
+    public void addKeyword(Keyword keyword, Set<Publication> allPublicationIds) {
+        if (allPublicationIds.stream().anyMatch(this::equals)){
             this.keywords.add(keyword);
         }
+    }
+    public void addKeyword(Keyword keyword) {
+            this.keywords.add(keyword);
     }
 
     public Publication () {

@@ -74,7 +74,7 @@ public class Parser {
                     });
         }
 
-//        StorageHandler.updateKeyword(Parser.allKeywordPublicationIds);
+        StorageHandler.updateKeyword(Parser.allKeywordPublicationIds);
     }
 
     /**
@@ -111,7 +111,7 @@ public class Parser {
                     if (authorSet.size() <= searchLimit) {
                         Publication publBO = new Publication(row.getElementsByTagName("a").get(0).asText());
 
-                        publBO.addKeyword(Navigator.keyword);
+                        publBO.addKeyword(Navigator.keyword, Parser.allKeywordPublicationIds);
                         publBO.setLink(row.getElementsByTagName("a").get(0).getAttribute("href"));
                         publBO.setMetric(citations);
 

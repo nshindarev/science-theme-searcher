@@ -4,6 +4,7 @@ import com.apporiented.algorithm.clustering.visualization.ClusterComponent;
 import database.model.*;
 import database.service.*;
 import elibrary.parser.Navigator;
+import elibrary.parser.Parser;
 import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.collection.internal.PersistentSet;
@@ -288,6 +289,7 @@ public class StorageHandler  {
         as.closeConnection();
         return res;
     }
+
 
     public static Map<Cluster, List<Author>> getTopAuthors (Map<Cluster, List<String>> clusters, int minClusterSize, int topVerticesSize){
 
