@@ -1,7 +1,7 @@
 package database.dao;
 
 import database.model.Cluster;
-import main.Test;
+import main.Parameters;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utility.HibernateSessionFactoryUtil;
@@ -49,8 +49,8 @@ public class ClusterDao {
     }
     private void removeClusterToAuthor() {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = Test.postgresLogin;
-        String password = Test.postgresPassword;
+        String user = Parameters.postgresLogin;
+        String password = Parameters.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
@@ -63,8 +63,8 @@ public class ClusterDao {
 
     private void removeClusters() {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
-        String user = Test.postgresLogin;
-        String password = Test.postgresPassword;
+        String user = Parameters.postgresLogin;
+        String password = Parameters.postgresPassword;
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();

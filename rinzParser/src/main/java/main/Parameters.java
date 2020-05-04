@@ -6,6 +6,8 @@ import elibrary.parser.Navigator;
 
 
 public class Parameters {
+    public static String postgresLogin = "postgres";
+    public static String postgresPassword = "N1k1t0s1n4";
 
     /**
      * default configuration
@@ -19,6 +21,7 @@ public class Parameters {
     public boolean synonymy;
     public boolean clustererNew;
     public boolean clustererOld;
+    public String resultType;
 
 
     public Parameters (){
@@ -35,6 +38,9 @@ public class Parameters {
     public void setSearchLevel(int searchLevel){
         this.searchLevel = searchLevel;
         Navigator.searchLevel = searchLevel;
+    }
+    public void setResultType(String resultType){
+        this.resultType = resultType;
     }
 }
 
