@@ -54,19 +54,19 @@ public class Main {
         }
 
         /**
-         *  map synonymous accounts
-         */
-        if (params.authorsSynonymy){
-            SynonymyService synonymyService = new SynonymyServiceImpl();
-            synonymyService.authorsSearchForSynonyms();
-        }
-
-        /**
          *  map synonymous affiliations
          */
         if (params.affiliationsSynonymy){
             SynonymyService synonymyService = new SynonymyServiceImpl();
             synonymyService.affiliationsSearchForSynonyms();
+        }
+
+        /**
+         *  map synonymous accounts
+         */
+        if (params.authorsSynonymy){
+            SynonymyService synonymyService = new SynonymyServiceImpl();
+            synonymyService.authorsSearchForSynonyms();
         }
 
         if (params.clustererOld){
