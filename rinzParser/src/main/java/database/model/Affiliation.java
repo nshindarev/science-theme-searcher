@@ -27,10 +27,10 @@ public class Affiliation {
     @JoinTable(name = "authortoaffiliation", schema = "science_theme_searcher",
             joinColumns = @JoinColumn(name = "id_affiliation"),
             inverseJoinColumns = @JoinColumn(name = "id_author"))
-    private Set<Affiliation> affiliations = new HashSet<>();
+    private Set<Author> authors = new HashSet<>();
 
-    public void addAffiliation(Affiliation affiliation) {
-        this.affiliations.add(affiliation);
+    public void addAuthor(Author author) {
+        this.authors.add(author);
     }
 
     public Affiliation () { }

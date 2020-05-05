@@ -56,9 +56,17 @@ public class Main {
         /**
          *  map synonymous accounts
          */
-        if (params.synonymy){
+        if (params.authorsSynonymy){
             SynonymyService synonymyService = new SynonymyServiceImpl();
             synonymyService.authorsSearchForSynonyms();
+        }
+
+        /**
+         *  map synonymous accounts
+         */
+        if (params.affiliationsSynonymy){
+            SynonymyService synonymyService = new SynonymyServiceImpl();
+            synonymyService.affiliationsSearchForSynonyms();
         }
 
         if (params.clustererOld){
@@ -100,7 +108,7 @@ public class Main {
             StorageHandler.saveClusters(gc.getClusters());
         }
 
-        if (!params.resultType.equals("NONE")) {
+        if (!params.resultType.equals("none")) {
             SuggestingService suggestingService = new SuggestingServiceImpl();
             ClusterService clusterService = new ClusterService();
             clusterService.openConnection();
@@ -112,7 +120,19 @@ public class Main {
                     System.out.println("Getting affiliations by citations...");
                     for (Cluster cluster : clusters) {
                         affiliation = suggestingService.findClustersAffiliation(cluster);
-                        List<String> resultSet = suggestingService.executeSuggestionQueryByRating(Navigator.keyword.getKeyword(),cluster);
+
+                        int clusterSize = cluster.getAuthors().size();
+                        int limit;
+                        if (clusterSize > 10) {
+                            if (clusterSize > 25) {
+                                limit = 5;
+                            } else
+                                limit = 3;
+                        } else {
+                            limit = 1;
+                        }
+
+                        List<String> resultSet = suggestingService.executeSuggestionQueryByRating(Navigator.keyword.getKeyword(),cluster, limit);
                         if (!resultSet.isEmpty()) {
                             Iterator<String> iterator = resultSet.iterator();
                             result.append("Publications for affiliation: ").append(affiliation).append("\n");
@@ -126,7 +146,19 @@ public class Main {
                     System.out.println("Getting affiliations by year...");
                     for (Cluster cluster : clusters) {
                         affiliation = suggestingService.findClustersAffiliation(cluster);
-                        List<String> resultSet = suggestingService.executeSuggestionQueryByYear(Navigator.keyword.getKeyword(),cluster);
+
+                        int clusterSize = cluster.getAuthors().size();
+                        int limit;
+                        if (clusterSize > 10) {
+                            if (clusterSize > 25) {
+                                limit = 5;
+                            } else
+                                limit = 3;
+                        } else {
+                            limit = 1;
+                        }
+
+                        List<String> resultSet = suggestingService.executeSuggestionQueryByYear(Navigator.keyword.getKeyword(),cluster, limit);
                         if (!resultSet.isEmpty()) {
                             Iterator<String> iterator = resultSet.iterator();
                             result.append("Publications for affiliation: ").append(affiliation).append("\n");
@@ -145,7 +177,8 @@ public class Main {
     private static final String searchLimit =            "searchLimit";
     private static final String searchLevel=             "searchLevel";
     private static final String parser =                 "parser";
-    private static final String synonymy =               "synonymy";
+    private static final String authorsSynonymy =        "authorsSynonymy";
+    private static final String affiliationsSynonymy =   "affiliationsSynonymy";
     private static final String clustererNew =           "clustererNew";
     private static final String clustererOld =           "clustererOld";
     private static final String minClusterSize =         "minClusterSize";
@@ -164,7 +197,8 @@ public class Main {
         options.addOption(searchLevel,true,  "number of search iterations");
 
         options.addOption(parser,true,  "set true, to proceed with elibrary parsing level");
-        options.addOption(synonymy,true,  "set true, to proceed with synonymy preprocessing level");
+        options.addOption(authorsSynonymy,true,  "set true, to proceed with authors synonymy preprocessing level");
+        options.addOption(affiliationsSynonymy,true,  "set true, to proceed with affiliations synonymy preprocessing level");
         options.addOption(clustererNew,true, "if true, uses gephi toolkit to cluster");
         options.addOption(clustererOld,true, "if true, uses jgrapht to cluster ");
         options.addOption(resultType,true, "type of result set getting logic");
@@ -191,10 +225,11 @@ public class Main {
                     parameters.searchLimit = cl.hasOption(searchLimit)?Integer.parseInt(cl.getOptionValue(searchLimit)):Integer.MAX_VALUE;
                     parameters.searchLevel = cl.hasOption(searchLevel)?Integer.parseInt(cl.getOptionValue(searchLevel)):Integer.MAX_VALUE;
                     parameters.parser = cl.hasOption(parser) && Boolean.parseBoolean(cl.getOptionValue(parser));
-                    parameters.synonymy = cl.hasOption(synonymy) && Boolean.parseBoolean(cl.getOptionValue(synonymy));
+                    parameters.authorsSynonymy = cl.hasOption(authorsSynonymy) && Boolean.parseBoolean(cl.getOptionValue(authorsSynonymy));
+                    parameters.affiliationsSynonymy = cl.hasOption(affiliationsSynonymy) && Boolean.parseBoolean(cl.getOptionValue(affiliationsSynonymy));
                     parameters.clustererNew = cl.hasOption(clustererNew) && Boolean.parseBoolean(cl.getOptionValue(clustererNew));
                     parameters.clustererOld = cl.hasOption(clustererOld) && Boolean.parseBoolean(cl.getOptionValue(clustererOld));
-                    parameters.resultType = cl.hasOption(resultType) ? cl.getOptionValue(resultType) : "NONE";
+                    parameters.resultType = cl.hasOption(resultType) ? cl.getOptionValue(resultType) : "none";
                 }
             }
 

@@ -1,6 +1,8 @@
 package implementation;
 
+import database.model.Affiliation;
 import database.model.Author;
+import database.service.AffiliationService;
 import database.service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +12,12 @@ import service.TranslatorService;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 
 public class SynonymyServiceImpl implements SynonymyService {
     private static final Logger logger = LoggerFactory.getLogger(SynonymyServiceImpl.class);
     static HashSet<Author> deleted = new HashSet<>();
+    static HashSet<Affiliation> deletedAffiliations = new HashSet<>();
     TranslatorService translatorService = new TranslatorServiceImpl();
     LengthComparatorService lengthComparatorService = new LengthComparatorServiceImpl();
 
@@ -42,6 +46,30 @@ public class SynonymyServiceImpl implements SynonymyService {
         }
     }
 
+
+    @Override
+    public boolean checkAffiliationsEquality(Affiliation firstAffiliation, Affiliation secondAffiliation) {
+        String firstName = firstAffiliation.getName().replaceAll("\\s+", "").replaceAll("-", "").toLowerCase();
+        String secondName = secondAffiliation.getName().replaceAll("\\s+", "").replaceAll("-", "").toLowerCase();
+        if (firstName.length()>25 && secondName.length()>25 && firstName.substring(0,25).equals(secondName.substring(0,25))) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Одинаковы ли аффиляции? (y/n) \n  1)  "+firstAffiliation.getName()+"\n  2)  "+secondAffiliation.getName());
+            String phrase = sc.nextLine();
+            if (phrase.equals("y")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }  else {
+            if (firstName.equals(secondName)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     @Override
     public void authorsJoin(AuthorService authorService, Author author1, Author author2) {
         author1.getIncomingAuthorToAuthors().addAll(author2.getIncomingAuthorToAuthors());
@@ -54,9 +82,21 @@ public class SynonymyServiceImpl implements SynonymyService {
         deleted.add(author2);
     }
 
+    public void affiliationJoin(AffiliationService affiliationService, Affiliation affiliation1, Affiliation affiliation2) {
+        affiliation1.getAuthors().addAll(affiliation2.getAuthors());
+        affiliationService.updateAffiliation(affiliation1);
+        deletedAffiliations.add(affiliation2);
+    }
+
     private void deleteAuthors(AuthorService authorService) {
         for (Author author:deleted) {
             authorService.deleteAuthor(author);
+        }
+    }
+
+    private void deleteAffiliations(AffiliationService affiliationService) {
+        for (Affiliation affiliation:deletedAffiliations) {
+            affiliationService.deleteAffiliation(affiliation);
         }
     }
 
@@ -78,5 +118,25 @@ public class SynonymyServiceImpl implements SynonymyService {
         logger.debug("Finished searching similarities, similarities found: {}",deleted.size());
         deleteAuthors(authorService);
         authorService.closeConnection();
+    }
+
+    @Override
+    public void affiliationsSearchForSynonyms() {
+        AffiliationService affiliationService = new AffiliationService();
+        affiliationService.openConnection();
+        List<Affiliation> affiliations = affiliationService.findAllAffiliations();
+        logger.debug("Start searching similarities");
+        for (Affiliation affiliation1: affiliations) {
+            for (Affiliation affiliation2 : affiliations) {
+                if (affiliation1.getId() != affiliation2.getId() && !deletedAffiliations.contains(affiliation1)) {
+                    if (checkAffiliationsEquality(affiliation1, affiliation2)) {
+                        affiliationJoin(affiliationService, affiliation1, affiliation2);
+                    }
+                }
+            }
+        }
+        logger.debug("Finished searching similarities, similarities found: {}",deletedAffiliations.size());
+        deleteAffiliations(affiliationService);
+        affiliationService.closeConnection();
     }
 }

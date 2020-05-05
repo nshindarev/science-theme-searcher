@@ -29,7 +29,7 @@ public class SuggestingServiceImpl implements SuggestingService {
     }
 
     @Override
-    public List<String> executeSuggestionQueryByRating(String keyword, Cluster cluster) {
+    public List<String> executeSuggestionQueryByRating(String keyword, Cluster cluster, int limit) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
         String user = Parameters.postgresLogin;
         String password = Parameters.postgresPassword;
@@ -37,23 +37,21 @@ public class SuggestingServiceImpl implements SuggestingService {
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select ans.name from\n" +
-                    "(select distinct sel.name from \n" +
-                    "(select  *\n" +
-                    "from science_theme_searcher.publication p,\n" +
-                    "\t\t\tscience_theme_searcher.keyword k,\n" +
-                    "\t\t\tscience_theme_searcher.keywordtopublication kp,\n" +
-                    "\t\t\tscience_theme_searcher.authortopublication ap,\n" +
-                    "\t\t\tscience_theme_searcher.clustertoauthor ca\n" +
-                    "\t\t\twhere k.keyword = '"+keyword+"'\n" +
-                    "\t\t\tand k.id = kp.id_keyword\n" +
-                    "\t\t\tand kp.id_publication = p.id\n" +
-                    "\t\t\tand p.id = ap.id_publication\n" +
-                    "\t\t\tand ap.id_author = ca.id_author\n" +
-                    "\t\t\tand ca.id_cluster = "+cluster.getId()+"\n" +
-                    "order by metric desc) sel\n" +
-                    " )ans\n" +
-                    " limit 3");
+            ResultSet rs = st.executeQuery( "select name from \n" +
+                    "(select  distinct p.name, p.year, p.metric\n" +
+                    "\tfrom science_theme_searcher.publication p,\n" +
+                    "\t\tscience_theme_searcher.keyword k,\n" +
+                    "\t\tscience_theme_searcher.keywordtopublication kp,\n" +
+                    "\t\tscience_theme_searcher.authortopublication ap,\n" +
+                    "\t\tscience_theme_searcher.clustertoauthor ca\n" +
+                    "\twhere k.keyword = '"+keyword+"'\n" +
+                    "\t\tand k.id = kp.id_keyword\n" +
+                    "\t\tand kp.id_publication = p.id\n" +
+                    "\t\tand p.id = ap.id_publication\n" +
+                    "\t\tand ap.id_author = ca.id_author\n" +
+                    "\t\tand ca.id_cluster = "+cluster.getId()+"\n" +
+                    "\torder by metric desc\n" +
+                    "\tlimit "+limit+")sel");
 
             while (rs.next()) {
                 result.add(rs.getString(1));
@@ -68,7 +66,7 @@ public class SuggestingServiceImpl implements SuggestingService {
 
 
     @Override
-    public List<String> executeSuggestionQueryByYear(String keyword, Cluster cluster) {
+    public List<String> executeSuggestionQueryByYear(String keyword, Cluster cluster, int limit) {
         String url = "jdbc:postgresql://localhost:5432/postgres_sts";
         String user = Parameters.postgresLogin;
         String password = Parameters.postgresPassword;
@@ -76,23 +74,21 @@ public class SuggestingServiceImpl implements SuggestingService {
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select ans.name from\n" +
-                    "(select distinct sel.name from \n" +
-                    "(select  *\n" +
-                    "from science_theme_searcher.publication p,\n" +
-                    "\t\t\tscience_theme_searcher.keyword k,\n" +
-                    "\t\t\tscience_theme_searcher.keywordtopublication kp,\n" +
-                    "\t\t\tscience_theme_searcher.authortopublication ap,\n" +
-                    "\t\t\tscience_theme_searcher.clustertoauthor ca\n" +
-                    "\t\t\twhere k.keyword = '"+keyword+"'\n" +
-                    "\t\t\tand k.id = kp.id_keyword\n" +
-                    "\t\t\tand kp.id_publication = p.id\n" +
-                    "\t\t\tand p.id = ap.id_publication\n" +
-                    "\t\t\tand ap.id_author = ca.id_author\n" +
-                    "\t\t\tand ca.id_cluster = "+cluster.getId()+"\n" +
-                    "order by year desc) sel\n" +
-                    " )ans\n" +
-                    " limit 3");
+            ResultSet rs = st.executeQuery("select name from \n" +
+                    "(select  distinct p.name, p.year, p.metric\n" +
+                    "\tfrom science_theme_searcher.publication p,\n" +
+                    "\t\tscience_theme_searcher.keyword k,\n" +
+                    "\t\tscience_theme_searcher.keywordtopublication kp,\n" +
+                    "\t\tscience_theme_searcher.authortopublication ap,\n" +
+                    "\t\tscience_theme_searcher.clustertoauthor ca\n" +
+                    "\twhere k.keyword = '"+keyword+"'\n" +
+                    "\t\tand k.id = kp.id_keyword\n" +
+                    "\t\tand kp.id_publication = p.id\n" +
+                    "\t\tand p.id = ap.id_publication\n" +
+                    "\t\tand ap.id_author = ca.id_author\n" +
+                    "\t\tand ca.id_cluster = "+cluster.getId()+"\n" +
+                    "\torder by year desc\n" +
+                    "\tlimit "+limit+")sel");
 
             while (rs.next()) {
                 result.add(rs.getString(1));

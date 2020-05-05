@@ -1,10 +1,18 @@
 package database.dao;
 
 import database.model.Affiliation;
+import database.model.Author;
+import database.model.Cluster;
+import database.model.Publication;
+import main.Parameters;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utility.HibernateSessionFactoryUtil;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 public class AffiliationDao {
@@ -29,8 +37,44 @@ public class AffiliationDao {
 
     public void delete(Affiliation affiliation) {
         Transaction tx1 = session.beginTransaction();
-        session.delete(affiliation);
+        for (Author author : affiliation.getAuthors())
+        {
+            author.getAffiliations().remove(affiliation);
+        }
+        affiliation.setAuthors(null);
         tx1.commit();
+        removeAuthors(affiliation);
+        removeAffiliation(affiliation);
+    }
+
+    private void removeAuthors(Affiliation affiliation) {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = Parameters.postgresLogin;
+        String password = Parameters.postgresPassword;
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.authortoaffiliation\n" +
+                    "\tWHERE id_affiliation = "+affiliation.getId());
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+    }
+
+    private void removeAffiliation(Affiliation affiliation) {
+        String url = "jdbc:postgresql://localhost:5432/postgres_sts";
+        String user = Parameters.postgresLogin;
+        String password = Parameters.postgresPassword;
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.affiliation\n" +
+                    "\tWHERE id = "+affiliation.getId());
+
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
     }
 
     public List<Affiliation> findAll() {
