@@ -62,7 +62,7 @@ public class Main {
         }
 
         /**
-         *  map synonymous accounts
+         *  map synonymous affiliations
          */
         if (params.affiliationsSynonymy){
             SynonymyService synonymyService = new SynonymyServiceImpl();

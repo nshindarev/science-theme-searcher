@@ -17,7 +17,9 @@ import java.util.Scanner;
 public class SynonymyServiceImpl implements SynonymyService {
     private static final Logger logger = LoggerFactory.getLogger(SynonymyServiceImpl.class);
     static HashSet<Author> deleted = new HashSet<>();
+    static HashSet<Author> notDeleted = new HashSet<>();
     static HashSet<Affiliation> deletedAffiliations = new HashSet<>();
+    static HashSet<Affiliation> notDeletedAffiliations = new HashSet<>();
     TranslatorService translatorService = new TranslatorServiceImpl();
     LengthComparatorService lengthComparatorService = new LengthComparatorServiceImpl();
 
@@ -79,6 +81,7 @@ public class SynonymyServiceImpl implements SynonymyService {
         author1.getPublications().addAll(author2.getPublications());
         author1.getAffiliations().addAll(author2.getAffiliations());
         authorService.updateAuthor(author1);
+        notDeleted.add(author1);
         deleted.add(author2);
     }
 
@@ -86,6 +89,7 @@ public class SynonymyServiceImpl implements SynonymyService {
         affiliation1.getAuthors().addAll(affiliation2.getAuthors());
         affiliationService.updateAffiliation(affiliation1);
         deletedAffiliations.add(affiliation2);
+        notDeletedAffiliations.add(affiliation1);
     }
 
     private void deleteAuthors(AuthorService authorService) {
