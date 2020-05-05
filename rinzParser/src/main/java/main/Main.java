@@ -100,7 +100,7 @@ public class Main {
             StorageHandler.saveClusters(gc.getClusters());
         }
 
-        if (!params.resultType.equals("NONE")) {
+        if (!params.resultType.equals("none")) {
             SuggestingService suggestingService = new SuggestingServiceImpl();
             ClusterService clusterService = new ClusterService();
             clusterService.openConnection();
@@ -112,7 +112,19 @@ public class Main {
                     System.out.println("Getting affiliations by citations...");
                     for (Cluster cluster : clusters) {
                         affiliation = suggestingService.findClustersAffiliation(cluster);
-                        List<String> resultSet = suggestingService.executeSuggestionQueryByRating(Navigator.keyword.getKeyword(),cluster);
+
+                        int clusterSize = cluster.getAuthors().size();
+                        int limit;
+                        if (clusterSize > 10) {
+                            if (clusterSize > 25) {
+                                limit = 5;
+                            } else
+                                limit = 3;
+                        } else {
+                            limit = 1;
+                        }
+
+                        List<String> resultSet = suggestingService.executeSuggestionQueryByRating(Navigator.keyword.getKeyword(),cluster, limit);
                         if (!resultSet.isEmpty()) {
                             Iterator<String> iterator = resultSet.iterator();
                             result.append("Publications for affiliation: ").append(affiliation).append("\n");
@@ -126,7 +138,19 @@ public class Main {
                     System.out.println("Getting affiliations by year...");
                     for (Cluster cluster : clusters) {
                         affiliation = suggestingService.findClustersAffiliation(cluster);
-                        List<String> resultSet = suggestingService.executeSuggestionQueryByYear(Navigator.keyword.getKeyword(),cluster);
+
+                        int clusterSize = cluster.getAuthors().size();
+                        int limit;
+                        if (clusterSize > 10) {
+                            if (clusterSize > 25) {
+                                limit = 5;
+                            } else
+                                limit = 3;
+                        } else {
+                            limit = 1;
+                        }
+
+                        List<String> resultSet = suggestingService.executeSuggestionQueryByYear(Navigator.keyword.getKeyword(),cluster, limit);
                         if (!resultSet.isEmpty()) {
                             Iterator<String> iterator = resultSet.iterator();
                             result.append("Publications for affiliation: ").append(affiliation).append("\n");
@@ -194,7 +218,7 @@ public class Main {
                     parameters.synonymy = cl.hasOption(synonymy) && Boolean.parseBoolean(cl.getOptionValue(synonymy));
                     parameters.clustererNew = cl.hasOption(clustererNew) && Boolean.parseBoolean(cl.getOptionValue(clustererNew));
                     parameters.clustererOld = cl.hasOption(clustererOld) && Boolean.parseBoolean(cl.getOptionValue(clustererOld));
-                    parameters.resultType = cl.hasOption(resultType) ? cl.getOptionValue(resultType) : "NONE";
+                    parameters.resultType = cl.hasOption(resultType) ? cl.getOptionValue(resultType) : "none";
                 }
             }
 
