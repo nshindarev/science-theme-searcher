@@ -18,7 +18,8 @@ public class Parameters {
     public int minClusterSize = 0;
     public int topVerticesCardinality = 3;
     public boolean parser;
-    public boolean synonymy;
+    public boolean authorsSynonymy;
+    public boolean affiliationsSynonymy;
     public boolean clustererNew;
     public boolean clustererOld;
     public String resultType;
