@@ -1,6 +1,7 @@
 package database.operations;
 
 import com.apporiented.algorithm.clustering.visualization.ClusterComponent;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import database.model.*;
 import database.service.*;
 import elibrary.parser.Navigator;
@@ -330,5 +331,33 @@ public class StorageHandler  {
         }
 
         return false;
+    }
+    public static void updatePublicationsYear(){
+        PublicationService ps = new PublicationService();
+        ps.openConnection();
+
+        List<Publication> publications = ps.findAllPublications();
+        publications.forEach(pub -> {
+            setPublicationYear(pub);
+            try{
+                if (pub.getYear() > 1900 && pub.getYear() <2021){
+                    ps.updatePublication(pub);
+                }
+            }
+            catch (NullPointerException ex){
+                logger.error(pub.getName());
+            }
+
+        });
+
+        ps.closeConnection();
+    }
+    private static void setPublicationYear (Publication publBO){
+        if (publBO.getLink()!=null){
+            Link linkToPublication = new Link("http://elibrary.ru/" + publBO.getLink());
+            Parser.getPublicationYear(Navigator.getPublicationPage(linkToPublication), publBO, "2");
+
+        }
+
     }
 }

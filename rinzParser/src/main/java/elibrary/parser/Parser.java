@@ -436,5 +436,26 @@ public class Parser {
         }
     }
 
+    public static void getPublicationYear(HtmlPage publicationPage, Publication publBO, String tableNum){
+        try {
+            List<HtmlTable> tables = publicationPage.getByXPath("/html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[2]");
+
+            tables.forEach(tab -> {
+
+                tab.getRows().forEach(row -> {
+                    row.getCells().forEach(cell -> {
+                        cell.getChildElements().forEach(it -> {
+                            if ((it.asText().matches("[1-2]{1}[0-9]{3}")) && (it.asText().length() <= 5))
+                                publBO.setYear(Integer.parseInt(it.asText()));
+                        });
+                    });
+                });
+            });
+        }
+        catch (Exception ex){
+            logger.error(ex.getMessage());
+        }
+    }
+
 
     }

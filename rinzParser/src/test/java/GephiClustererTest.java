@@ -1,4 +1,5 @@
 import database.operations.StorageHandler;
+import elibrary.auth.LogIntoElibrary;
 import graph.gephi.GephiClusterer;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -14,5 +15,11 @@ public class GephiClustererTest {
 
         StorageHandler.saveClusters(gc.getClusters());
 
+    }
+
+    @Test
+    public void updateYear(){
+        LogIntoElibrary.withoutAuth();
+        StorageHandler.updatePublicationsYear();
     }
 }
