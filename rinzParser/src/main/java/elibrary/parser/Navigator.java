@@ -1,9 +1,6 @@
 package elibrary.parser;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import com.gargoylesoftware.htmlunit.ScriptException;
-import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 import database.model.Author;
 import database.model.Keyword;
@@ -185,6 +182,9 @@ public class Navigator {
         catch (ScriptException ex){
             logger.error(ex.getMessage());
        //     return getAuthorsPage(link);
+            return null;
+        }
+        catch (Exception ex){
             return null;
         }
 

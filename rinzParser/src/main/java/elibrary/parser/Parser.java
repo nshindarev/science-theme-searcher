@@ -441,21 +441,9 @@ public class Parser {
              * /html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[2]
              * /html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[3]/tbody/tr[1]/td/font[4]
              */
-
-//            List<HtmlTable> tables2 = publicationPage.getByXPath("/html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[2]");
-//            List<HtmlTable> tables3 = publicationPage.getByXPath("/html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[3]");
             List<HtmlTable> tablesAll = publicationPage.getByXPath("/html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table");
+            getYearFromTables(tablesAll, publBO);
 
-//            for (HtmlTable table: tablesAll){
-                getYearFromTables(tablesAll, publBO);
-//                if (publBO.getYear() != null) break;
-//            }
-//            getYearFromTables(tables2, publBO);
-
-
-//            if (publBO.getYear()==null){
-//                getYearFromTables(tables3, publBO);
-//            }
         }
         catch (Exception ex){
             logger.error(ex.getMessage());
