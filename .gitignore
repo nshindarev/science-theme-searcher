@@ -7,7 +7,6 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-resources/
 .idea/
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
@@ -15,3 +14,13 @@ resources/
 authorsSearchPage.xml
 basicSearchResults.xml
 authorSearchRezults.xml
+appl/src/main/resources/authors.txt
+appl/src/main/resources/authorSearchResults.xml
+appl/src/main/resources/authorsGraphCsv
+appl/src/main/resources/authPage.xml
+appl/src/main/resources/graphCsvFormat
+appl/src/main/resources/graphForPython
+appl/src/main/resources/error/authorSearchFieldNotFound.xml
+appl/src/main/resources/serialized/authDB.out
+appl/src/main/resources/serialized/jgraph_obj.out
+/rinzParser/src/main/resources/graph/

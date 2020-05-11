@@ -2,16 +2,27 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Annotation profile for parser.scopus.client" enabled="true">
+        <sourceOutputDir name="rinzParser/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="rinzParser/target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="appl" />
+        <module name="parser.scopus.client" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="appl" target="1.8" />
       <module name="parser.scopus.client" target="1.8" />
+      <module name="rinzParser" target="1.8" />
+      <module name="synonymy" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="appl" options="-Xlint:all" />
+      <module name="parser.scopus.client" options="-Xlint:all" />
+      <module name="rinzParser" options="-Xlint:all" />
+      <module name="synonymy" options="-Xlint:all" />
+    </option>
   </component>
 </project>
