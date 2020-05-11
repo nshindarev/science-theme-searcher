@@ -46,7 +46,8 @@ public class LogIntoElibrary {
             Navigator.webClient = new WebClient(BrowserVersion.CHROME);
             Navigator.webClient.getOptions().setCssEnabled(true);
             Navigator.webClient.getOptions().setJavaScriptEnabled(true);
-            Navigator.webClient.getOptions().setThrowExceptionOnScriptError(true);
+//            Navigator.webClient.getOptions().setThrowExceptionOnScriptError(true);
+            Navigator.webClient.getOptions().setThrowExceptionOnScriptError(false);
             Navigator.webClient.waitForBackgroundJavaScript(25000);
             Navigator.webClient.setJavaScriptTimeout(25000);
             Navigator.webClient.getCache().clear();

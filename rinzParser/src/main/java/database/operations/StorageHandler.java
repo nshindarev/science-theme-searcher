@@ -31,14 +31,6 @@ public class StorageHandler  {
     public static void saveAuthors(Collection<Author> authors){
         AuthorService authorService = new AuthorService();
 
-        // to check if DB already contains author
-//        authorService.openConnection();
-//        Set<Author> dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
-//        authorService.closeConnection();
-
-        //need this to update authors
-//        ArrayList<Author> authorList = new ArrayList(dbAuthorsSnapshot);
-
         for (Author auth: authors){
                 try{
                     authorService.openConnection();
@@ -47,7 +39,6 @@ public class StorageHandler  {
                         authorService.saveAuthor(auth);
                     }
                     else {
-//                        auth.join(foundAuth);
                         foundAuth.join(auth);
                         authorService.updateAuthor(foundAuth);
                     }
@@ -64,7 +55,6 @@ public class StorageHandler  {
                     logger.error(ex.getMessage());
                 }
                 finally {
-//                    dbAuthorsSnapshot = new HashSet<>(authorService.findAllAuthors());
                     authorService.closeConnection();
                 }
         }

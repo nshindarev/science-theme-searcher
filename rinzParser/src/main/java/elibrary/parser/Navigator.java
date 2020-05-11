@@ -184,7 +184,8 @@ public class Navigator {
         }
         catch (ScriptException ex){
             logger.error(ex.getMessage());
-            return getAuthorsPage(link);
+       //     return getAuthorsPage(link);
+            return null;
         }
 
     }

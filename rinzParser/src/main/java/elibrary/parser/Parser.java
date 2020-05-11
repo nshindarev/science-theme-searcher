@@ -121,6 +121,12 @@ public class Parser {
                         Link linkToPublication = new Link("http://elibrary.ru/" + row.getElementsByTagName("a").get(0).getAttribute("href"));
                         Set<Author> authInPubl = getPublicationAuthors(Navigator.getPublicationPage(linkToPublication), publBO);
 
+
+                        /*
+                         *  publication: update year
+                         */
+                        setPublicationYear(publBO);
+
                         for (Author authToAdd : authInPubl) {
                             if (!authorSet.contains(authToAdd)) {
                                 authorSet.add(authToAdd);
@@ -173,21 +179,13 @@ public class Parser {
             List<HtmlAnchor> affiliationList = publicationPage
                     .getByXPath("/html/body/table/tbody/tr/td/table[1]" +
                             "/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[1]/tbody/tr/td[2]/a");
-            String affiliation = "";
 
-
-
-//            if (affiliationList.size() > 0){
-//                 affiliation = affiliationList.get(0).getTextContent();
-//                logger.info ("found affiliation: " + affiliation);
-//            }
 
             Set<Author> res = new HashSet<>();
             for (HtmlSpan span : el) {
                 if (span.getElementsByTagName("a").size()>0) {
                     Author authBO = Author.convertStringToAuthor(span.getElementsByTagName("a").get(0).asText());
                     authBO.addPublication(publBO);
-//                    authBO.addAffiliation(new Affiliation(affiliation));
 
                     if (span.getElementsByTagName("a").get(0).getAttribute("href") != null) {
                         authBO.addLink(new Link("http://elibrary.ru/" + span.getElementsByTagName("a").get(0).getAttribute("href")));
@@ -436,26 +434,53 @@ public class Parser {
         }
     }
 
+
     public static void getPublicationYear(HtmlPage publicationPage, Publication publBO, String tableNum){
         try {
-            List<HtmlTable> tables = publicationPage.getByXPath("/html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[2]");
+            /**
+             * /html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[2]
+             * /html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[3]/tbody/tr[1]/td/font[4]
+             */
 
-            tables.forEach(tab -> {
+//            List<HtmlTable> tables2 = publicationPage.getByXPath("/html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[2]");
+//            List<HtmlTable> tables3 = publicationPage.getByXPath("/html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table[3]");
+            List<HtmlTable> tablesAll = publicationPage.getByXPath("/html/body/table/tbody/tr/td/table[1]/tbody/tr/td[2]/table/tbody/tr[2]/td[1]/div/table");
 
-                tab.getRows().forEach(row -> {
-                    row.getCells().forEach(cell -> {
-                        cell.getChildElements().forEach(it -> {
-                            if ((it.asText().matches("[1-2]{1}[0-9]{3}")) && (it.asText().length() <= 5))
-                                publBO.setYear(Integer.parseInt(it.asText()));
-                        });
-                    });
-                });
-            });
+//            for (HtmlTable table: tablesAll){
+                getYearFromTables(tablesAll, publBO);
+//                if (publBO.getYear() != null) break;
+//            }
+//            getYearFromTables(tables2, publBO);
+
+
+//            if (publBO.getYear()==null){
+//                getYearFromTables(tables3, publBO);
+//            }
         }
         catch (Exception ex){
             logger.error(ex.getMessage());
         }
     }
-
-
+    private static void getYearFromTables (List<HtmlTable> tables, Publication publBO){
+        tables.forEach(tab -> {
+            tab.getRows().forEach(row -> {
+                row.getCells().forEach(cell -> {
+                    cell.getChildElements().forEach(it -> {
+                        if ((it.asText().matches("[1-2]{1}[0-9]{3}")) && (it.asText().length() <= 5)) {
+                            publBO.setYear(Integer.parseInt(it.asText()));
+                        }
+                    });
+                });
+            });
+        });
     }
+    private static void setPublicationYear (Publication publBO){
+        if (publBO.getLink()!=null){
+            Link linkToPublication = new Link("http://elibrary.ru/" + publBO.getLink());
+            Parser.getPublicationYear(Navigator.getPublicationPage(linkToPublication), publBO, "2");
+        }
+    }
+
+
+
+}

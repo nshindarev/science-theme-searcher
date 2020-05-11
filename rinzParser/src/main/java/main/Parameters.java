@@ -7,7 +7,7 @@ import elibrary.parser.Navigator;
 
 public class Parameters {
     public static String postgresLogin = "postgres";
-    public static String postgresPassword = "N1k1t0s1n4";
+    public static String postgresPassword = "postgres";
 
     /**
      * default configuration
