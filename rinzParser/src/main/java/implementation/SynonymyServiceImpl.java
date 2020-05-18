@@ -17,7 +17,9 @@ import java.util.Scanner;
 public class SynonymyServiceImpl implements SynonymyService {
     private static final Logger logger = LoggerFactory.getLogger(SynonymyServiceImpl.class);
     static HashSet<Author> deleted = new HashSet<>();
+    static HashSet<Author> notDeleted = new HashSet<>();
     static HashSet<Affiliation> deletedAffiliations = new HashSet<>();
+    static HashSet<Affiliation> notDeletedAffiliations = new HashSet<>();
     TranslatorService translatorService = new TranslatorServiceImpl();
     LengthComparatorService lengthComparatorService = new LengthComparatorServiceImpl();
 
@@ -79,6 +81,7 @@ public class SynonymyServiceImpl implements SynonymyService {
         author1.getPublications().addAll(author2.getPublications());
         author1.getAffiliations().addAll(author2.getAffiliations());
         authorService.updateAuthor(author1);
+        notDeleted.add(author1);
         deleted.add(author2);
     }
 
@@ -86,6 +89,7 @@ public class SynonymyServiceImpl implements SynonymyService {
         affiliation1.getAuthors().addAll(affiliation2.getAuthors());
         affiliationService.updateAffiliation(affiliation1);
         deletedAffiliations.add(affiliation2);
+        notDeletedAffiliations.add(affiliation1);
     }
 
     private void deleteAuthors(AuthorService authorService) {
@@ -104,10 +108,14 @@ public class SynonymyServiceImpl implements SynonymyService {
     public void authorsSearchForSynonyms() {
         AuthorService authorService = new AuthorService();
         authorService.openConnection();
-        List<Author> authors = authorService.findAllAuthors();
+        List<Author> authorList = authorService.findAllAuthors();
+        Author[] authors = new Author[authorList.size()];
+        authors = authorList.toArray(authors);
         logger.debug("Start searching similarities");
-        for (Author author1: authors) {
-            for (Author author2 : authors) {
+        for (int i = 0; i < authors.length-1; i++) {
+            Author author1 = authors[i];
+            for (int j = i+1; j < authors.length; j++) {
+                Author author2 = authors[j];
                 if (author1.getId() != author2.getId() && !deleted.contains(author1)) {
                     if (checkAuthorsEquality(author1, author2)) {
                         authorsJoin(authorService, author1, author2);

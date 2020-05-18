@@ -37,8 +37,8 @@ public class SuggestingServiceImpl implements SuggestingService {
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery( "select name from \n" +
-                    "(select  distinct p.name, p.year, p.metric\n" +
+            ResultSet rs = st.executeQuery( "select metric || '  ' || name || '  ' || link from \n" +
+                    "(select  distinct p.name, p.year, p.metric, p.link \n" +
                     "\tfrom science_theme_searcher.publication p,\n" +
                     "\t\tscience_theme_searcher.keyword k,\n" +
                     "\t\tscience_theme_searcher.keywordtopublication kp,\n" +
@@ -74,8 +74,8 @@ public class SuggestingServiceImpl implements SuggestingService {
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select name from \n" +
-                    "(select  distinct p.name, p.year, p.metric\n" +
+            ResultSet rs = st.executeQuery("select year || '  ' || name || '  ' || link from \n" +
+                    "(select  distinct p.name, p.year, p.metric, p.link \n" +
                     "\tfrom science_theme_searcher.publication p,\n" +
                     "\t\tscience_theme_searcher.keyword k,\n" +
                     "\t\tscience_theme_searcher.keywordtopublication kp,\n" +
