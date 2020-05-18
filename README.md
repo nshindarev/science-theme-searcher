@@ -9,11 +9,16 @@ You may set some theme as input string and output will contain most famous autho
 # Настройка базы данных
 1) Установить PgAdmin для управления БД PostgreSQL
 
-2) Создать новую базу: 
+2) Создать сервер с параметрами:
+- name: postgres
+- host name/address: localhost
+- password: postgres
 
-- установить пароль: postgres 
-- создать новую базу: postgres_sts
-- пкм по базе -> query editor -> вставить SQL скрипт, расположенный по ссылке:
+
+2) Создать базу данных: 
+
+- name: postgres_sts
+- пкм по базе -> query tool -> вставить SQL скрипт, расположенный по ссылке:
 https://github.com/nshindarev/science-theme-searcher/blob/master/rinzParser/src/main/resources/scripts/tablesScripts.sql
 
 3) Для каждой таблицы (сначала одиночные таблицы: Author, Affiliation, Cluster, Keyword, Link, Publication, AuthorToAuthor; после - все остальные) импортировать данные, находящиеся в папке "dbSnapshot"
