@@ -6,6 +6,14 @@ This project is aimed to simplify theme-search in different knowledge bases, suc
 You may set some theme as input string and output will contain most famous authors from different author groups. 
 *Attention:* search requires some limitations, because of elibrary parse limitations.
 
+# Настройка базы данных
+1) Установить СУБД PostgreSQL
+
+2) Запустить скрипт создания таблиц (?)
+
+3) Для каждой таблицы (сначала одиночные, позже - связи) импортировтаь данные, находящиеся в папке "dbSnapshot"
+
+(Импорт: ПКМ на имя таблицы -> Import/Export -> В переключателе сверху всплывшего окна выбрать "Import" -> в поле "File" выбрать одноименный таблице файл из папки dbSnaphot -> проставть значение "Header" в True -> нажать "Ok")
 
 # Запуск (требует предварительной настройки базы)
 
