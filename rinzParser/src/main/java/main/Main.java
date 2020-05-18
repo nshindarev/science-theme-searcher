@@ -41,29 +41,36 @@ public class Main {
          *  parser
          */
         if (params.parser){
+            System.out.println("Starting parser...");
             if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
                 LogIntoElibrary.withoutAuth();
                 new Parser(Navigator.keyword).parse();
             }
+            System.out.println("Finished parser.");
         }
 
         /**
          *  map synonymous affiliations
          */
         if (params.affiliationsSynonymy){
+            System.out.println("Starting affiliation synonymy search...");
             SynonymyService synonymyService = new SynonymyServiceImpl();
             synonymyService.affiliationsSearchForSynonyms();
+            System.out.println("Finished affiliation synonymy search.");
         }
 
         /**
          *  map synonymous accounts
          */
         if (params.authorsSynonymy){
+            System.out.println("Starting authors synonymy search...");
             SynonymyService synonymyService = new SynonymyServiceImpl();
             synonymyService.authorsSearchForSynonyms();
+            System.out.println("Finished authors synonymy search.");
         }
 
         if (params.clustererOld){
+            System.out.println("Starting cluster search...");
             /**
              *  get graph from DB
              */
@@ -80,12 +87,14 @@ public class Main {
              */
             GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
             visualizer.visualize();
+            System.out.println("Finished cluster search.");
         }
 
         /**
          * Gephi clustering
          */
         if (params.clustererNew) {
+            System.out.println("Starting cluster search...");
             GephiClusterer gc = new GephiClusterer();
             gc.action();
 
@@ -100,9 +109,11 @@ public class Main {
              */
             StorageHandler.getTopAuthors(gc.sortRecommendations(), 7, 3);
             StorageHandler.saveClusters(gc.getClusters());
+            System.out.println("Finished cluster search.");
         }
 
         if (!params.resultType.equals("none")) {
+            System.out.println("Starting forming result set...");
             SuggestingService suggestingService = new SuggestingServiceImpl();
             ClusterService clusterService = new ClusterService();
             clusterService.openConnection();
@@ -165,6 +176,7 @@ public class Main {
                     break;
             }
             clusterService.closeConnection();
+            System.out.println("Finished forming result set.");
             System.out.println(result.toString());
         }
     }

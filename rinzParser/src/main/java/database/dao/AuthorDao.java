@@ -34,6 +34,7 @@ public class AuthorDao {
     }
 
     public void delete(Author author) {
+        System.out.println("Deleted author: "+author.toString());
         Transaction tx1 = session.beginTransaction();
         for (Publication publication :author.getPublications())
         {
@@ -70,7 +71,7 @@ public class AuthorDao {
                     "\tor id_second = "+author.getId());
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 
@@ -86,7 +87,7 @@ public class AuthorDao {
                     "\tWHERE id_author = "+author.getId());
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 
@@ -101,7 +102,7 @@ public class AuthorDao {
                     "\tWHERE id_author = "+author.getId());
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 
@@ -116,7 +117,7 @@ public class AuthorDao {
                     "\tWHERE id_author = "+author.getId());
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 
@@ -131,7 +132,7 @@ public class AuthorDao {
                     "\tWHERE id_author = "+author.getId());
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 
@@ -146,7 +147,7 @@ public class AuthorDao {
                     "\tWHERE id = "+author.getId());
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 

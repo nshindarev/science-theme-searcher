@@ -36,6 +36,7 @@ public class AffiliationDao {
     }
 
     public void delete(Affiliation affiliation) {
+        System.out.println("Deleted affiliation: "+affiliation.toString());
         Transaction tx1 = session.beginTransaction();
         for (Author author : affiliation.getAuthors())
         {
@@ -58,7 +59,7 @@ public class AffiliationDao {
                     "\tWHERE id_affiliation = "+affiliation.getId());
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 
@@ -73,7 +74,7 @@ public class AffiliationDao {
                     "\tWHERE id = "+affiliation.getId());
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 

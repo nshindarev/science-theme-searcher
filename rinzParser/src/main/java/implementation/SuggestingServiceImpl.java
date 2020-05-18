@@ -59,7 +59,7 @@ public class SuggestingServiceImpl implements SuggestingService {
             return result;
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
         return null;
     }
@@ -96,7 +96,7 @@ public class SuggestingServiceImpl implements SuggestingService {
             return result;
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
         return null;
     }

@@ -18,12 +18,6 @@
     <logger name="rinzParser.src.main.java.implementation.TranslatorServiceImpl" level="info" additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="rinzParser.src.main.java.implementation.LengthComparatorServiceImpl" level="info" additivity="false"><appender-ref ref="STDOUT"/></logger>
     <logger name="rinzParser.src.main.java.implementation.SynonymyServiceImpl"         level="info"    additivity="false"><appender-ref ref="STDOUT"/></logger>
-    <logger name="org.hibernate">
-        <level value="ERROR" />
-    </logger>
 
-    <!-- root -->
-    <root level="TRACE">
-        <appender-ref ref="STDOUT"/>
-    </root>
+
 </configuration>

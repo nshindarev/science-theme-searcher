@@ -57,7 +57,7 @@ public class ClusterDao {
             ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.ClusterToAuthor\n");
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 
@@ -71,7 +71,7 @@ public class ClusterDao {
             ResultSet rs = st.executeQuery("DELETE FROM science_theme_searcher.Cluster\n");
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            //System.out.println(ex.getStackTrace());
         }
     }
 
