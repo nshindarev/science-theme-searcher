@@ -33,7 +33,7 @@ clustererNew - true/false, отвечает за включение/отключ
 
 resultType - none/metric/year, отвечает за включение/отключения модуля нахождения итогового списка публикаций с учетом их сортировки по цитированию (metric) или годам (year)
 
-Пример запуска (в папке с запускаемым файлом STS.jar):
+## Пример запуска из терминала/командной строки (в папке с запускаемым файлом STS.jar):
 
 java -jar STS.jar -keyword "социоинженерные атаки" -parser false -searchLimit 20 -searchLevel 1 -authorsSynonymy true -affiliationsSynonymy false -clustererNew true -resultType metric
 
