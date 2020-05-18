@@ -41,36 +41,36 @@ public class Main {
          *  parser
          */
         if (params.parser){
-            System.out.println("Starting parser...");
+            System.out.println(" \n Starting parser... \n ");
             if (!StorageHandler.alreadyParsed(Navigator.keyword.getKeyword())){
                 LogIntoElibrary.withoutAuth();
                 new Parser(Navigator.keyword).parse();
             }
-            System.out.println("Finished parser.");
+            System.out.println(" \n Finished parser. \n ");
         }
 
         /**
          *  map synonymous affiliations
          */
         if (params.affiliationsSynonymy){
-            System.out.println("Starting affiliation synonymy search...");
+            System.out.println(" \n Starting affiliation synonymy search... \n ");
             SynonymyService synonymyService = new SynonymyServiceImpl();
             synonymyService.affiliationsSearchForSynonyms();
-            System.out.println("Finished affiliation synonymy search.");
+            System.out.println(" \n Finished affiliation synonymy search. \n ");
         }
 
         /**
          *  map synonymous accounts
          */
         if (params.authorsSynonymy){
-            System.out.println("Starting authors synonymy search...");
+            System.out.println(" \n Starting authors synonymy search... \n ");
             SynonymyService synonymyService = new SynonymyServiceImpl();
             synonymyService.authorsSearchForSynonyms();
-            System.out.println("Finished authors synonymy search.");
+            System.out.println(" \n Finished authors synonymy search. \n ");
         }
 
         if (params.clustererOld){
-            System.out.println("Starting cluster search...");
+            System.out.println(" \n Starting cluster search... \n ");
             /**
              *  get graph from DB
              */
@@ -87,14 +87,14 @@ public class Main {
              */
             GraphVisualizer visualizer = new GraphVisualizer((DefaultDirectedGraph) cluster.getGraph());
             visualizer.visualize();
-            System.out.println("Finished cluster search.");
+            System.out.println(" \n Finished cluster search. \n ");
         }
 
         /**
          * Gephi clustering
          */
         if (params.clustererNew) {
-            System.out.println("Starting cluster search...");
+            System.out.println(" \n Starting cluster search... \n ");
             GephiClusterer gc = new GephiClusterer();
             gc.action();
 
@@ -109,11 +109,11 @@ public class Main {
              */
             StorageHandler.getTopAuthors(gc.sortRecommendations(), 7, 3);
             StorageHandler.saveClusters(gc.getClusters());
-            System.out.println("Finished cluster search.");
+            System.out.println(" \n Finished cluster search. \n ");
         }
 
         if (!params.resultType.equals("none")) {
-            System.out.println("Starting forming result set...");
+            System.out.println(" \n Starting forming result set... \n ");
             SuggestingService suggestingService = new SuggestingServiceImpl();
             ClusterService clusterService = new ClusterService();
             clusterService.openConnection();
@@ -123,7 +123,7 @@ public class Main {
             PublicationService publicationService = new PublicationService();
             switch (params.resultType) {
                 case "metric":
-                    System.out.println("Getting affiliations by citations...");
+                    System.out.println(" \n Getting affiliations by citations... \n ");
                     for (Cluster cluster : clusters) {
                         affiliation = suggestingService.findClustersAffiliation(cluster);
 
@@ -149,7 +149,7 @@ public class Main {
                     }
                     break;
                 case "year":
-                    System.out.println("Getting affiliations by year...");
+                    System.out.println("\n Getting affiliations by year... \n ");
                     for (Cluster cluster : clusters) {
                         affiliation = suggestingService.findClustersAffiliation(cluster);
 
@@ -176,7 +176,7 @@ public class Main {
                     break;
             }
             clusterService.closeConnection();
-            System.out.println("Finished forming result set.");
+            System.out.println(" \n Finished forming result set. \n ");
             System.out.println(result.toString());
         }
     }
