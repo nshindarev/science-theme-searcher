@@ -1,14 +1,8 @@
 package main;
 
-import database.model.Author;
-import database.model.AuthorToAuthor;
-import database.model.Cluster;
-import database.model.Keyword;
+import database.model.*;
 import database.operations.StorageHandler;
-import database.service.AuthorService;
-import database.service.AuthorToAuthorService;
-import database.service.ClusterService;
-import database.service.KeywordService;
+import database.service.*;
 import elibrary.auth.LogIntoElibrary;
 import elibrary.parser.Navigator;
 import elibrary.parser.Parser;
@@ -54,19 +48,19 @@ public class Main {
         }
 
         /**
-         *  map synonymous accounts
+         *  map synonymous affiliations
          */
-        if (params.authorsSynonymy){
+        if (params.affiliationsSynonymy){
             SynonymyService synonymyService = new SynonymyServiceImpl();
-            synonymyService.authorsSearchForSynonyms();
+            synonymyService.affiliationsSearchForSynonyms();
         }
 
         /**
          *  map synonymous accounts
          */
-        if (params.affiliationsSynonymy){
+        if (params.authorsSynonymy){
             SynonymyService synonymyService = new SynonymyServiceImpl();
-            synonymyService.affiliationsSearchForSynonyms();
+            synonymyService.authorsSearchForSynonyms();
         }
 
         if (params.clustererOld){
@@ -115,6 +109,7 @@ public class Main {
             List<Cluster> clusters = clusterService.findAllClusters();
             String affiliation = "";
             StringBuilder result = new StringBuilder();
+            PublicationService publicationService = new PublicationService();
             switch (params.resultType) {
                 case "metric":
                     System.out.println("Getting affiliations by citations...");
