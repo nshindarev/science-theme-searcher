@@ -7,7 +7,7 @@ You may set some theme as input string and output will contain most famous autho
 *Attention:* search requires some limitations, because of elibrary parse limitations.
 
 # Настройка базы данных
-1) Установить СУБД PostgreSQL
+1) Установить PgAdmin для управления БД PostgreSQL
 
 2) Создать новую базу: 
 
