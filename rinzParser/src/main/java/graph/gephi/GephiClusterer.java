@@ -116,7 +116,7 @@ public class GephiClusterer {
         //Export full graph
         ExportController ec = Lookup.getDefault().lookup(ExportController.class);
         try {
-            this.clusteredGraphFile = new File("rinzParser/src/main/resources/graph/clustered_graph"+authorsNetwork.getNodeCount()+".gexf");
+            this.clusteredGraphFile = new File(authorsNetwork.getNodeCount()+".gexf");
             ec.exportFile(this.clusteredGraphFile);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -252,7 +252,7 @@ public class GephiClusterer {
         //Export
         ExportController ec = Lookup.getDefault().lookup(ExportController.class);
         try {
-            ec.exportFile(new File("rinzParser/src/main/resources/graph/clustered_graph" + graph.getNodeCount() + ".pdf"));
+            ec.exportFile(new File(graph.getNodeCount() + ".pdf"));
         } catch (IOException ex) {
             ex.printStackTrace();
             return;
