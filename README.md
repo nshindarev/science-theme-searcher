@@ -9,7 +9,12 @@ You may set some theme as input string and output will contain most famous autho
 # Настройка базы данных
 1) Установить СУБД PostgreSQL
 
-2) Запустить скрипт создания таблиц (?)
+2) Создать новую базу: 
+
+- установить пароль: postgres 
+- создать новую базу: postgres_sts
+- пкм по базе -> query editor -> вставить SQL скрипт, расположенный по ссылке:
+https://github.com/nshindarev/science-theme-searcher/blob/master/rinzParser/src/main/resources/scripts/tablesScripts.sql
 
 3) Для каждой таблицы (сначала одиночные таблицы: Author, Affiliation, Cluster, Keyword, Link, Publication, AuthorToAuthor; после - все остальные) импортировать данные, находящиеся в папке "dbSnapshot"
 
