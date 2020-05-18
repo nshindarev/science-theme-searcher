@@ -9,26 +9,20 @@ You may set some theme as input string and output will contain most famous autho
 
 # Запуск (требует предварительной настройки базы)
 
-java -jar STS.jar 
--keyword "социоинженерные атаки" 
--parser false 
--searchLimit 20 
--searchLevel 1 
--authorsSynonymy false 
--affiliationsSynonymy false 
--clustererNew false 
--resultType none
-
-
 keyword - строка, ключевое слово, по которому будет осуществляться поиск
 
 parser - true/false, отвечает за включение/отключения модуля получения данных с eLibrary.ru
 
 searchLimit - число, отвечает за количество сущностей на каждом уровне поиска (по умолчанию - 20)
+
 searchLevel - число, число, отвечает за количество уровней поиска (по умолчанию - 1)
+
 authorsSynonymy - true/false, отвечает за включение/отключения модуля поиска синонимичных авторов и их удаление из БД
+
 affiliationsSynonymy - true/false, отвечает за включение/отключения модуля поиска синонимичных аффилиаций и их удаление из БД
+
 clustererNew - true/false, отвечает за включение/отключения модуля кластеризации (разбиение графа на группы соавторов и представление итогового графа)
+
 resultType - none/metric/year, отвечает за включение/отключения модуля нахождения итогового списка публикаций с учетом их сортировки по цитированию (metric) или годам (year)
 
 Пример запуска (в папке с запускаемым файлом STS.jar):
