@@ -27,7 +27,7 @@ resultType - none/metric/year, отвечает за включение/откл
 
 Пример запуска (в папке с запускаемым файлом STS.jar):
 
-java -jar STS.jar -keyword "социоинженерные атаки" -parser false -searchLimit 20 -searchLevel 1 -authorsSynonymy false -affiliationsSynonymy false -clustererNew false -resultType none
+java -jar STS.jar -keyword "социоинженерные атаки" -parser false -searchLimit 20 -searchLevel 1 -authorsSynonymy true -affiliationsSynonymy false -clustererNew true -resultType metric
 
 Файл запуска находится по ссылке:
-https://drive.google.com/file/d/1Kc-V5Lr67EDrDgIB512_XFGvPfV5yDbL/view?usp=sharing
+https://drive.google.com/file/d/1Gpt_f9XziuXLgZtc8wblCEloRqmyPoH3/view?usp=sharing
